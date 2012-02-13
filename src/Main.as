@@ -6,9 +6,22 @@
 package {
 import flash.display.Sprite;
 
+import game.GameContainer;
+
+import game.SceneController;
+
 public class Main extends Sprite {
+	private var sceneController:SceneController;
+
 	public function Main() {
 		trace("app started");
+		startMenu();
+	}
+
+	/* Internal functions */
+
+	private function startMenu():void {
+		sceneController = new SceneController(new GameContainer(this));
 	}
 }
 }
