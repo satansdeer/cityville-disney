@@ -15,12 +15,12 @@ public class Main extends Sprite {
 
 	public function Main() {
 		trace("app started");
-		startMenu();
+		startGame();
 	}
 
 	/* Internal functions */
 
-	private function startMenu():void {
+	private function startGame():void {
 		sceneController = new SceneController(new GameContainer(this));
 	}
 }
