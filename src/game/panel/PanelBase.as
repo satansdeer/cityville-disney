@@ -19,5 +19,11 @@ public class PanelBase extends SceneSprite {
 		component.y = y;
 		this.addChild(component);
 	}
+
+	public function removeComponent(component:SceneSprite):void {
+		if (this.contains(component)) {
+			this.removeChild(component);
+		}
+	}
 }
 }

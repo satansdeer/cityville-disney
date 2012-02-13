@@ -23,6 +23,12 @@ public class ScrollablePanel extends PanelBase {
 		if (componentOutsideByY(component)) { showVerticalScroll(); }
 	}
 
+	override public function removeComponent(component:SceneSprite):void {
+		super.removeComponent(component);
+		if (!componentOutsideByX(component)) { hideHorizontalScroll(); }
+		if (!componentOutsideByY(component)) { hideVerticalScroll(); }
+	}
+
 	/* Internal functions */
 
 	private function showVerticalScroll():void {
