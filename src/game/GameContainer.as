@@ -37,6 +37,7 @@ public class GameContainer {
 
 	private function createLayers():void {
 		layerList = new Vector.<Layer>();
+		layerList.push(new Layer(Layers.MAP));
 		layerList.push(new Layer(Layers.MAIN));
 		layerList.push(new Layer(Layers.ICON));
 	}
