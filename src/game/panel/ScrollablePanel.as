@@ -17,41 +17,26 @@ public class ScrollablePanel extends PanelBase {
 		_panelWidth = width;
 	}
 
+	public function get panelWidth() { return _panelWidth; }
+	public function get panelHeight() { return _panelHeight; }
+
 	override public function addComponent(component:SceneSprite, x:Number, y:Number):void {
 		super.addComponent(component, x, y);
-		if (componentOutsideByX(component)) { showHorizontalScroll(); }
-		if (componentOutsideByY(component)) { showVerticalScroll(); }
+		if (componentOutside(component)) { showScroll(); }
 	}
 
 	override public function removeComponent(component:SceneSprite):void {
 		super.removeComponent(component);
-		if (!componentOutsideByX(component)) { hideHorizontalScroll(); }
-		if (!componentOutsideByY(component)) { hideVerticalScroll(); }
+		if (!componentOutside(component)) { hideScroll(); }
 	}
 
 	/* Internal functions */
 
-	private function showVerticalScroll():void {
+	protected function showScroll():void {}
+	protected function hideScroll():void {}
 
-	}
-
-	private function hideVerticalScroll():void {
-
-	}
-
-	private function showHorizontalScroll():void {
-
-	}
-	private function hideHorizontalScroll():void {
-
-	}
-
-	private function componentOutsideByX(component:SceneSprite):Boolean {
-		return (component.x < 0 || component.x + component.width > _panelWidth);
-	}
-
-	private function componentOutsideByY(component:SceneSprite):Boolean {
-		return (component.y< 0 || component.y + component.height > _panelHeight);
+	protected function componentOutside(component:SceneSprite):Boolean {
+		return false;
 	}
 }
 }
