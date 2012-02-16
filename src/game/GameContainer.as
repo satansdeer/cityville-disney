@@ -8,6 +8,7 @@ import flash.display.Sprite;
 
 import game.layer.Layer;
 import game.layer.Layers;
+import game.tower.TowerBase;
 
 public class GameContainer {
 	private var layerList:Vector.<Layer>;
@@ -38,6 +39,7 @@ public class GameContainer {
 	private function createLayers():void {
 		layerList = new Vector.<Layer>();
 		layerList.push(new Layer(Layers.MAP));
+		layerList.push(new Layer(Layers.TOWERS));
 		layerList.push(new Layer(Layers.MAIN));
 		layerList.push(new Layer(Layers.ICON));
 	}

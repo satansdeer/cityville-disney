@@ -10,7 +10,11 @@ import game.GameContainer;
 
 import game.SceneController;
 
+[SWF(width=400, height=400, frameRate=25)]
 public class Main extends Sprite {
+	public static const APP_WIDTH:int = 400;
+	public static const APP_HEIGHT:int = 400;
+
 	private var sceneController:SceneController;
 
 	public function Main() {
