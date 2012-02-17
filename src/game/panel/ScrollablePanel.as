@@ -5,7 +5,7 @@
  */
 package game.panel {
 
-import game.SceneSprite;
+import core.display.SceneSprite;
 
 public class ScrollablePanel extends PanelBase {
 	private var _panelWidth:Number;

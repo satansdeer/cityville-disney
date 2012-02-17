@@ -4,8 +4,8 @@
  * Time: 12:18 PM
  */
 package game.map {
-import game.SceneSprite;
-import game.layer.Layers;
+import core.display.SceneSprite;
+import core.layer.Layers;
 
 public class Tile extends SceneSprite {
 	public function Tile(x:Number, y:Number) {

@@ -3,7 +3,7 @@
  * Date: 10/02/12
  * Time: 5:19 PM
  */
-package game {
+package core.display {
 import flash.display.Sprite;
 
 public class SceneSprite extends Sprite{

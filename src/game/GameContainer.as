@@ -4,10 +4,12 @@
  * Time: 5:18 PM
  */
 package game {
+import core.display.SceneSprite;
+
 import flash.display.Sprite;
 
-import game.layer.Layer;
-import game.layer.Layers;
+import core.layer.Layer;
+import core.layer.Layers;
 import game.tower.TowerBase;
 
 public class GameContainer {
@@ -42,6 +44,7 @@ public class GameContainer {
 		layerList.push(new Layer(Layers.TOWERS));
 		layerList.push(new Layer(Layers.MAIN));
 		layerList.push(new Layer(Layers.ICON));
+		layerList.push(new Layer(Layers.WINDOWS));
 	}
 
 	private function getLayer(layerType:uint):Layer {

@@ -4,8 +4,8 @@
  * Time: 4:52 PM
  */
 package game.panel {
-import game.SceneSprite;
-import game.layer.Layers;
+import core.display.SceneSprite;
+import core.layer.Layers;
 
 public class PanelBase extends SceneSprite {
 	private var components:Vector.<SceneSprite>;

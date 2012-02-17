@@ -4,8 +4,8 @@
  * Time: 1:27 AM
  */
 package game.tower {
-import game.SceneSprite;
-import game.layer.Layers;
+import core.display.SceneSprite;
+import core.layer.Layers;
 
 public class TowerBase extends SceneSprite {
 	public static function createOneTower():TowerBase {

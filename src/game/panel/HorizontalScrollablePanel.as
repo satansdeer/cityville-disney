@@ -4,7 +4,7 @@
  * Time: 12:49 PM
  */
 package game.panel {
-import game.SceneSprite;
+import core.display.SceneSprite;
 
 public class HorizontalScrollablePanel extends ScrollablePanel{
 	public function HorizontalScrollablePanel(width:Number, height:Number) {

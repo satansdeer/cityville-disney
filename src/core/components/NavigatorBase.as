@@ -1,12 +1,16 @@
 package core.components {
-	
-	import flash.display.DisplayObject;
+
+import core.display.SceneSprite;
+
+import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
-	
-	public class NavigatorBase extends Sprite {
+
+import core.layer.Layers;
+
+public class NavigatorBase extends SceneSprite {
 		
 		public static const FORCE_CHECK_LIMITS:String = "forceCheckLimits";
 		
@@ -30,6 +34,7 @@ package core.components {
 		private var _currentColumn:int;
 		
 		public function NavigatorBase() {
+			super(Layers.WINDOWS);
 			children = new Vector.<DisplayObject>();
 			renderedChildren = new Vector.<DisplayObject>();
 			container = new Sprite();
