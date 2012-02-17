@@ -3,7 +3,7 @@
  * Date: 13/02/12
  * Time: 4:56 PM
  */
-package game.panel {
+package core.component.panel {
 
 import core.display.SceneSprite;
 
@@ -20,8 +20,8 @@ public class ScrollablePanel extends PanelBase {
 	public function get panelWidth() { return _panelWidth; }
 	public function get panelHeight() { return _panelHeight; }
 
-	override public function addComponent(component:SceneSprite, x:Number, y:Number):void {
-		super.addComponent(component, x, y);
+	override public function addComponent(component:SceneSprite):void {
+		super.addComponent(component);
 		if (componentOutside(component)) { showScroll(); }
 	}
 

@@ -1,4 +1,4 @@
-package core.windows {
+package core.window {
 	
 	public interface IInformerWindow {
 	}

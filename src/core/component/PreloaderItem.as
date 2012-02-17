@@ -1,4 +1,4 @@
-package core.components {
+package core.component {
 	
 	import flash.display.Graphics;
 	import flash.display.Sprite;

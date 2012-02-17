@@ -1,4 +1,4 @@
-package core.windows {
+package core.window {
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;

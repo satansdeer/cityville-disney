@@ -1,4 +1,4 @@
-package core.components {
+package core.component {
 	
 	import flash.events.EventDispatcher;
 	

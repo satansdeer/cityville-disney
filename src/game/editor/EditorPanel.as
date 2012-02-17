@@ -4,30 +4,48 @@
  * Time: 12:47 PM
  */
 package game.editor {
-import game.panel.PanelBase;
-import game.panel.VerticalScrollablePanel;
+import core.component.NavigatorBase;
+import core.display.SceneSprite;
 
-public class EditorPanel extends VerticalScrollablePanel{
-	private static const PANEL_WIDTH:Number = 100;
-	private static const PANEL_HEIGHT:Number = 400;
+public class EditorPanel extends NavigatorBase{
+	private static const PANEL_WIDTH:Number = 400;
+	private static const PANEL_HEIGHT:Number = 100;
 
 	public function EditorPanel() {
-		super(PANEL_WIDTH, PANEL_HEIGHT);
+		super();
+		defaultItemWidth = 100;
+		defaultItemHeight = 100;
+		numColumns = 4;
 		drawInterface();
 	}
 
 	/* API */
+
+	override public function addComponent(component:SceneSprite):void {
+		super.addComponent(component);
+		pushChild(component);
+	}
+
+	override public function removeComponent(component:SceneSprite):void {
+		super.removeComponent(component);
+		pullChild(component);
+	}
 
 	public function moveToRight(y:Number = 0):void {
 		this.x = Main.APP_WIDTH - this.width;
 		this.y = y;
 	}
 
+	public function moveToTop(x:Number = 0):void {
+		this.x = x;
+		this.y = PANEL_HEIGHT/2;
+	}
+
 	/* Internal functions */
 
 	private function drawInterface():void {
 		this.graphics.lineStyle(1, 0xaacc00);
-		this.graphics.drawRect(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
+		this.graphics.drawRect(0, -PANEL_HEIGHT/2, PANEL_WIDTH, PANEL_HEIGHT);
 	}
 }
 }

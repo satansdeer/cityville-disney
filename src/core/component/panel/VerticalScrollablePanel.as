@@ -3,16 +3,16 @@
  * Date: 16/02/12
  * Time: 12:49 PM
  */
-package game.panel {
+package core.component.panel {
 import core.display.SceneSprite;
 
-public class HorizontalScrollablePanel extends ScrollablePanel{
-	public function HorizontalScrollablePanel(width:Number, height:Number) {
+public class VerticalScrollablePanel extends ScrollablePanel{
+	public function VerticalScrollablePanel(width:Number, height:Number) {
 		super(width, height);
 	}
 
 	override protected function componentOutside(component:SceneSprite):Boolean {
-		return (component.x < 0 || component.x + component.width > panelWidth);
+		return (component.y< 0 || component.y + component.height > panelHeight);
 	}
 
 	override protected function showScroll():void {}

@@ -1,4 +1,4 @@
-package core.windows {
+package core.window {
 	
 	import flash.display.Sprite;
 	import flash.events.EventDispatcher;
