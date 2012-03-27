@@ -1,0 +1,14 @@
+<objects>
+	<object id="0" name="hut" url="assets/Buildings/01_01_Hut.png" offsetX="-30" offsetY="-48" width="2" length="2"/>
+	<object id="1" name="strongHut" url="assets/Buildings/01_02_StrongHut.png" offsetX="-16" offsetY="-40" width="3" length="2"/>
+	<object id="2" name="pentHut" url="assets/Buildings/01_03_HutWithPenthouse.png" offsetX="-40" offsetY="-58" width="2" length="2"/>
+	<object id="3" name="greenH" url="assets/Buildings/01_05_GreenHouse.png" offsetX="-48" offsetY="-48" width="3" length="3"/>
+	<object id="4" name="strongH" url="assets/Buildings/01_06_StrongVillageHouse.png" offsetX="-20" offsetY="-60" width="3" length="2"/>
+	<object id="5" name="strongH" url="assets/Buildings/01_07.png" offsetX="-20" offsetY="-60" width="3" length="2"/>
+	<object id="6" name="strongH" url="assets/Buildings/01_08.png" offsetX="-20" offsetY="-60" width="3" length="3"/>
+	<object id="7" name="strongH" url="assets/Buildings/01_09.png" offsetX="-20" offsetY="-60" width="3" length="2"/>
+	<object id="8" name="strongH" url="assets/Buildings/01_10.png" offsetX="-20" offsetY="-60" width="3" length="2"/>
+	<object id="9" name="strongH" url="assets/Buildings/01_11.png" offsetX="-20" offsetY="-60" width="3" length="2"/>
+	<object id="10" name="strongH" url="assets/Buildings/01_12.png" offsetX="-20" offsetY="-60" width="3" length="2"/>
+	<object id="11" name="strongH" url="assets/Buildings/01_15.png" offsetX="-64" offsetY="-60" width="3" length="3"/>
+</objects>

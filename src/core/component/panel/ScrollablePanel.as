@@ -7,36 +7,35 @@ package core.component.panel {
 
 import core.display.SceneSprite;
 
-public class ScrollablePanel extends PanelBase {
-	private var _panelWidth:Number;
-	private var _panelHeight:Number;
+import flash.display.Sprite;
 
-	public function ScrollablePanel(width:Number, height:Number) {
+public class ScrollablePanel extends PanelBase {
+	public var spacing:int = 8;
+	
+	public var scrollValue:int = 3;
+	public var scrollSpeed:int = 1;
+	
+	public var currentIndex:int;
+
+	public function ScrollablePanel(width:int, height:int) {
 		super();
 		_panelHeight = height;
 		_panelWidth = width;
 	}
 
-	public function get panelWidth() { return _panelWidth; }
-	public function get panelHeight() { return _panelHeight; }
-
-	override public function addComponent(component:SceneSprite):void {
-		super.addComponent(component);
-		if (componentOutside(component)) { showScroll(); }
+	public function get panelWidth():int { return _panelWidth; }
+	public function get panelHeight():int { return _panelHeight; }
+	
+	public function scrollRight():void{
+		
 	}
-
-	override public function removeComponent(component:SceneSprite):void {
-		super.removeComponent(component);
-		if (!componentOutside(component)) { hideScroll(); }
+	
+	public function scrollLeft():void{
+		
 	}
-
-	/* Internal functions */
-
-	protected function showScroll():void {}
-	protected function hideScroll():void {}
-
-	protected function componentOutside(component:SceneSprite):Boolean {
-		return false;
+	
+	protected function canScroll():Boolean{
+		return true;
 	}
 }
 }

@@ -3,13 +3,13 @@
  * Date: 2/17/12
  * Time: 1:27 AM
  */
-package game.tower {
+package building {
 import core.display.SceneSprite;
-import core.layer.Layers;
+import core.layer.LayersENUM;
 
-public class TowerBase extends SceneSprite {
-	public static function createOneTower():TowerBase {
-		var result:TowerBase = new TowerBase();
+public class BuildingBase extends SceneSprite {
+	public static function createOneTower():BuildingBase {
+		var result:BuildingBase = new BuildingBase();
 		result.graphics.beginFill(0xffaa33);
 		result.graphics.drawRect(-20, -20, 40, 40);
 		result.graphics.drawCircle(0, 0, 10);
@@ -17,8 +17,8 @@ public class TowerBase extends SceneSprite {
 		return result;
 	}
 
-	public static function createTwoTower():TowerBase {
-		var result:TowerBase = new TowerBase();
+	public static function createTwoTower():BuildingBase {
+		var result:BuildingBase = new BuildingBase();
 		result.graphics.beginFill(0xffaa33);
 		result.graphics.drawCircle(0, 0, 40);
 		result.graphics.drawCircle(0, 0, 20);
@@ -26,8 +26,8 @@ public class TowerBase extends SceneSprite {
 		return result;
 	}
 
-	public function TowerBase() {
-		super(Layers.TOWERS);
+	public function BuildingBase() {
+		super(LayersENUM.SCENE);
 	}
 }
 }

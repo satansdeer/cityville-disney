@@ -21,13 +21,13 @@ public class EditorPanel extends NavigatorBase{
 
 	/* API */
 
-	override public function addComponent(component:SceneSprite):void {
-		super.addComponent(component);
+	override public function addItem(component:SceneSprite):void {
+		super.addItem(component);
 		pushChild(component);
 	}
 
-	override public function removeComponent(component:SceneSprite):void {
-		super.removeComponent(component);
+	override public function removeItem(component:SceneSprite):void {
+		super.removeItem(component);
 		pullChild(component);
 	}
 
