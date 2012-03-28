@@ -4,13 +4,14 @@ package game.map
 	import as3isolib.display.scene.IsoScene;
 	
 	import core.AppData;
+	import core.enum.ScenesENUM;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	
 	import game.GameView;
-	import game.enum.ScenesENUM;
+	import game.events.GameViewEvent;
 	
 	import ru.beenza.framework.utils.EventJoin;
 
@@ -33,12 +34,37 @@ package game.map
 		[Embed(source="assets/water.png")]			private static const WaterPNG:Class;
 		
 		private static const waterBmd:BitmapData		= (new WaterPNG() as Bitmap).bitmapData;
+		private static var _instance:GroundMap;
 		
 		public function GroundMap(gameView:GameView) {
 			super(gameView);
+			_instance = this;
 			_scene = _gameView.getScene(ScenesENUM.GROUND);
 			_eventJ = new EventJoin(2,load);
 			AppData.instance.addEventListener(Event.COMPLETE, onComplete);
+		}
+		
+		protected function onGameViewMove(event:Event):void{
+			
+		}
+		
+		public static function get instance():GroundMap{
+			return _instance;
+		}
+		
+		public function setSize(w:int, h:int):void{
+			var tile:IsoSprite;
+			var bmp:Bitmap;
+			for (var x:int=0; x < w; x++){
+				if(x >= _map.length){
+					_map[x] = new Array();
+				}
+				for(var y:int= 0; y < h; y++){
+					if(x >= _map.length || y >= _map[x].length){
+						_map[x][y] = "g";
+					}
+				}
+			}
 		}
 		
 		protected function onComplete(event:Event):void{

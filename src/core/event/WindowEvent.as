@@ -1,6 +1,8 @@
-package core.window {
+package core.event {
 	
 	import flash.events.Event;
+	
+	import core.window.WindowBase;
 	
 	/**
 	 * @author Viktor Kotseruba

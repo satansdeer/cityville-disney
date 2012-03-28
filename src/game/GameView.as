@@ -12,6 +12,7 @@ package game {
 	import flash.utils.Dictionary;
 	
 	import org.casalib.util.StageReference;
+	import game.events.GameViewEvent;
 	
 	/**
 	 * @author SatansDeer
@@ -165,9 +166,9 @@ package game {
 				velosity.y = 0;
 			}
 			panBy(velosity.x, velosity.y);
-			//centerOnPt(new Pt(currentX + velosity.x, currentY + velosity.y), false);
 			render(true);
 			validatePosition();
+			dispatchEvent(new GameViewEvent(GameViewEvent.MOVE));
 		}
 		
 		private function onViewDown(event:MouseEvent):void {
@@ -204,10 +205,8 @@ package game {
 				curPoint.x = mouseX;
 				curPoint.y = mouseY;
 				curPt = localToIso(curPoint);
-				//velosity.x = prevPt.x - curPt.x;
-				//velosity.y = prevPt.y - curPt.y;
-				velosity.x = ((currentPoint.x - curPoint.x) - currentX)/currentZoom;
-				velosity.y = ((currentPoint.y - curPoint.y) - currentY)/currentZoom;
+				velosity.x = ((currentPoint.x - curPoint.x) - currentX);
+				velosity.y = ((currentPoint.y - curPoint.y) - currentY);
 				trace(currentZoom)
 			}
 			if(velosity.x != 0 || velosity.y != 0){

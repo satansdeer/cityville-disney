@@ -18,7 +18,7 @@ package game.map
 	import flash.geom.Rectangle;
 	
 	import game.GameView;
-	import game.enum.ScenesENUM;
+	import core.enum.ScenesENUM;
 	import game.vo.MapObjectVO;
 	
 	import mouse.MouseManager;

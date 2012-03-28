@@ -1,4 +1,4 @@
-package game.enum
+package core.enum
 {
 	/**
 	 * ScenesENUM

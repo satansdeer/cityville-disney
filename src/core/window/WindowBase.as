@@ -1,16 +1,15 @@
-package core.window {
-	
-	import flash.display.DisplayObjectContainer;
+package core.window
+{
+	/**
+	 * WindowBase
+	 * @author satansdeer
+	 */
 	import flash.display.Sprite;
-	import flash.events.EventDispatcher;
 	
-	public class WindowBase extends EventDispatcher {
-		
-		public var view:DisplayObjectContainer;
-		
-		public function WindowBase() {
+	public class WindowBase extends Sprite{
+		public function WindowBase()
+		{
+			super();
 		}
-		
 	}
-	
 }

@@ -12,7 +12,7 @@ package game.map
 	import flash.display.BitmapData;
 	
 	import game.GameView;
-	import game.enum.ScenesENUM;
+	import core.enum.ScenesENUM;
 	
 	public class Road1Map extends MapBase{
 		

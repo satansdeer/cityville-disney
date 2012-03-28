@@ -6,6 +6,9 @@ package iface
 	 */
 	import com.bit101.components.PushButton;
 	
+	import core.enum.WindowsENUM;
+	import core.window.WindowManager;
+	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
@@ -24,6 +27,11 @@ package iface
 		private function createButtons():void {
 			_resizeMapButton = new PushButton(this, 4,4, "resize");
 			_resizeMapButton.width = 42;
+			_resizeMapButton.addEventListener(MouseEvent.CLICK, onResizeMapButtonClick);
+		}
+		
+		protected function onResizeMapButtonClick(event:MouseEvent):void{
+			WindowManager.instance.showWindow(WindowsENUM.RESIZE_MAP_WINDOW);
 		}
 		
 		private function addListeners():void {

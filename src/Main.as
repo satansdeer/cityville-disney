@@ -10,7 +10,10 @@ import as3isolib.display.scene.IsoScene;
 import core.AppData;
 import core.component.panel.HorizontalScrollablePanel;
 import core.component.panel.PanelItem;
+import core.enum.ScenesENUM;
+import core.enum.WindowsENUM;
 import core.layer.LayersENUM;
+import core.window.WindowManager;
 
 import flash.display.Sprite;
 import flash.display.StageAlign;
@@ -21,14 +24,15 @@ import flash.net.URLRequest;
 
 import game.GameView;
 import game.SceneController;
-import game.enum.ScenesENUM;
 import game.map.GroundMap;
 import game.map.MapBase;
+import game.map.MapsController;
 import game.map.ObjectsMap;
 import game.map.Road1Map;
 
 import iface.Interface;
 import iface.ObjectsPanel;
+import iface.windows.ResizeMapWindow;
 
 import org.casalib.util.StageReference;
 
@@ -43,9 +47,7 @@ public class Main extends Sprite {
 	private var sceneController:SceneController;
 
 	private var _gameView:GameView;
-	private var _groundMap:GroundMap;
-	private var _road1Map:Road1Map;
-	private var _objectsMap:ObjectsMap;
+	private var _mapsController:MapsController;
 	
 	public function Main() {
 		trace("app started");
@@ -74,7 +76,13 @@ public class Main extends Sprite {
 			//controllers
 		initGameView();
 		initPanel();
+		registerWindows();
 		new Interface();
+	}
+	
+	private function registerWindows():void {
+		WindowManager.instance.layer = LayerManager.getLayer(LayersENUM.WINDOWS);
+		WindowManager.instance.registerWindow(WindowsENUM.RESIZE_MAP_WINDOW, new ResizeMapWindow());
 	}
 	
 	private function loadOptions():void {
@@ -105,9 +113,7 @@ public class Main extends Sprite {
 		_gameView.addSceneWithName(ScenesENUM.FOG);
 		_gameView.addSceneWithName(ScenesENUM.HIDDEN_OBJECTS);
 		LayerManager.getLayer("scene").addChild(_gameView);
-		_groundMap = new GroundMap(_gameView);
-		//_road1Map = new Road1Map(_gameView);
-		_objectsMap = new ObjectsMap(_gameView);
+		_mapsController = new MapsController(_gameView);
 	}
 }
 }
