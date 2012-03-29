@@ -17,16 +17,17 @@ package game.map
 			super(target);
 		}
 		
-		public static function mapFromFile(path:String):Array{
+		public static function mapFromFile(path:String):Vector.<Vector.<Tile>>{
 			var mapXml:XML = XMLHelper.readXML(path);
-			var output:Array = [];
+			var output:Vector.<Vector.<Tile>> = new Vector.<Vector.<Tile>>(mapXml.@width, true);
 			var k:int;
 			if(mapXml){
 				for (var i:int = 0; i < mapXml.@width; i++){
-					output[i] = [];
+					output[i] = new Vector.<Tile>(mapXml.@height, true);
 					for(var j:int = 0; j < mapXml.@height; j++){
 						k++;
-						output[i][j] = mapXml.tile[k];
+						//output[i][j] = mapXml.tile[k];
+						output[i][j] = new Tile(i,j, mapXml.tile[k], null);
 					}
 				}
 			}

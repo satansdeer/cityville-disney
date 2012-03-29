@@ -27,9 +27,15 @@ package iface.components
 		{
 			super();
 			_w = w;
+			_name = name;
 			drawBackground()
 			addLabels();
 			addListeners();
+		}
+		
+		public function set value(v:int):void{
+			_value = v;
+			_valueLabel.text = v.toString();
 		}
 		
 		private function addListeners():void {
@@ -46,7 +52,8 @@ package iface.components
 		}
 		
 		private function addLabels():void {
-			_nameLabel = new Label(this, 0,0,"LVL");
+			_nameLabel = new Label(this, 0,0, _name);
+			_valueLabel = new Label(this, _w - 14,0,"");
 		}
 		
 		private function drawBackground():void {

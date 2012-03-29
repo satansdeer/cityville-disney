@@ -35,6 +35,8 @@ package game.map
 		private var _y:int;
 		private var preloader:MapObjectPreloader;
 		
+		public var shown:Boolean;
+		
 		public function MapObject(objectVO:MapObjectVO, controller:ObjectsMap)
 		{
 			super(null);
@@ -53,12 +55,10 @@ package game.map
 		
 		public function set x(value:int):void{
 			_x = value;
-			isoSprite.moveTo(value, _y, 0);
 		}
 		
 		public function set y(value:int):void{
 			_y = value;
-			isoSprite.moveTo(_x, value, 0);
 		}
 		
 		public function remove():void{
@@ -79,24 +79,26 @@ package game.map
 			}
 		}
 		
-		private function init():void{
-			isoSprite = new IsoSprite();
-			isoSprite.setSize(Main.UNIT_SIZE, Main.UNIT_SIZE, 0);
-			isoSprite.moveTo(x * Main.UNIT_SIZE, y * Main.UNIT_SIZE, 0);
-			isoSprite.data = {x:x, y:y}
-			if(AssetManager.getImageByURL(vo.url)){
-				img = new InteractivePNG(AssetManager.getImageByURL(vo.url));
-				isoSprite.container.addChild(img);
-				img.scaleX = 0.25;
-				img.scaleY = 0.25;
-				img.x = vo.offsetX;
-				img.y = vo.offsetY;
-				addListeners()
-			}else{
-				AssetManager.load(vo.url);
-				AssetManager.instance.addEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);
-				preloader = new MapObjectPreloader(vo.width, vo.length);
-				isoSprite.container.addChild(preloader);
+		public function init():void{
+			if(!isoSprite){
+				isoSprite = new IsoSprite();
+				isoSprite.setSize(vo.width * Main.UNIT_SIZE,vo.length * Main.UNIT_SIZE, 1);
+				isoSprite.moveTo(x * Main.UNIT_SIZE, y * Main.UNIT_SIZE, 0);
+				isoSprite.data = {x:x, y:y}
+				if(AssetManager.getImageByURL(vo.url)){
+					img = new InteractivePNG(AssetManager.getImageByURL(vo.url));
+					isoSprite.container.addChild(img);
+					img.scaleX = 0.25;
+					img.scaleY = 0.25;
+					img.x = vo.offsetX;
+					img.y = vo.offsetY;
+					addListeners()
+				}else{
+					AssetManager.load(vo.url);
+					AssetManager.instance.addEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);
+					preloader = new MapObjectPreloader(vo.width, vo.length);
+					isoSprite.container.addChild(preloader);
+				}
 			}
 		}
 		

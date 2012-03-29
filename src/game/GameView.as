@@ -11,8 +11,9 @@ package game {
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	
-	import org.casalib.util.StageReference;
 	import game.events.GameViewEvent;
+	
+	import org.casalib.util.StageReference;
 	
 	/**
 	 * @author SatansDeer
@@ -45,6 +46,9 @@ package game {
 		private var prevPt:Pt;
 		private var curPt:Pt;
 		private var curPoint:Point;
+		
+		private var curUnitPoint:Point = new Point();
+		private var prevUnitPoint:Point = new Point();
 		
 		public function GameView(unitSize:uint) {
 			super();
@@ -165,10 +169,18 @@ package game {
 			}else{
 				velosity.y = 0;
 			}
-			panBy(velosity.x, velosity.y);
-			render(true);
-			validatePosition();
-			dispatchEvent(new GameViewEvent(GameViewEvent.MOVE));
+			if((velosity.x != 0) || (velosity.y !=0)){
+				panBy(velosity.x, velosity.y);
+				render(true);
+				validatePosition();
+				curUnitPoint.x = int(currentX/Main.UNIT_SIZE);
+				curUnitPoint.y = int(currentY/Main.UNIT_SIZE);
+				if((curUnitPoint.x != prevUnitPoint.x) || (curUnitPoint.y != prevUnitPoint.y)){
+					dispatchEvent(new GameViewEvent(GameViewEvent.MOVE));
+				}
+				prevUnitPoint.x = curUnitPoint.x;
+				prevUnitPoint.y = curUnitPoint.y;
+			}
 		}
 		
 		private function onViewDown(event:MouseEvent):void {
@@ -207,7 +219,6 @@ package game {
 				curPt = localToIso(curPoint);
 				velosity.x = ((currentPoint.x - curPoint.x) - currentX);
 				velosity.y = ((currentPoint.y - curPoint.y) - currentY);
-				trace(currentZoom)
 			}
 			if(velosity.x != 0 || velosity.y != 0){
 				moveView();
@@ -239,6 +250,9 @@ package game {
 		
 		
 		
+		public function resize():void {
+			setSize(StageReference.getStage().stageWidth, StageReference.getStage().stageHeight);
+		}
 	}
 	
 }

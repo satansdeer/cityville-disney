@@ -1,12 +1,15 @@
 package iface
 {
+	import com.bit101.components.FPSMeter;
 	import com.bit101.components.Label;
 	import com.bit101.components.PushButton;
 	
+	import core.FpsMeter;
 	import core.layer.LayersENUM;
 	
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.events.Event;
 	
 	import iface.components.GameValueLabel;
 	
@@ -18,7 +21,7 @@ package iface
 	 * Interface
 	 * @author satansdeer
 	 */
-	public class Interface{
+	public class GameInterface{
 		
 		private var stage:Stage;
 		private var optionsButton:PushButton;
@@ -30,20 +33,32 @@ package iface
 		
 		private var _stage:Stage;
 		
-		private var levelLabel:GameValueLabel;
+		private var fpsLabel:GameValueLabel;
 		private var donateLabel:GameValueLabel;
 		private var moneyLabel:GameValueLabel;
 		private var foodLabel:GameValueLabel;
 		private var woodLabel:GameValueLabel;
 		private var peapleLabel:GameValueLabel;
 		
-		public function Interface()
+		public function GameInterface()
 		{
 			_stage = StageReference.getStage();
 			initLabels();
 			drawTopPanel();
-			initActionButtonsPanel()
-			initTerraformingPanel()
+			initActionButtonsPanel();
+			initTerraformingPanel();
+			FpsMeter.instance.addEventListener(Event.CHANGE, onChange);
+		}
+		
+		public function resize():void{
+			_topPanelBackground.graphics.beginFill(0x888888);
+			_topPanelBackground.graphics.drawRect(0, 0, _stage.stageWidth, 26);
+			_topPanelBackground.graphics.endFill();
+			_terraformingPanel.y = _stage.stageHeight/2 - _terraformingPanel.height/2;
+		}
+		
+		protected function onChange(event:Event):void{
+			fpsLabel.value = event.target.fps;
 		}
 		
 		private function initTerraformingPanel():void {
@@ -54,10 +69,10 @@ package iface
 		}
 		
 		private function initLabels():void {
-			levelLabel = new GameValueLabel("LVL", 40);
-			levelLabel.x = 4;
-			levelLabel.y = 4;
-			levelLabel.hint = "Player level";
+			fpsLabel = new GameValueLabel("FPS", 40);
+			fpsLabel.x = 4;
+			fpsLabel.y = 4;
+			fpsLabel.hint = "Current fps";
 		}
 		
 		private function initActionButtonsPanel():void{
@@ -73,7 +88,7 @@ package iface
 			_topPanelBackground.graphics.drawRect(0, 0, Main.APP_WIDTH, 26);
 			_topPanelBackground.graphics.endFill();
 			LayerManager.getLayer(LayersENUM.INTERFACE).addChild(_topPanelBackground);
-			_topPanelBackground.addChild(levelLabel);
+			_topPanelBackground.addChild(fpsLabel);
 		}
 	}
 }

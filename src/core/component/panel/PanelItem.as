@@ -90,7 +90,6 @@ package core.component.panel
 		}
 		
 		protected function onAssetLoaded(event:AssetEvent):void{
-			trace(_vo.url + ' ' + event.url);
 			if(event.url == _vo.url){
 				AssetManager.instance.removeEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);
 				var img:InteractivePNG = new InteractivePNG(AssetManager.getImageByURL(_vo.url));

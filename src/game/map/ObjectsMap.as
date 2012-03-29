@@ -7,6 +7,7 @@ package game.map
 	import core.AppData;
 	import core.display.InteractivePNG;
 	import core.display.IsoFurnitureGrid;
+	import core.enum.ScenesENUM;
 	import core.helper.XMLHelper;
 	import core.layer.LayersENUM;
 	
@@ -18,7 +19,6 @@ package game.map
 	import flash.geom.Rectangle;
 	
 	import game.GameView;
-	import core.enum.ScenesENUM;
 	import game.vo.MapObjectVO;
 	
 	import mouse.MouseManager;
@@ -37,27 +37,32 @@ package game.map
 		private var _map:Array;
 		private var objects:Array = [];
 		
-		private var grid:IsoFurnitureGrid;
+		//private var grid:IsoFurnitureGrid;
 		
 		private var _objectForBuying:MapObject;
 		
-		[Embed(source="assets/stone.png")]			private static const FloorPNG:Class;
-		
-		private static const floorBmd:BitmapData		= (new FloorPNG() as Bitmap).bitmapData;
-		
 		private var _loadEventJoin:EventJoin;
+		private var _controller:MapsController;
 		
-		public function ObjectsMap(gameView:GameView)
+		private var _shownObjects:Array = [];
+		
+		private var _tempObjects:Array = [];
+		private var _newObjectsForShow:Array = [];
+		private var tempObject:MapObject;
+		private const SHOW_NUM:int = 1;
+		
+		public function ObjectsMap(gameView:GameView, controller:MapsController)
 		{
 			super(gameView);
+			_controller = controller;
 			_scene = _gameView.getScene(ScenesENUM.OBJECTS);
-			grid = new IsoFurnitureGrid();
-			grid.setGridSize(16,16)
-			grid.y = -Main.UNIT_SIZE/2;
-			grid.x = Main.UNIT_SIZE/2;
-			gameView.getScene(ScenesENUM.GRID).addChild(grid);
-			grid.container.mouseChildren = false;
-			grid.container.mouseEnabled = false;
+			//grid = new IsoFurnitureGrid();
+			//grid.setGridSize(16,16)
+			//grid.y = -Main.UNIT_SIZE/2;
+			//grid.x = Main.UNIT_SIZE/2;
+			//gameView.getScene(ScenesENUM.GRID).addChild(grid);
+			//grid.container.mouseChildren = false;
+			//grid.container.mouseEnabled = false;
 			LayerManager.getLayer(LayersENUM.SCENE).addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 			LayerManager.getLayer(LayersENUM.SCENE).addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
@@ -71,9 +76,8 @@ package game.map
 			_objectForBuying = new MapObject(value, this);
 			_objectForBuying.x = isoMouse.x;
 			_objectForBuying.y = isoMouse.y;
+			_objectForBuying.isoSprite.moveTo(isoMouse.x, isoMouse.y, 0);
 			_scene.addChild(_objectForBuying.isoSprite);
-			//_objectForBuying.isoSprite.container.mouseChildren = false;
-			//_objectForBuying.isoSprite.container.mouseEnabled = false;
 			updateGridWithAvailableCells(_objectForBuying);
 			GameView.instance.getScene(ScenesENUM.GRID).render();
 			_objectForBuying.isoSprite.render();
@@ -89,22 +93,26 @@ package game.map
 		
 		public function addObjectAt(x:int, y:int, vo:MapObjectVO):void{
 			objects.push(new MapObject(vo, this));
-			_scene.addChild(objects[objects.length-1].isoSprite);
-			objects[objects.length-1].x = x;
-			objects[objects.length-1].y = y;
-			(objects[objects.length-1].isoSprite as IsoSprite).setSize(objects[objects.length-1].vo.width *Main.UNIT_SIZE,objects[objects.length-1].vo.length *Main.UNIT_SIZE,1);
-			objects[objects.length-1].isoSprite.render();
+			objects[objects.length -1].shown = true;
+			_shownObjects.push(objects[objects.length-1]);
+			_scene.addChild(_shownObjects[_shownObjects.length-1].isoSprite);
+			_shownObjects[_shownObjects.length-1].x = x/Main.UNIT_SIZE;
+			_shownObjects[_shownObjects.length-1].y = y/Main.UNIT_SIZE;
+			_shownObjects[_shownObjects.length-1].isoSprite.moveTo(x,y,0);
+			(_shownObjects[_shownObjects.length-1].isoSprite as IsoSprite).setSize(_shownObjects[_shownObjects.length-1].vo.width *Main.UNIT_SIZE,_shownObjects[_shownObjects.length-1].vo.length *Main.UNIT_SIZE,1);
+			_shownObjects[_shownObjects.length-1].isoSprite.render();
 		}
 		
 		public function removeObject(object:MapObject):void{
 			object.remove();
 			_scene.removeChild(object.isoSprite);
 			objects.splice(objects.indexOf(object),1);
+			_shownObjects.splice(_shownObjects.indexOf(object),1);
 			save();
 		}
 		
 		public function updateGridWithAvailableCells(object:MapObject):void {
-			if (!object) return;
+			/*if (!object) return;
 			
 			var neutrals:Vector.<uint>, greens:Vector.<uint>, reds:Vector.<uint>;
 			var x:int, y:int, obj:MapObject;
@@ -112,7 +120,7 @@ package game.map
 			greens = new Vector.<uint>();
 			reds = new Vector.<uint>();
 			
-			const objectRect:Rectangle = new Rectangle(int(object.x / Main.UNIT_SIZE), int(object.y / Main.UNIT_SIZE), object.vo.width, object.vo.length);
+			const objectRect:Rectangle = new Rectangle(int(object.isoSprite.x / Main.UNIT_SIZE), int(object.isoSprite.y / Main.UNIT_SIZE), object.vo.width, object.vo.length);
 			const objRect:Rectangle = new Rectangle();
 			var rect:Rectangle;
 			
@@ -137,7 +145,7 @@ package game.map
 					}
 				}
 			}
-			grid.colorized(neutrals, greens, reds);
+			grid.colorized(neutrals, greens, reds);*/
 		}
 		
 		protected function onDataLoaded(event:Event):void{
@@ -157,7 +165,7 @@ package game.map
 					addObjectAt(_objectForBuying.x, _objectForBuying.y, _objectForBuying.vo);
 				}
 				_objectForBuying = null;
-				grid.clear();
+				//grid.clear();
 				setObjectsMouseEnabled(true);
 				save()
 			}
@@ -175,9 +183,15 @@ package game.map
 		
 		private function load():void{
 			var mapXML:XML = XMLHelper.readXML(AppData.options.objectsMap);
+			var mO:MapObject;
 			for(var i:int = 0; i<mapXML.object.length(); i++){
-				addObjectAt(mapXML.object[i].@x, mapXML.object[i].@y, getVOById(mapXML.object[i].@id)); 
+				mO = new MapObject(getVOById(mapXML.object[i].@id), this);
+				mO.x = int(mapXML.object[i].@x);
+				mO.y = int(mapXML.object[i].@y);
+				mO.shown = false;
+				objects.push(mO);
 			}
+			updateRegion();
 		}
 		
 		private function getVOById(id:String):MapObjectVO{
@@ -202,9 +216,9 @@ package game.map
 				if((_objectForBuying.y != isoMouse.y) || (_objectForBuying.x != isoMouse.x)){
 					_objectForBuying.x = isoMouse.x;
 					_objectForBuying.y = isoMouse.y;
+					_objectForBuying.isoSprite.moveTo(isoMouse.x, isoMouse.y, 0);
 					updateGridWithAvailableCells(_objectForBuying);
 				}
-				//setObjectsMouseEnabled(false);
 				_scene.render();
 			}
 		}
@@ -223,35 +237,14 @@ package game.map
 			}
 		}
 		
-		private function makeTileMap():void {
-			var tile:IsoSprite;
-			var intPng:InteractivePNG;
-			for(var x:int = 0; x < _map.length; x++){
-				for(var y:int = 0; y < _map[x].length; y++){
-					tile = new IsoSprite();
-					tile.setSize(Main.UNIT_SIZE, Main.UNIT_SIZE, 0);
-					tile.moveTo(x * Main.UNIT_SIZE, y * Main.UNIT_SIZE, 0);
-					tile.data = {x:x, y:y}
-					intPng = new InteractivePNG(floorBmd);
-					tile.container.addChild(intPng);
-					intPng.x = 16;
-					intPng.y -= Main.UNIT_SIZE/4;
-					_scene.addChild(tile);
-					tile.render();
-					objects.push(tile)
-					_scene.render();
-				}
-			}
-		}
-		
 		private function placeAvailable(object:MapObject):Boolean{
 			var obj:MapObject;
 			var rect:Rectangle;
-			const objectRect:Rectangle = new Rectangle(int(object.x / Main.UNIT_SIZE), int(object.y / Main.UNIT_SIZE), object.vo.width, object.vo.length);
+			const objectRect:Rectangle = new Rectangle(int(object.isoSprite.x/Main.UNIT_SIZE), int(object.isoSprite.y/Main.UNIT_SIZE), object.vo.width, object.vo.length);
 			const objRect:Rectangle = new Rectangle();
-			for each (obj in objects) {
-				objRect.x = int(obj.x / Main.UNIT_SIZE);
-				objRect.y = int(obj.y / Main.UNIT_SIZE);
+			for each (obj in _shownObjects) {
+				objRect.x = int(obj.isoSprite.x/Main.UNIT_SIZE);
+				objRect.y = int(obj.isoSprite.y/Main.UNIT_SIZE);
 				objRect.width = obj.vo.width;
 				objRect.height = obj.vo.length;
 				rect = objectRect.intersection(objRect);
@@ -269,6 +262,69 @@ package game.map
 			p.x = Math.floor(pt.x / Main.UNIT_SIZE) * Main.UNIT_SIZE;
 			p.y = Math.floor(pt.y / Main.UNIT_SIZE) * Main.UNIT_SIZE;
 			return p;
+		}
+		
+		private function getObjectByXY(oX:int, oY:int):MapObject{
+			for(var i:int = 0; i<objects.length; i++){
+				if((objects[i].x == oX) && (objects[i].y == oY)){
+					return objects[i];
+				}
+			}
+			return null;
+		}
+		
+		public function updateRegion():void {
+			//grid.moveTo(_controller.minUnitIsoPoint.x*Main.UNIT_SIZE, _controller.minUnitIsoPoint.y * Main.UNIT_SIZE, 0);
+			//grid.render();
+			_gameView.getScene(ScenesENUM.GRID).render();
+			for (var k:int = 0; k<objects.length; k++){
+				if((objects[k].x>_controller.minUnitIsoPoint.x) && (objects[k].y>_controller.minUnitIsoPoint.y) && (objects[k].x<_controller.maxUnitIsoPoint.x) && (objects[k].y<_controller.maxUnitIsoPoint.y)){
+					if(objects[k].shown == false){
+						objects[k].shown = true;
+						_newObjectsForShow.push(objects[k]);
+					}
+				}
+			}
+			_tempObjects = [];
+			for (k = 0; k < _shownObjects.length; k++){
+				if((_shownObjects[k].x<_controller.minUnitIsoPoint.x) || (_shownObjects[k].y<_controller.minUnitIsoPoint.y) || (_shownObjects[k].x>_controller.maxUnitIsoPoint.x) || (_shownObjects[k].y>_controller.maxUnitIsoPoint.y)){
+					_scene.removeChild(_shownObjects[k].isoSprite);
+					getObjectByXY(_shownObjects[k].x, _shownObjects[k].y).shown = false;
+				}else{
+					_tempObjects.push(_shownObjects[k]);
+				}
+			}
+			_shownObjects = _tempObjects;
+		}
+		
+		public function showNewObjects():void {
+			if(_newObjectsForShow.length >0){
+				var max:int;
+				if(_newObjectsForShow.length >= SHOW_NUM){
+					max = SHOW_NUM;
+				}else{
+					max = _newObjectsForShow.length;
+				}
+				for (var i:int = 0; i < SHOW_NUM; i++){
+					tempObject = _newObjectsForShow[_newObjectsForShow.length -1];
+					if(tempObject && ((tempObject.x>_controller.minUnitIsoPoint.x) || (tempObject.y>_controller.minUnitIsoPoint.y) || (tempObject.x<_controller.maxUnitIsoPoint.x) || (tempObject.y<_controller.maxUnitIsoPoint.y))){
+						var object:MapObject = _newObjectsForShow.shift();
+						if(object){
+							_shownObjects.push(object);
+							_shownObjects[_shownObjects.length-1].isoSprite.moveTo(object.x * Main.UNIT_SIZE, object.y * Main.UNIT_SIZE, 0);
+							_scene.addChild(_shownObjects[_shownObjects.length-1].isoSprite);
+							_shownObjects[_shownObjects.length-1].isoSprite.render();
+							//_scene.render();
+						}
+					}
+				}
+			}
+		}
+		
+		public function setSize(sW:int, sL:int):void {
+			//grid.setGridSize(_controller.maxUnitIsoPoint.x - _controller.minUnitIsoPoint.x,_controller.maxUnitIsoPoint.y - _controller.minUnitIsoPoint.y);
+			//grid.y = -Main.UNIT_SIZE/2;
+			//grid.x = Main.UNIT_SIZE/2;
 		}
 	}
 }

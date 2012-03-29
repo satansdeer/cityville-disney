@@ -21,6 +21,7 @@ import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.net.URLLoader;
 import flash.net.URLRequest;
+import flash.profiler.showRedrawRegions;
 
 import game.GameView;
 import game.SceneController;
@@ -30,7 +31,7 @@ import game.map.MapsController;
 import game.map.ObjectsMap;
 import game.map.Road1Map;
 
-import iface.Interface;
+import iface.GameInterface;
 import iface.ObjectsPanel;
 import iface.windows.ResizeMapWindow;
 
@@ -38,7 +39,7 @@ import org.casalib.util.StageReference;
 
 import ru.beenza.framework.layers.LayerManager;
 
-[SWF(width=700, height=670, frameRate=25, backgroundColor="0x000000")]
+[SWF(width=700, height=670, frameRate=45, backgroundColor="0xFFFFFF")]
 public class Main extends Sprite {
 	public static const APP_WIDTH:int = 700;
 	public static const APP_HEIGHT:int = 670;
@@ -49,8 +50,11 @@ public class Main extends Sprite {
 	private var _gameView:GameView;
 	private var _mapsController:MapsController;
 	
+	private var _iface:GameInterface;
+	
 	public function Main() {
 		trace("app started");
+		//flash.profiler.showRedrawRegions ( true, 0x0000FF );
 		addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 	}
 
@@ -65,6 +69,7 @@ public class Main extends Sprite {
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.align = StageAlign.TOP_LEFT;
 		StageReference.setStage(stage);
+		stage.addEventListener(Event.RESIZE, onStageResize);
 			//layers
 		LayerManager.init();
 		LayerManager.addLayer(LayersENUM.SCENE);
@@ -77,7 +82,12 @@ public class Main extends Sprite {
 		initGameView();
 		initPanel();
 		registerWindows();
-		new Interface();
+		_iface = new GameInterface();
+	}
+	
+	protected function onStageResize(event:Event):void{
+		_gameView.resize();
+		_iface.resize();
 	}
 	
 	private function registerWindows():void {

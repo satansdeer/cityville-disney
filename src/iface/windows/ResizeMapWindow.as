@@ -18,6 +18,7 @@ package iface.windows
 	import flash.media.StageWebView;
 	
 	import game.map.GroundMap;
+	import game.map.MapsController;
 	
 	import org.casalib.util.StageReference;
 	
@@ -59,7 +60,7 @@ package iface.windows
 		}
 		
 		protected function onOkClick(event:MouseEvent):void{
-			GroundMap.instance.setSize(_mapWidth, _mapLength);
+			MapsController.instance.setSize(_mapWidth, _mapLength);
 		}
 		
 		protected function onWidthChange(event:Event):void{
