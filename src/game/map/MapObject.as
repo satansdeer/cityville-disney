@@ -75,7 +75,6 @@ package game.map
 				event.stopPropagation();
 				_controller.setObjectForBuying(vo);
 				(_controller as ObjectsMap).removeObject(this);
-				_controller.updateGridWithAvailableCells(_controller.objectForBuying)
 			}
 		}
 		

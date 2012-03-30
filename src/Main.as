@@ -7,6 +7,8 @@ package {
 import as3isolib.display.IsoView;
 import as3isolib.display.scene.IsoScene;
 
+import com.demonsters.debugger.MonsterDebugger;
+
 import core.AppData;
 import core.component.panel.HorizontalScrollablePanel;
 import core.component.panel.PanelItem;
@@ -17,6 +19,7 @@ import core.window.WindowManager;
 
 import flash.display.Sprite;
 import flash.display.StageAlign;
+import flash.display.StageQuality;
 import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.net.URLLoader;
@@ -54,6 +57,7 @@ public class Main extends Sprite {
 	
 	public function Main() {
 		trace("app started");
+		//MonsterDebugger.initialize(this);
 		//flash.profiler.showRedrawRegions ( true, 0x0000FF );
 		addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 	}
@@ -70,6 +74,7 @@ public class Main extends Sprite {
 		stage.align = StageAlign.TOP_LEFT;
 		StageReference.setStage(stage);
 		stage.addEventListener(Event.RESIZE, onStageResize);
+		stage.quality = StageQuality.LOW;
 			//layers
 		LayerManager.init();
 		LayerManager.addLayer(LayersENUM.SCENE);

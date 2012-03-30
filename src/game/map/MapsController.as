@@ -10,10 +10,13 @@ package game.map
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
 	import game.GameView;
 	import game.events.GameViewEvent;
+	
+	import mouse.MouseManager;
 	
 	import org.casalib.util.StageReference;
 	
@@ -34,6 +37,7 @@ package game.map
 		
 		private var _stage:Stage;
 		private static var _instance:MapsController;
+		private var _fogMap:FogMap;
 		
 		public function MapsController(gV:GameView)
 		{
@@ -43,7 +47,32 @@ package game.map
 			_stage = StageReference.getStage();
 			_stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 			_gameView.addEventListener(GameViewEvent.MOVE, onGameViewMove);
+			_gameView.addEventListener(MouseEvent.CLICK, onGameViewClick);
 			initMaps();
+		}
+		
+		public function get fogMap():FogMap{
+			return _fogMap;
+		}
+		
+		protected function onGameViewClick(event:MouseEvent):void{
+			if(MouseManager.instance.mode == MouseManager.FOG_MODE){
+				var pt:Pt =  getIsoUnitPt(_gameView.mouseX, _gameView.mouseY);
+				if(!_fogMap.map[pt.x][pt.y]){
+					_fogMap.addTile(pt);
+				}else{
+					_fogMap.removeTile(pt);
+				}
+			}
+		}
+		
+		protected function getIsoUnitPt(mX:int, mY:int):Pt{
+			tempPoint.x = mX;
+			tempPoint.y = mY;
+			var pt:Pt = _gameView.localToIso(tempPoint);
+			pt.x = int((pt.x - Main.UNIT_SIZE/2) / Main.UNIT_SIZE);
+			pt.y = int((pt.y) / Main.UNIT_SIZE);
+			return pt;
 		}
 		
 		public static function get instance():MapsController{
@@ -53,6 +82,7 @@ package game.map
 		public function setSize(sW:int, sL:int):void{
 			_groundMap.setSize(sW, sL);
 			_objectsMap.setSize(sW, sL);
+			_fogMap.setSize(sW, sL);
 		}
 		
 		protected function onEnterFrame(event:Event):void{
@@ -64,12 +94,14 @@ package game.map
 			recountRegion();
 			_groundMap.updateRegion();
 			_objectsMap.updateRegion();
+			_fogMap.updateRegion();
 		}
 		
 		private function initMaps():void {
 			_groundMap = new GroundMap(_gameView, this);
 			//_road1Map = new Road1Map(_gameView);
 			_objectsMap = new ObjectsMap(_gameView, this);
+			_fogMap = new FogMap(_gameView, this);
 		}
 		
 		protected function recountRegion():void{

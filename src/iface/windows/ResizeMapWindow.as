@@ -15,7 +15,6 @@ package iface.windows
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.media.StageWebView;
 	
 	import game.map.GroundMap;
 	import game.map.MapsController;
@@ -61,6 +60,7 @@ package iface.windows
 		
 		protected function onOkClick(event:MouseEvent):void{
 			MapsController.instance.setSize(_mapWidth, _mapLength);
+			WindowManager.instance.hideCurrentWindow();
 		}
 		
 		protected function onWidthChange(event:Event):void{

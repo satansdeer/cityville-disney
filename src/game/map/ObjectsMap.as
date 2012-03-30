@@ -8,7 +8,6 @@ package game.map
 	import core.display.InteractivePNG;
 	import core.display.IsoFurnitureGrid;
 	import core.enum.ScenesENUM;
-	import core.helper.XMLHelper;
 	import core.layer.LayersENUM;
 	
 	import flash.display.Bitmap;
@@ -17,6 +16,8 @@ package game.map
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	
 	import game.GameView;
 	import game.vo.MapObjectVO;
@@ -50,19 +51,13 @@ package game.map
 		private var _newObjectsForShow:Array = [];
 		private var tempObject:MapObject;
 		private const SHOW_NUM:int = 1;
+		private var loader:URLLoader;
 		
 		public function ObjectsMap(gameView:GameView, controller:MapsController)
 		{
 			super(gameView);
 			_controller = controller;
 			_scene = _gameView.getScene(ScenesENUM.OBJECTS);
-			//grid = new IsoFurnitureGrid();
-			//grid.setGridSize(16,16)
-			//grid.y = -Main.UNIT_SIZE/2;
-			//grid.x = Main.UNIT_SIZE/2;
-			//gameView.getScene(ScenesENUM.GRID).addChild(grid);
-			//grid.container.mouseChildren = false;
-			//grid.container.mouseEnabled = false;
 			LayerManager.getLayer(LayersENUM.SCENE).addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 			LayerManager.getLayer(LayersENUM.SCENE).addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
@@ -78,7 +73,6 @@ package game.map
 			_objectForBuying.y = isoMouse.y;
 			_objectForBuying.isoSprite.moveTo(isoMouse.x, isoMouse.y, 0);
 			_scene.addChild(_objectForBuying.isoSprite);
-			updateGridWithAvailableCells(_objectForBuying);
 			GameView.instance.getScene(ScenesENUM.GRID).render();
 			_objectForBuying.isoSprite.render();
 		}
@@ -111,42 +105,6 @@ package game.map
 			save();
 		}
 		
-		public function updateGridWithAvailableCells(object:MapObject):void {
-			/*if (!object) return;
-			
-			var neutrals:Vector.<uint>, greens:Vector.<uint>, reds:Vector.<uint>;
-			var x:int, y:int, obj:MapObject;
-			grid.clear();
-			greens = new Vector.<uint>();
-			reds = new Vector.<uint>();
-			
-			const objectRect:Rectangle = new Rectangle(int(object.isoSprite.x / Main.UNIT_SIZE), int(object.isoSprite.y / Main.UNIT_SIZE), object.vo.width, object.vo.length);
-			const objRect:Rectangle = new Rectangle();
-			var rect:Rectangle;
-			
-			if(!objects || objects.length == 0){
-				for (y = 0; y < objectRect.height; ++y) {
-					for (x = 0; x < objectRect.width; ++x) {
-						greens.push(objectRect.x + x, objectRect.y + y);
-					}
-				}
-			}
-			
-			if(!placeAvailable(object)){
-				for (y = 0; y < objectRect.height; ++y) {
-					for (x = 0; x < objectRect.width; ++x) {
-						reds.push(objectRect.x + x, objectRect.y + y);
-					}
-				}
-			}else{
-				for (y = 0; y < objectRect.height; ++y) {
-					for (x = 0; x < objectRect.width; ++x) {
-						greens.push(objectRect.x + x, objectRect.y + y);
-					}
-				}
-			}
-			grid.colorized(neutrals, greens, reds);*/
-		}
 		
 		protected function onDataLoaded(event:Event):void{
 			_loadEventJoin.join(event);
@@ -178,11 +136,18 @@ package game.map
 			}
 			mapString += "</objects>";
 			var mapXML:XML = new XML(mapString);
-			XMLHelper.saveXML(mapXML, AppData.options.objectsMap);
 		}
 		
 		private function load():void{
-			var mapXML:XML = XMLHelper.readXML(AppData.options.objectsMap);
+			loader = new URLLoader()
+			loader.addEventListener(Event.COMPLETE, onMapLoaded)
+			loader.load(new URLRequest("data/objectsMap.xml"))
+		}
+		
+		protected function onMapLoaded(event:Event):void
+		{
+			AppData.objectsMap= new XML(loader.data);
+			var mapXML:XML = AppData.objectsMap;
 			var mO:MapObject;
 			for(var i:int = 0; i<mapXML.object.length(); i++){
 				mO = new MapObject(getVOById(mapXML.object[i].@id), this);
@@ -217,7 +182,6 @@ package game.map
 					_objectForBuying.x = isoMouse.x;
 					_objectForBuying.y = isoMouse.y;
 					_objectForBuying.isoSprite.moveTo(isoMouse.x, isoMouse.y, 0);
-					updateGridWithAvailableCells(_objectForBuying);
 				}
 				_scene.render();
 			}

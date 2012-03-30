@@ -55,7 +55,7 @@ package game {
 			unitSize = unitSize;
 			_instance = this;
 			showBorder = true;
-			clipContent = true;
+			//clipContent = true;
 			autoUpdate = true;
 			limitRangeOfMotion = false;
 			setSize(StageReference.getStage().stageWidth, StageReference.getStage().stageHeight);

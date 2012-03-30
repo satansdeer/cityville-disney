@@ -23,6 +23,7 @@ package mouse
 	
 	public class MouseManager extends EventDispatcher{
 		
+		public static const FOG_MODE:String = "fog_mode";
 		public static const NORMAL_MODE:String = "normal_mode";
 		public static const REMOVE_MODE:String = "remove_mode";
 		public static const MOVE_MODE:String = "move_mode";

@@ -81,18 +81,26 @@ package game.map
 		}
 		
 		private function load():void{
-			_map = MapLoader.mapFromFile(AppData.options.groundMap);
+			MapLoader.mapFromFile();
+			MapLoader.instance.addEventListener(Event.COMPLETE, onMapLoaderComplete);
+		}
+		
+		protected function onMapLoaderComplete(event:Event):void{
+			_map = MapLoader.map;
 			makeTileMap();
 		}
 		
 		private function makeTileMap():void {
-			for(var x:int = 0; x < _map.length; x++){
-				for(var y:int = 0; y < _map[x].length; y++){
+			var mapWidth:int = _map.length;
+			var mapLength:int = _map[0].length;
+			for(var x:int = 0; x < mapWidth; x++){
+				for(var y:int = 0; y < mapLength; y++){
 					tempTile = _map[x][y]
 					tempTile.shown = true;
 					_newTilesFowShow.push(tempTile);
 				}
 			}
+			_controller.fogMap.setSize(mapWidth, mapLength);
 		}
 		
 		private function getTileByXY(tX:int, tY:int):Tile{
