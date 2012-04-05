@@ -19,8 +19,10 @@ package game.map
 	import mouse.MouseManager;
 	
 	import org.casalib.util.StageReference;
-	
-	public class MapsController extends EventDispatcher{
+
+import rpc.GameRpc;
+
+public class MapsController extends EventDispatcher{
 		
 		protected var minPoint:Point = new Point();
 		protected var maxPoint:Point = new Point();
@@ -77,6 +79,10 @@ package game.map
 		
 		public static function get instance():MapsController{
 			return _instance;
+		}
+
+		public function saveToServer():void {
+			GameRpc.instance.sendMap(_groundMap.mapToJSON());
 		}
 		
 		public function setSize(sW:int, sL:int):void{

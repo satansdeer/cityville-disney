@@ -16,6 +16,7 @@ public class RpcHttp extends EventDispatcher {
 
 	public function RpcHttp(host:String, port:int, debug:Boolean = false):void {
 		super();
+		_requests = new Vector.<RequestVO>();
 		_host = host;
 		_port = port;
 		//_loader = new URLLoader();
@@ -59,7 +60,6 @@ public class RpcHttp extends EventDispatcher {
 		}
 	}
 
-	@Depricated
 	private function getOnLoadedFunction(callback:Function):Function {
 		return function (event:Event):void { if (callback != null) callback(event.target.data); };
 	}

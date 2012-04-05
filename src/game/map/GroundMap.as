@@ -46,12 +46,9 @@ package game.map
 			_instance = this;
 			_stage = StageReference.getStage();
 			_scene = _gameView.getScene(ScenesENUM.GROUND);
-			_eventJ = new EventJoin(2,load);
+			//_eventJ = new EventJoin(2,load);
+			load();
 			AppData.instance.addEventListener(Event.COMPLETE, onComplete);
-		}
-		
-		protected function onGameViewMove(event:Event):void{
-			
 		}
 		
 		public static function get instance():GroundMap{
@@ -81,7 +78,7 @@ package game.map
 		}
 		
 		private function load():void{
-			MapLoader.mapFromFile(onMapLoaderComplete);
+			MapLoader.mapFromServer(onMapLoaderComplete);
 		}
 		
 		protected function onMapLoaderComplete():void{
@@ -164,7 +161,22 @@ package game.map
 				}
 			}
 		}
-		
+
+		public function mapToJSON():String {
+			if (_map.length == 0) { return "{\"width\":0, \"height\":0}"; }
+			var tiles:String = "[";
+			for (var i:int = 0; i < _map.length; ++i) {
+				for (var j:int = 0; j < _map[i].length; ++j) {
+					tiles += "\"" + _map[i][j].url + "\"";
+					if ((i != 0 || j != 0) && (i != _map.length-1 || j != _map.length-1)) { tiles += ", "; }
+				}
+			}
+			trace("tiles : " + tiles + " [GroundMap.mapToJSON]");
+			return "{\"width\":" + _map.length + ", \"height\":" + _map[0].length + ", \"tiles\":[" + tiles + "]}";
+		}
+
+		/* Internal function */
+
 		private function recountShowNum():void {
 			if(FpsMeter.instance.fps > MAX_SHOW_NUM){
 				showNum = MAX_SHOW_NUM

@@ -30,7 +30,7 @@ package iface
 			super(panelWidth, panelHeight);
 			drawButtons();
 			drawMask();
-			loadObjects();
+			//loadObjects();
 		}
 		
 		protected function drawButtons():void {

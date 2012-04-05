@@ -35,8 +35,22 @@ package rpc {
 			//if (_rpc) { _rpc.send_test(); }
 		}
 
+		public function sendMap(jsonMap:String, callback:Function =null, errback:Function=null):void {
+			_rpc.send("{" + getRequestString("savemap") + ", \"map\" : " + jsonMap + "}", callback);
+		}
+
+		public function getMap(callback:Function, errback:Function = null):void {
+			_rpc.send("{" + getRequestString("getmap") + "}", callback);
+		}
+
 		public function send(request:Object, callback:Function=null, errback:Function=null):void {
 			_rpc.send(JSON.encode(request), callback);
+		}
+
+		/* Internal functions */
+
+		private function getRequestString(requestName:String):String {
+			return "\"request\" : \"" + requestName + "\"";
 		}
 		
 	}

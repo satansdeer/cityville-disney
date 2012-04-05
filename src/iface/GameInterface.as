@@ -23,7 +23,6 @@ package iface
 	 */
 	public class GameInterface{
 		
-		private var stage:Stage;
 		private var optionsButton:PushButton;
 		
 		private var _topPanelBackground:Sprite;

@@ -43,6 +43,8 @@ public class Tile {
 	public function get y():int{
 		return _y;
 	}
+
+	public function get url():String { return _url; }
 	
 	public function remove():void{
 		AssetManager.instance.removeEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);

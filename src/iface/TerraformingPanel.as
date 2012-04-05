@@ -11,13 +11,16 @@ package iface
 	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	
-	import mouse.MouseManager;
+
+import game.map.MapsController;
+
+import mouse.MouseManager;
 	
 	public class TerraformingPanel extends Sprite{
 		
 		private var _resizeMapButton:PushButton;
 		private var _makeFogButton:PushButton;
+		private var _saveButton:PushButton;
 		
 		public function TerraformingPanel()
 		{
@@ -34,6 +37,9 @@ package iface
 			_makeFogButton = new PushButton(this, 4, 26, "fog");
 			_makeFogButton.addEventListener(MouseEvent.CLICK, onFogButtonClick);
 			_makeFogButton.width = 42;
+			_saveButton = new PushButton(this, 4, 48, "save");
+			_saveButton.width = 42;
+			_saveButton.addEventListener(MouseEvent.CLICK,  onSaveMapButtonClick);
 		}
 		
 		protected function onFogButtonClick(event:MouseEvent):void{
@@ -42,6 +48,10 @@ package iface
 		
 		protected function onResizeMapButtonClick(event:MouseEvent):void{
 			WindowManager.instance.showWindow(WindowsENUM.RESIZE_MAP_WINDOW);
+		}
+
+		private function onSaveMapButtonClick(event:MouseEvent):void {
+			MapsController.instance.saveToServer();
 		}
 		
 		private function addListeners():void {

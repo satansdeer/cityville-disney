@@ -4,14 +4,7 @@
  * Time: 1:59 PM
  */
 package {
-import as3isolib.display.IsoView;
-import as3isolib.display.scene.IsoScene;
-
-import com.demonsters.debugger.MonsterDebugger;
-
 import core.AppData;
-import core.component.panel.HorizontalScrollablePanel;
-import core.component.panel.PanelItem;
 import core.enum.ScenesENUM;
 import core.enum.WindowsENUM;
 import core.layer.LayersENUM;
@@ -24,21 +17,18 @@ import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.net.URLLoader;
 import flash.net.URLRequest;
-import flash.profiler.showRedrawRegions;
 
 import game.GameView;
 import game.SceneController;
-import game.map.GroundMap;
-import game.map.MapBase;
 import game.map.MapsController;
-import game.map.ObjectsMap;
-import game.map.Road1Map;
 
 import iface.GameInterface;
 import iface.ObjectsPanel;
 import iface.windows.ResizeMapWindow;
 
 import org.casalib.util.StageReference;
+
+import rpc.GameRpc;
 
 import ru.beenza.framework.layers.LayerManager;
 
@@ -66,8 +56,10 @@ public class Main extends Sprite {
 
 	private function addedToStageHandler(event:Event):void {
 		removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+
+		GameRpc.instance.init("localhost", 8080);
 		
-		loadOptions();
+		//loadOptions();
 		
 			// stage settings
 		stage.scaleMode = StageScaleMode.NO_SCALE;

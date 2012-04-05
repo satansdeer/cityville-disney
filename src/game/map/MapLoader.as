@@ -12,8 +12,10 @@ import flash.events.Event;
 	import flash.events.IEventDispatcher;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	
-	public class MapLoader extends EventDispatcher{
+
+import rpc.GameRpc;
+
+public class MapLoader extends EventDispatcher{
 		
 		public static var map:Vector.<Vector.<Tile>>;
 		private static var _callback:Function;
@@ -25,13 +27,27 @@ import flash.events.Event;
 		public static function mapFromFile(callback:Function):void{
 			_callback = callback;
 			var loader:URLLoader = new URLLoader();
-			loader.addEventListener(Event.COMPLETE, onMapJSONLoaded);
+			loader.addEventListener(Event.COMPLETE, onMapFromFileLoaded);
 			//loader.load(new URLRequest("data/map.xml"));
 			loader.load(new URLRequest("data/map.json"));
 		}
 
-		private static function onMapJSONLoaded(event:Event):void {
-			var mapObject:Object = JSON.decode(event.target.data);
+		public static function mapFromServer(callback:Function):void {
+			_callback = callback;
+			GameRpc.instance.getMap(onMapFromServerLoaded);
+		}
+
+		/* Internal functionsn */
+
+	private static function onMapFromServerLoaded(map:String):void {
+		createMapFromJSON(JSON.decode(map)["response"]);
+	}
+
+		private static function onMapFromFileLoaded(event:Event):void {
+			createMapFromJSON(JSON.decode(event.target.data))
+		}
+
+		private static function createMapFromJSON(mapObject:Object):void {
 			var k:int = 0;
 			if(mapObject && mapObject["width"] && mapObject["height"] && mapObject["tiles"]){
 				var tiles:Array = mapObject["tiles"];
