@@ -81,17 +81,17 @@ package game.map
 		}
 		
 		private function load():void{
-			MapLoader.mapFromFile();
-			MapLoader.instance.addEventListener(Event.COMPLETE, onMapLoaderComplete);
+			MapLoader.mapFromFile(onMapLoaderComplete);
 		}
 		
-		protected function onMapLoaderComplete(event:Event):void{
+		protected function onMapLoaderComplete():void{
 			_map = MapLoader.map;
 			makeTileMap();
 		}
 		
 		private function makeTileMap():void {
 			var mapWidth:int = _map.length;
+			if (mapWidth == 0) { return; }
 			var mapLength:int = _map[0].length;
 			for(var x:int = 0; x < mapWidth; x++){
 				for(var y:int = 0; y < mapLength; y++){

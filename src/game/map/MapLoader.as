@@ -4,8 +4,10 @@ package game.map
 	 * MapLoader
 	 * @author satansdeer
 	 */
-	
-	import flash.events.Event;
+
+import by.blooddy.crypto.serialization.JSON;
+
+import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.net.URLLoader;
@@ -14,29 +16,44 @@ package game.map
 	public class MapLoader extends EventDispatcher{
 		
 		public static var map:Vector.<Vector.<Tile>>;
+		private static var _callback:Function;
 		
-		private static var _instance:MapLoader;
-		
-		public function MapLoader(target:IEventDispatcher=null)
-		{
+		public function MapLoader(target:IEventDispatcher=null) {
 			super(target);
 		}
 		
-		public static function get instance():MapLoader{
-			if(!_instance){
-				_instance = new MapLoader();
-			}
-			return _instance;
-		}
-		
-		public static function mapFromFile():void{
+		public static function mapFromFile(callback:Function):void{
+			_callback = callback;
 			var loader:URLLoader = new URLLoader();
-			loader.addEventListener(Event.COMPLETE, onMapLoaded);
-			loader.load(new URLRequest("data/map.xml"));
+			loader.addEventListener(Event.COMPLETE, onMapJSONLoaded);
+			//loader.load(new URLRequest("data/map.xml"));
+			loader.load(new URLRequest("data/map.json"));
+		}
+
+		private static function onMapJSONLoaded(event:Event):void {
+			var mapObject:Object = JSON.decode(event.target.data);
+			var k:int = 0;
+			if(mapObject && mapObject["width"] && mapObject["height"] && mapObject["tiles"]){
+				var tiles:Array = mapObject["tiles"];
+				map = new Vector.<Vector.<Tile>>(mapObject["width"], true);
+
+				for (var i:int = 0; i < mapObject["width"]; i++){
+					map[i] = new Vector.<Tile>(mapObject["height"], true);
+					for(var j:int = 0; j < mapObject["height"]; j++){
+						map[i][j] = new Tile(i,j, tiles[k], null);
+						k++;
+					}
+				}
+			} else {
+				trace("map wrong [MapLoader.onMapJSONLoaded]");
+				map = new Vector.<Vector.<Tile>>();
+			}
+			if (_callback) { _callback(); }
 		}
 		
 		protected static function onMapLoaded(event:Event):void{
 			var mapXml:XML = new XML(event.target.data);
+			trace("map : " + mapXml + " [MapLoader.onMapLoaded]");
 			var output:Vector.<Vector.<Tile>> = new Vector.<Vector.<Tile>>(mapXml.@width, true);
 			var k:int;
 			if(mapXml){
@@ -49,7 +66,7 @@ package game.map
 					}
 				}
 			}
-			instance.dispatchEvent(new Event(Event.COMPLETE));
+			if (_callback) { _callback(); }
 		}
 	}
 }

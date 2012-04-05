@@ -23,7 +23,7 @@ package game {
 		private static const SCREEN_WIDTH:int = 700;
 		private static const SCREEN_HEIGHT:int = 670;
 		
-		[Embed(source="ColoredMockup.jpg")] private static const Infrastructure:Class;
+		[Embed(source="../ColoredMockup.jpg")] private static const Infrastructure:Class;
 		
 		public static var unitSize:uint;
 		
