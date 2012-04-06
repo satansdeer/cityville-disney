@@ -163,16 +163,17 @@ package game.map
 		}
 
 		public function mapToJSON():String {
-			if (_map.length == 0) { return "{\"width\":0, \"height\":0}"; }
+			//if (_map.length == 0) { return "{\"width\":0, \"height\":0}"; }
 			var tiles:String = "[";
-			for (var i:int = 0; i < _map.length; ++i) {
-				for (var j:int = 0; j < _map[i].length; ++j) {
-					tiles += "\"" + _map[i][j].url + "\"";
-					if ((i != 0 || j != 0) && (i != _map.length-1 || j != _map.length-1)) { tiles += ", "; }
+			for (var i:int = 0; i < 4; ++i) {
+				for (var j:int = 0; j < 4; ++j) {
+					tiles += "\"" + "http://localhost:8080/tile.png" + "\"";
+					if (i != 3 || j != 3) { tiles += ", "; }
 				}
 			}
+			tiles += "]";
 			trace("tiles : " + tiles + " [GroundMap.mapToJSON]");
-			return "{\"width\":" + _map.length + ", \"height\":" + _map[0].length + ", \"tiles\":[" + tiles + "]}";
+			return "{\"width\":" + 4 + ", \"height\":" + 4 + ", \"tiles\":" + tiles + "}";
 		}
 
 		/* Internal function */
