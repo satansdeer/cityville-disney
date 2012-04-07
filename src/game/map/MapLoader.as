@@ -13,6 +13,8 @@ import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 
+import org.osmf.events.TimeEvent;
+
 import rpc.GameRpc;
 
 public class MapLoader extends EventDispatcher{
@@ -52,14 +54,14 @@ public class MapLoader extends EventDispatcher{
 
 		private static function createMapFromJSON(mapObject:Object):void {
 			var k:int = 0;
-			if(mapObject && mapObject["width"] && mapObject["height"] && mapObject["tiles"]){
+			if(mapObject && mapObject["width"] && mapObject["height"]){
 				var tiles:Array = mapObject["tiles"];
 				map = new Vector.<Vector.<Tile>>(mapObject["width"], true);
 
 				for (var i:int = 0; i < mapObject["width"]; i++){
 					map[i] = new Vector.<Tile>(mapObject["height"], true);
 					for(var j:int = 0; j < mapObject["height"]; j++){
-						map[i][j] = new Tile(i,j, tiles[k], null);
+						map[i][j] = new Tile(i,j, Configuration.HOST + "/" + Tile.TILE1_URL);
 						k++;
 					}
 				}
@@ -69,23 +71,6 @@ public class MapLoader extends EventDispatcher{
 			}
 			if (_callback) { _callback(); }
 		}
-		
-		protected static function onMapLoaded(event:Event):void{
-			var mapXml:XML = new XML(event.target.data);
-			trace("map : " + mapXml + " [MapLoader.onMapLoaded]");
-			var output:Vector.<Vector.<Tile>> = new Vector.<Vector.<Tile>>(mapXml.@width, true);
-			var k:int;
-			if(mapXml){
-				map = new Vector.<Vector.<Tile>>(mapXml.@width, true);
-				for (var i:int = 0; i < mapXml.@width; i++){
-					map[i] = new Vector.<Tile>(mapXml.@height, true);
-					for(var j:int = 0; j < mapXml.@height; j++){
-						k++;
-						map[i][j] = new Tile(i,j, mapXml.tile[k], null);
-					}
-				}
-			}
-			if (_callback) { _callback(); }
-		}
+
 	}
 }

@@ -25,7 +25,7 @@ package game.map
 		}
 		
 		public function addTile(pt:Pt):void {
-			var tile:Tile = new Tile(pt.x * Main.UNIT_SIZE, pt.y * Main.UNIT_SIZE, "assets/fog.png", _scene);
+			var tile:Tile = new Tile(pt.x * Main.UNIT_SIZE, pt.y * Main.UNIT_SIZE, Configuration.HOST + "/" + Tile.TILE1_URL);
 			tile.draw();
 			tile.isoSprite.moveTo(pt.x * Main.UNIT_SIZE, pt.y * Main.UNIT_SIZE, 0);
 			_scene.addChild(tile.isoSprite);

@@ -29,8 +29,10 @@ public class Tile {
 	private var img:InteractivePNG;
 	
 	public var isoSprite:IsoSprite;
+
+	public static const TILE1_URL:String = "tile.png";
 	
-	public function Tile(x:Number, y:Number, url:String, scene:IsoScene) {
+	public function Tile(x:Number, y:Number, url:String) {
 		_x = x;
 		_y = y;
 		_url = url;

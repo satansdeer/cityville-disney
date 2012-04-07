@@ -62,11 +62,15 @@ package game.map
 			for (var x:int=0; x < w; x++){
 				_tempMap[x] = new Vector.<Tile>(h, true);
 				for(var y:int= 0; y < h; y++){
-					_tempMap[x][y] =  new Tile(x,y, "assets/tile.png", _scene);
+					_tempMap[x][y] =  new Tile(x,y, Configuration.HOST + "/" + Tile.TILE1_URL);
+					_newTilesFowShow.push(_tempMap[x][y]);
 				}
 			}
-			for (x=0; x < _map.length; x++){
-				for(y= 0; y < _map[x].length; y++){
+			var width:int = Math.min(_map.length, _tempMap.length);
+			var height:int;
+			for (x=0; x < width; x++){
+				height = Math.min(_map[x].length, _tempMap[x].length);
+				for(y= 0; y < height; y++){
 					_tempMap[x][y] =  _map[x][y];
 				}
 			}
@@ -163,17 +167,18 @@ package game.map
 		}
 
 		public function mapToJSON():String {
-			//if (_map.length == 0) { return "{\"width\":0, \"height\":0}"; }
+			if (_map.length == 0) { return "{\"width\":0, \"height\":0}"; }
+			/*
 			var tiles:String = "[";
-			for (var i:int = 0; i < 4; ++i) {
-				for (var j:int = 0; j < 4; ++j) {
-					tiles += "\"" + "http://localhost:8080/tile.png" + "\"";
+			for (var i:int = 0; i < _map.length; ++i) {
+				for (var j:int = 0; j < _map[i].length; ++j) {
+					tiles += "\"" + Configuration.HOST + "/" + Tile.TILE1_URL + "\"";
 					if (i != 3 || j != 3) { tiles += ", "; }
 				}
 			}
 			tiles += "]";
-			trace("tiles : " + tiles + " [GroundMap.mapToJSON]");
-			return "{\"width\":" + 4 + ", \"height\":" + 4 + ", \"tiles\":" + tiles + "}";
+			*/
+			return "{\"width\":" + _map.length + ", \"height\":" + _map[0].length + "}";
 		}
 
 		/* Internal function */
