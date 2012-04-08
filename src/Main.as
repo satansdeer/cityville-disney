@@ -57,7 +57,7 @@ public class Main extends Sprite {
 	private function addedToStageHandler(event:Event):void {
 		removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 
-		GameRpc.instance.init("localhost", 8080);
+		GameRpc.instance.init("hz0.beenza.ru", 8080);
 		
 		loadOptions();
 		

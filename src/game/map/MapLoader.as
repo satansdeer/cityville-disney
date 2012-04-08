@@ -55,7 +55,6 @@ public class MapLoader extends EventDispatcher{
 		private static function createMapFromJSON(mapObject:Object):void {
 			var k:int = 0;
 			if(mapObject && mapObject["width"] && mapObject["height"]){
-				var tiles:Array = mapObject["tiles"];
 				map = new Vector.<Vector.<Tile>>(mapObject["width"], true);
 
 				for (var i:int = 0; i < mapObject["width"]; i++){

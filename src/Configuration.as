@@ -5,6 +5,6 @@
  */
 package {
 public class Configuration {
-	public static const HOST:String = "http://localhost:8080";
+	public static const HOST:String = "http://hz0.beenza.ru:8080";
 }
 }

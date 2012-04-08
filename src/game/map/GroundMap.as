@@ -66,12 +66,14 @@ package game.map
 					_newTilesFowShow.push(_tempMap[x][y]);
 				}
 			}
-			var width:int = Math.min(_map.length, _tempMap.length);
-			var height:int;
-			for (x=0; x < width; x++){
-				height = Math.min(_map[x].length, _tempMap[x].length);
-				for(y= 0; y < height; y++){
-					_tempMap[x][y] =  _map[x][y];
+			if (_map) {
+				var width:int = Math.min(_map.length, _tempMap.length);
+				var height:int;
+				for (x=0; x < width; x++){
+					height = Math.min(_map[x].length, _tempMap[x].length);
+					for(y= 0; y < height; y++){
+						_tempMap[x][y] =  _map[x][y];
+					}
 				}
 			}
 			_map = _tempMap;
