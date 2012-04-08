@@ -17,7 +17,7 @@ package core.display {
 	
 	public class AssetManager extends EventDispatcher {
 		
-		public static var urlPrefix:String = "";
+		public static var urlPrefix:String = Configuration.HOST + "/";
 		
 		private static const THREADS:uint = 3;
 		private static const MAX_ATTEMPTS:uint = 3;

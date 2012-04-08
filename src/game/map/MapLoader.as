@@ -61,7 +61,7 @@ public class MapLoader extends EventDispatcher{
 				for (var i:int = 0; i < mapObject["width"]; i++){
 					map[i] = new Vector.<Tile>(mapObject["height"], true);
 					for(var j:int = 0; j < mapObject["height"]; j++){
-						map[i][j] = new Tile(i,j, Configuration.HOST + "/" + Tile.TILE1_URL);
+						map[i][j] = new Tile(i,j, Tile.TILE1_URL);
 						k++;
 					}
 				}

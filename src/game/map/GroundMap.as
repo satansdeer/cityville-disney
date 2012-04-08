@@ -46,8 +46,8 @@ package game.map
 			_instance = this;
 			_stage = StageReference.getStage();
 			_scene = _gameView.getScene(ScenesENUM.GROUND);
-			//_eventJ = new EventJoin(2,load);
-			load();
+			_eventJ = new EventJoin(2,load);
+			//load();
 			AppData.instance.addEventListener(Event.COMPLETE, onComplete);
 		}
 		
@@ -62,7 +62,7 @@ package game.map
 			for (var x:int=0; x < w; x++){
 				_tempMap[x] = new Vector.<Tile>(h, true);
 				for(var y:int= 0; y < h; y++){
-					_tempMap[x][y] =  new Tile(x,y, Configuration.HOST + "/" + Tile.TILE1_URL);
+					_tempMap[x][y] =  new Tile(x,y, Tile.TILE1_URL);
 					_newTilesFowShow.push(_tempMap[x][y]);
 				}
 			}

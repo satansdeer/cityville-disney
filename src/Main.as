@@ -59,7 +59,7 @@ public class Main extends Sprite {
 
 		GameRpc.instance.init("localhost", 8080);
 		
-		//loadOptions();
+		loadOptions();
 		
 			// stage settings
 		stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -93,7 +93,7 @@ public class Main extends Sprite {
 	}
 	
 	private function loadOptions():void {
-		var req:URLRequest = new URLRequest("options.xml");
+		var req:URLRequest = new URLRequest(Configuration.HOST + "/options.xml");
 		var loader:URLLoader = new URLLoader;
 		loader.addEventListener(Event.COMPLETE, onOptionsComplete);
 		loader.load(req);

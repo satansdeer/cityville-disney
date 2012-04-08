@@ -141,7 +141,7 @@ package game.map
 		private function load():void{
 			loader = new URLLoader()
 			loader.addEventListener(Event.COMPLETE, onMapLoaded)
-			loader.load(new URLRequest("data/objectsMap.xml"))
+			loader.load(new URLRequest(Configuration.HOST + "/data/objectsMap.xml"))
 		}
 		
 		protected function onMapLoaded(event:Event):void

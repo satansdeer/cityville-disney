@@ -30,7 +30,7 @@ package iface
 			super(panelWidth, panelHeight);
 			drawButtons();
 			drawMask();
-			//loadObjects();
+			loadObjects();
 		}
 		
 		protected function drawButtons():void {
@@ -58,7 +58,7 @@ package iface
 		}
 		
 		protected function loadObjects():void{
-			var urlrequest:URLRequest = new URLRequest("data/objects.xml");
+			var urlrequest:URLRequest = new URLRequest(Configuration.HOST + "/data/objects.xml");
 			loader = new URLLoader();
 			loader.addEventListener(Event.COMPLETE, onComplete);
 			loader.load(urlrequest);
