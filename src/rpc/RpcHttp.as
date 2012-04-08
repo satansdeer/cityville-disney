@@ -1,4 +1,6 @@
 package rpc {
+import by.blooddy.crypto.serialization.JSON;
+
 import flash.net.URLRequestMethod;
 import flash.net.URLVariables;
 import flash.events.Event;
@@ -40,7 +42,7 @@ public class RpcHttp extends EventDispatcher {
 		var callback:Function = getAndRemoveCallback(event.target as URLLoader);
 		trace("response : " + event.target.data + " [RpcHttp.onLoadComplete]");
 		if (callback) {
-			callback(event.target.data);
+			callback(JSON.decode(event.target.data));
 		}
 	}
 

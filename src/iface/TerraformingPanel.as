@@ -20,7 +20,7 @@ import mouse.MouseManager;
 		
 		private var _resizeMapButton:PushButton;
 		private var _makeFogButton:PushButton;
-		private var _saveButton:PushButton;
+//		private var _saveButton:PushButton;
 		
 		public function TerraformingPanel()
 		{
@@ -37,9 +37,9 @@ import mouse.MouseManager;
 			_makeFogButton = new PushButton(this, 4, 26, "fog");
 			_makeFogButton.addEventListener(MouseEvent.CLICK, onFogButtonClick);
 			_makeFogButton.width = 42;
-			_saveButton = new PushButton(this, 4, 48, "save");
-			_saveButton.width = 42;
-			_saveButton.addEventListener(MouseEvent.CLICK,  onSaveMapButtonClick);
+//			_saveButton = new PushButton(this, 4, 48, "save");
+//			_saveButton.width = 42;
+//			_saveButton.addEventListener(MouseEvent.CLICK,  onSaveMapButtonClick);
 		}
 		
 		protected function onFogButtonClick(event:MouseEvent):void{

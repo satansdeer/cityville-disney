@@ -25,8 +25,10 @@ package game.map
 	import mouse.MouseManager;
 	
 	import org.casalib.util.StageReference;
-	
-	import ru.beenza.framework.layers.LayerManager;
+
+import rpc.GameRpc;
+
+import ru.beenza.framework.layers.LayerManager;
 	import ru.beenza.framework.utils.EventJoin;
 
 	/**
@@ -139,9 +141,21 @@ package game.map
 		}
 		
 		private function load():void{
-			loader = new URLLoader()
-			loader.addEventListener(Event.COMPLETE, onMapLoaded)
-			loader.load(new URLRequest(Configuration.HOST + "/data/objectsMap.xml"))
+			GameRpc.instance.getMapObjects(onObjectsInfoLoaded);
+		}
+
+		private function onObjectsInfoLoaded(response:Object):void {
+			if (!response["ok"]) { return; }
+			var objectList:Array = response["ok"];
+			var mO:MapObject;
+			for(var i:int = 0; i<objectList.length(); i++){
+				mO = new MapObject(getVOById(objectList[i]["id"]), this);
+				mO.x = int(objectList[i]["x"]);
+				mO.y = int(objectList[i]["y"]);
+				mO.shown = false;
+				objects.push(mO);
+			}
+			updateRegion();
 		}
 		
 		protected function onMapLoaded(event:Event):void

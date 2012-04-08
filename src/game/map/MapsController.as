@@ -89,6 +89,7 @@ public class MapsController extends EventDispatcher{
 			_groundMap.setSize(sW, sL);
 			_objectsMap.setSize(sW, sL);
 			_fogMap.setSize(sW, sL);
+			saveToServer();
 		}
 		
 		protected function onEnterFrame(event:Event):void{
