@@ -23,8 +23,7 @@ package iface.components
 		
 		public var hint:String = new String();
 		
-		public function GameValueLabel(name:String, w:int)
-		{
+		public function GameValueLabel(name:String, w:int) {
 			super();
 			_w = w;
 			_name = name;

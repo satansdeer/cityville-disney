@@ -18,6 +18,7 @@ public class UserSession extends EventDispatcher {
 
 	private var _level:int;
 	private var _money:int;
+	private var _food:int;
 	private var _plot:PlotVO; //грядка епт!
 
 	private var _timer:Timer;
@@ -32,6 +33,10 @@ public class UserSession extends EventDispatcher {
 	}
 
 	public function UserSession() {}
+
+	public function get money():int { return _money; }
+	public function get level():int { return _level; }
+	public function get food():int { return _food; }
 
 	public function init():void {
 		_canRequest = true;
@@ -50,6 +55,7 @@ public class UserSession extends EventDispatcher {
 	public function onState(state:Object):void {
 		_level = state["level"];
 		_money = state["money"];
+		_food = state["food"];
 		if (!_plot) {
 			_plot = new PlotVO();
 		}

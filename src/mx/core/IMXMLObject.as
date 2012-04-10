@@ -13,7 +13,7 @@ package mx.core
 {
 
 /**
- *  The IMXMLObject interface defines the APIs that a non-visual component
+ *  The IMXMLObject interface defines the APIs that a non-visual components
  *  must implement in order to work properly with the MXML compiler.
  *  Currently, the only supported method is the <code>initialized()</code>
  *  method.

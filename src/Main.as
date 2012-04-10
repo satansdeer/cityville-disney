@@ -24,7 +24,7 @@ import game.SceneController;
 import game.map.MapsController;
 
 import iface.GameInterface;
-import iface.ObjectsPanel;
+import iface.panel.ObjectsPanel;
 import iface.windows.ResizeMapWindow;
 import iface.windows.StoreWindow;
 
@@ -34,10 +34,10 @@ import rpc.GameRpc;
 
 import ru.beenza.framework.layers.LayerManager;
 
-[SWF(width=700, height=670, frameRate=45, backgroundColor="0xFFFFFF")]
+[SWF(width=760, height=760, frameRate=45, backgroundColor="0xFFFFFF")]
 public class Main extends Sprite {
-	public static const APP_WIDTH:int = 700;
-	public static const APP_HEIGHT:int = 670;
+	public static const APP_WIDTH:int = 760;
+	public static const APP_HEIGHT:int = 760;
 	public static const UNIT_SIZE:int = 32;
 	
 	private var sceneController:SceneController;
@@ -71,7 +71,7 @@ public class Main extends Sprite {
 		stage.align = StageAlign.TOP_LEFT;
 		StageReference.setStage(stage);
 		stage.addEventListener(Event.RESIZE, onStageResize);
-		stage.quality = StageQuality.LOW;
+		//stage.quality = StageQuality.LOW;
 			//layers
 		LayerManager.init();
 		LayerManager.addLayer(LayersENUM.SCENE);
@@ -82,14 +82,13 @@ public class Main extends Sprite {
 		addChild(LayerManager.appLayer);
 			//controllers
 		initGameView();
-		initPanel();
+		//initPanel();
 		registerWindows();
 		_iface = new GameInterface();
 	}
 	
 	protected function onStageResize(event:Event):void{
-		_gameView.resize();
-		_iface.resize();
+		//_gameView.resize();
 	}
 	
 	private function registerWindows():void {

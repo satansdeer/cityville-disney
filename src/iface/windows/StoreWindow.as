@@ -18,13 +18,16 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 	public function StoreWindow() {
 		super();
 		_view = new Store_view();
+		_view.x = Main.APP_WIDTH/2 - _view.width/2;
+		_view.y = Main.APP_HEIGHT/2 - _view.height/2;
 		addChild(_view);
 		init();
 		addListeners();
 	}
 
 	private function init():void {
-		_view.buildTab.bg.gotoAndPlay(1);
+		_view.buildTab.bg.gotoAndStop(2);
+		_view.farmTab.bg.gotoAndStop(0);
 	}
 
 	private function addListeners():void {
