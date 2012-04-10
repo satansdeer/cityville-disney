@@ -41,7 +41,7 @@ public class MapLoader extends EventDispatcher{
 
 		/* Internal functionsn */
 
-	private static function onMapFromServerLoaded(response:String):void {
+	private static function onMapFromServerLoaded(response:Object):void {
 		if (response["ok"]) {
 			createMapFromJSON(response["ok"]);
 		}

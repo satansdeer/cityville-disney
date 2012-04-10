@@ -58,6 +58,10 @@ package rpc {
 			_rpc.send("{" + getRequestString("get_objects_info") + "}", callback);
 		}
 
+		public function getState(callback:Function):void {
+			_rpc.send("{" + getRequestString("get_state") + "}", callback);
+		}
+
 		public function send(request:Object, callback:Function=null, errback:Function=null):void {
 			_rpc.send(JSON.encode(request), callback);
 		}

@@ -4,7 +4,7 @@
  * Time: 1:59 PM
  */
 package {
-import core.AppData;
+import game.staticModel.AppData;
 import core.enum.ScenesENUM;
 import core.enum.WindowsENUM;
 import core.layer.LayersENUM;
@@ -17,6 +17,7 @@ import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.net.URLLoader;
 import flash.net.URLRequest;
+import flash.system.Security;
 
 import game.GameView;
 import game.SceneController;
@@ -47,6 +48,9 @@ public class Main extends Sprite {
 	
 	public function Main() {
 		trace("app started");
+		Security.allowDomain("*");
+		Security.allowInsecureDomain("*");
+		//Security.allowDomain("http://www.mochiads.com/static/lib/services/");
 		//MonsterDebugger.initialize(this);
 		//flash.profiler.showRedrawRegions ( true, 0x0000FF );
 		addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
@@ -57,7 +61,7 @@ public class Main extends Sprite {
 	private function addedToStageHandler(event:Event):void {
 		removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 
-		GameRpc.instance.init("hz0.beenza.ru", 8080);
+		GameRpc.instance.init("localhost", 8080);
 		
 		loadOptions();
 		

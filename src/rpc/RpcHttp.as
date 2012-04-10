@@ -41,8 +41,8 @@ public class RpcHttp extends EventDispatcher {
 		(event.target as URLLoader).removeEventListener(Event.COMPLETE, onLoadComplete);
 		var callback:Function = getAndRemoveCallback(event.target as URLLoader);
 		trace("response : " + event.target.data + " [RpcHttp.onLoadComplete]");
-		if (callback) {
-			callback(JSON.decode(event.target.data));
+		if (callback != null) {
+			callback(JSON.decode(event.target.data)["response"]);
 		}
 	}
 

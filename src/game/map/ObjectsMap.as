@@ -4,7 +4,7 @@ package game.map
 	import as3isolib.geom.IsoMath;
 	import as3isolib.geom.Pt;
 	
-	import core.AppData;
+	import game.staticModel.AppData;
 	import core.display.InteractivePNG;
 	import core.display.IsoFurnitureGrid;
 	import core.enum.ScenesENUM;
@@ -148,7 +148,7 @@ import ru.beenza.framework.layers.LayerManager;
 			if (!response["ok"]) { return; }
 			var objectList:Array = response["ok"];
 			var mO:MapObject;
-			for(var i:int = 0; i<objectList.length(); i++){
+			for(var i:int = 0; i<objectList.length; i++){
 				mO = new MapObject(getVOById(objectList[i]["id"]), this);
 				mO.x = int(objectList[i]["x"]);
 				mO.y = int(objectList[i]["y"]);
