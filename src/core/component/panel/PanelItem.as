@@ -52,8 +52,8 @@ import core.display.AssetManager;
 		}
 		
 		private function removeListeners():void {
-			removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+//			removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+//			removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}

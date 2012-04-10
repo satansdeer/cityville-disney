@@ -14,6 +14,7 @@ public class WidgetsPanel {
 	private var _view:Sprite;
 	private var _money:TextField;
 	private var _food:TextField;
+	private var _level:TextField;
 
 	public function WidgetsPanel(view:Sprite) {
 		_view = view;
@@ -24,11 +25,13 @@ public class WidgetsPanel {
 	private function init():void {
 		_money = _view["moneyTxt"];
 		_food = _view["foodTxt"];
+		_level = _view["levelTxt"];
 	}
 
 	private function onUserStateChange(event:Event):void {
 		_money.text = UserSession.instance.money.toString();
 		_food.text = UserSession.instance.food.toString();
+		_level.text = UserSession.instance.level.toString();
 	}
 }
 }

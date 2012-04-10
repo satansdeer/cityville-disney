@@ -6,6 +6,8 @@
 package iface.windows {
 import core.component.IfaceBtnWrapper;
 import core.component.panel.PanelItem;
+import core.display.AssetManager;
+import core.display.InteractivePNG;
 import core.event.WindowEvent;
 import core.window.IScreenWindow;
 import core.window.WindowBase;
@@ -17,6 +19,8 @@ import flash.ui.Mouse;
 
 import game.collector.ObjectsCollector;
 import game.vo.MapObjectVO;
+
+import mouse.MouseManager;
 
 public class StoreWindow  extends WindowBase implements IScreenWindow{
 	private var _view:Store_view;
@@ -40,6 +44,10 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 	private function init():void {
 		_view.buildTab.bg.gotoAndStop(1);
 		_view.farmTab.bg.gotoAndStop(2);
+		for (var i:int = 1; i <= 8; ++i) {
+			IfaceBtnWrapper.wrap(_view["item" + i].buyBtn);
+			_view["item" + i].buyBtn.mouseChildren = false;
+		}
 	}
 
 	private function updateItems():void {
@@ -51,6 +59,9 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 			if (i < _objectVOs.length) {
 				panelItem = new PanelItem(_objectVOs[i]);
 				_view["item" + itemIndex]["photo"].addChild(panelItem);
+				_view["item" + itemIndex].visible = true;
+			} else {
+				_view["item" + itemIndex].visible = false;
 			}
 		}
 		if (_page == 0) {
@@ -66,7 +77,6 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 		IfaceBtnWrapper.wrap(_view.nextBtn);
 		_view.closeBtn.addEventListener(MouseEvent.CLICK, onCloseBtnClick);
 		for (var i:int = 1; i <= 8; ++i) {
-			IfaceBtnWrapper.wrap(_view["item" + i].buyBtn);
 			_view["item" + i].buyBtn.addEventListener(MouseEvent.CLICK, onItemClick);
 		}
 	}
@@ -81,8 +91,12 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 
 	private function onItemClick(event:MouseEvent):void {
 		for (var i:int = 1; i <= 8; ++i) {
-			if (event.target.parent is _view["item" + i]) {
-				trace("clicked on " + i + " item [StoreWindow.onItemClick]");
+			if (event.target.parent == _view["item" + i]) {
+				MouseManager.instance.mode = MouseManager.NORMAL_MODE;
+				MouseManager.instance.img = new InteractivePNG(AssetManager.getImageByURL(_objectVOs[_page*ITEMS_NUM + i].url))
+				MouseManager.instance.data = _objectVOs[_page*ITEMS_NUM + i];
+				dispatchEvent(new WindowEvent(WindowEvent.JUST_HIDE_REQUEST));
+				break;
 			}
 		}
 	}
