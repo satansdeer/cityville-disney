@@ -6,7 +6,7 @@ package iface
 	 */
 	import com.bit101.components.PushButton;
 	
-	import game.staticModel.AppData;
+	import game.collector.AppData;
 	import core.component.panel.HorizontalScrollablePanel;
 	import core.component.panel.PanelItem;
 	

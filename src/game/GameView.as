@@ -79,10 +79,10 @@ package game {
 		 */
 		public function addSceneWithName(sceneName:String):void{
 			if (!sceneName) {
-				throw new Error("layerName must be non null");
+				throw new Error("sceneName must be non null");
 			}
 			if (sceneName in _isoScenes) {
-				throw new Error("layer with name '" + sceneName + "' already exists");
+				throw new Error("scene with name '" + sceneName + "' already exists");
 			}
 			const scene:IsoScene = new IsoScene();
 			_isoScenes[sceneName] = scene;

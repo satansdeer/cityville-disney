@@ -4,7 +4,7 @@
  * Time: 1:59 PM
  */
 package {
-import game.staticModel.AppData;
+import game.collector.AppData;
 import core.enum.ScenesENUM;
 import core.enum.WindowsENUM;
 import core.layer.LayersENUM;
@@ -26,6 +26,7 @@ import game.map.MapsController;
 import iface.GameInterface;
 import iface.ObjectsPanel;
 import iface.windows.ResizeMapWindow;
+import iface.windows.StoreWindow;
 
 import org.casalib.util.StageReference;
 
@@ -94,6 +95,7 @@ public class Main extends Sprite {
 	private function registerWindows():void {
 		WindowManager.instance.layer = LayerManager.getLayer(LayersENUM.WINDOWS);
 		WindowManager.instance.registerWindow(WindowsENUM.RESIZE_MAP_WINDOW, new ResizeMapWindow());
+		WindowManager.instance.registerWindow(WindowsENUM.STORE_WINDOW, new StoreWindow());
 	}
 	
 	private function loadOptions():void {

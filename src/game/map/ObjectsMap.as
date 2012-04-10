@@ -4,7 +4,7 @@ package game.map
 	import as3isolib.geom.IsoMath;
 	import as3isolib.geom.Pt;
 	
-	import game.staticModel.AppData;
+	import game.collector.AppData;
 	import core.display.InteractivePNG;
 	import core.display.IsoFurnitureGrid;
 	import core.enum.ScenesENUM;

@@ -3,7 +3,8 @@
  * Date: 10/04/12
  * Time: 11:40 AM
  */
-package game.staticModel {
+package game.model {
+import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.TimerEvent;
 import flash.utils.Timer;
@@ -13,6 +14,8 @@ import game.crafting.PlotVO;
 import rpc.GameRpc;
 
 public class UserSession extends EventDispatcher {
+	private static var _instance:UserSession;
+
 	private var _level:int;
 	private var _money:int;
 	private var _plot:PlotVO; //грядка епт!
@@ -23,7 +26,14 @@ public class UserSession extends EventDispatcher {
 
 	private const REQUEST_TIMEOUT:int = 1000; //milliseconds
 
-	public function UserSession() {
+	public static function get instance():UserSession {
+		if (!_instance) { _instance = new UserSession(); }
+		return _instance;
+	}
+
+	public function UserSession() {}
+
+	public function init():void {
 		_canRequest = true;
 		_timer = new Timer(REQUEST_TIMEOUT);
 		_timer.addEventListener(TimerEvent.TIMER, onTimer);
@@ -46,6 +56,7 @@ public class UserSession extends EventDispatcher {
 		_plot._timeLeft = state["plot"]["time"];
 		_plot.completed = state["plot"]["completed"];
 		_canRequest = true;
+		dispatchEvent(new Event(Event.CHANGE));
 	}
 
 }

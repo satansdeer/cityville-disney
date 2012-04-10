@@ -1,4 +1,4 @@
-package game.staticModel
+package game.collector
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

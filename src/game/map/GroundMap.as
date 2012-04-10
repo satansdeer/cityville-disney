@@ -4,7 +4,7 @@ package game.map
 	import as3isolib.display.scene.IsoScene;
 	import as3isolib.geom.Pt;
 	
-	import game.staticModel.AppData;
+	import game.collector.AppData;
 	import core.FpsMeter;
 	import core.enum.ScenesENUM;
 	

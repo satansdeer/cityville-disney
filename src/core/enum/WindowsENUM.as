@@ -6,7 +6,8 @@ package core.enum
 	 */
 	public class WindowsENUM{
 		
-		public static var RESIZE_MAP_WINDOW:String  = "resize_map_window";
+		public static var RESIZE_MAP_WINDOW:String  = "resizeMapWindow";
+		public static var STORE_WINDOW:String = "storeWindow";
 		
 	}
 }
