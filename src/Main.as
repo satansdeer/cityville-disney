@@ -21,7 +21,9 @@ import flash.system.Security;
 
 import game.GameView;
 import game.SceneController;
+import game.collector.ObjectsCollector;
 import game.map.MapsController;
+import game.model.UserSession;
 
 import iface.GameInterface;
 import iface.panel.ObjectsPanel;
@@ -63,6 +65,9 @@ public class Main extends Sprite {
 		removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 
 		GameRpc.instance.init("localhost", 8080);
+
+		UserSession.instance.init();
+		ObjectsCollector.instance.init();
 		
 		loadOptions();
 		

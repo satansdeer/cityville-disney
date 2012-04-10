@@ -1,8 +1,10 @@
 package core.component.panel
 {
 	import com.bit101.components.Label;
-	
-	import core.display.AssetManager;
+
+import core.display.AssetManager;
+
+import core.display.AssetManager;
 	import core.display.InteractivePNG;
 	import core.display.SceneSprite;
 	import core.event.AssetEvent;
@@ -29,14 +31,18 @@ package core.component.panel
 		public function PanelItem(vo:Object)
 		{
 			_vo = vo;
-			drawBackground();
+			//drawBackground();
 			nameLabel = new Label(this, 4 , 60)
 			if(_vo.hasOwnProperty("name")){
 				nameLabel.text = _vo.name;
 			}
 			drawPreloader();
-			AssetManager.instance.addEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);
-			AssetManager.load(_vo.url);
+			if (AssetManager.existInCache(_vo.url)) {
+				addImage();
+			} else {
+				AssetManager.instance.addEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);
+				AssetManager.load(_vo.url);
+			}
 			addEventListener(Event.ADDED_TO_STAGE, onAdded);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
 		}
@@ -57,10 +63,10 @@ package core.component.panel
 		}
 		
 		private function addListeners():void {
-			addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
-			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			//addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+			//addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+			//addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+			//addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 		
 		protected function onMouseOut(event:MouseEvent):void{
@@ -91,27 +97,24 @@ package core.component.panel
 		
 		protected function onAssetLoaded(event:AssetEvent):void{
 			if(event.url == _vo.url){
-				AssetManager.instance.removeEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);
-				var img:InteractivePNG = new InteractivePNG(AssetManager.getImageByURL(_vo.url));
-				if(img.width > width){
-					resizeImg(img);
-				}
-				img.x = width/2 - img.width/2;
-				img.y = height/2 - img.height/2;
-				img.mouseEnabled = false;
-				addChild(img);
-				removeChild(_preloader);
+				addImage();
 			}
 		}
-		
+
+		private function addImage() {
+			AssetManager.instance.removeEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);
+			var img:InteractivePNG = new InteractivePNG(AssetManager.getImageByURL(_vo.url));
+			img.width = 100;
+			img.height = 100;
+			img.x = -50;
+			img.y = -50;
+			img.mouseEnabled = false;
+			addChild(img);
+			removeChild(_preloader);
+		}
+
 		public function set itemName(value:String):void{
 			nameLabel.text = value;
-		}
-		
-		protected function drawBackground():void {
-			graphics.beginFill(0xCCCCCC);
-			graphics.drawRoundRect(0,0,50, 80, 4,4);
-			graphics.endFill();
 		}
 		
 		protected function drawPreloader():void{

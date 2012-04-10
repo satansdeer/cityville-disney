@@ -23,7 +23,7 @@ public class WidgetsPanel {
 
 	private function init():void {
 		_money = _view["moneyTxt"];
-		_food = _view["food"];
+		_food = _view["foodTxt"];
 	}
 
 	private function onUserStateChange(event:Event):void {

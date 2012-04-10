@@ -17,7 +17,7 @@ public class ObjectsCollector extends EventDispatcher {
 
 	private var _loader:URLLoader;
 
-	private var _objects:Vector.<MapObjectVO>;
+	private var _objectVOs:Vector.<MapObjectVO>;
 
 	public static function get instance():ObjectsCollector {
 		if (!_instance) { _instance = new ObjectsCollector(); }
@@ -30,6 +30,7 @@ public class ObjectsCollector extends EventDispatcher {
 		loadObjects();
 	}
 
+	public function get objectVOs():Vector.<MapObjectVO> { return _objectVOs; }
 
 	protected function loadObjects():void{
 		var urlrequest:URLRequest = new URLRequest(Configuration.HOST + "/data/objects.xml");
@@ -57,8 +58,8 @@ public class ObjectsCollector extends EventDispatcher {
 	}
 
 	private function addObject(objectVO:MapObjectVO):void {
-		if (!_objects) { _objects = new Vector.<MapObjectVO>(); }
-		_objects.push(objectVO);
+		if (!_objectVOs) { _objectVOs = new Vector.<MapObjectVO>(); }
+		_objectVOs.push(objectVO);
 	}
 
 }

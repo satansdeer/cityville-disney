@@ -39,7 +39,8 @@ public class UserSession extends EventDispatcher {
 	public function get food():int { return _food; }
 
 	public function init():void {
-		_canRequest = true;
+		GameRpc.instance.getState(onState);
+		_canRequest = false;
 		_timer = new Timer(REQUEST_TIMEOUT);
 		_timer.addEventListener(TimerEvent.TIMER, onTimer);
 		_timer.start();
