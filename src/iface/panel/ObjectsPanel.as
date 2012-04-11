@@ -6,18 +6,12 @@ package iface.panel
 	 */
 	import com.bit101.components.PushButton;
 	
-	import game.collector.AppData;
 	import core.component.panel.HorizontalScrollablePanel;
-	import core.component.panel.PanelItem;
-	
+
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.URLLoader;
-	import flash.net.URLRequest;
-	
-	import game.vo.MapObjectVO;
-	
+
 	public class ObjectsPanel extends HorizontalScrollablePanel{
 		
 		protected var leftButton:PushButton;
@@ -30,7 +24,6 @@ package iface.panel
 			super(panelWidth, panelHeight);
 			drawButtons();
 			drawMask();
-			loadObjects();
 		}
 		
 		protected function drawButtons():void {
@@ -56,31 +49,7 @@ package iface.panel
 		override protected function isVisible(item:Sprite):Boolean{
 			return (item.width + spacing) * (items.length -1) + 40 < panelWidth;
 		}
-		
-		protected function loadObjects():void{
-			var urlrequest:URLRequest = new URLRequest(Configuration.HOST + "/data/objects.xml");
-			loader = new URLLoader();
-			loader.addEventListener(Event.COMPLETE, onComplete);
-			loader.load(urlrequest);
-		}
-		
-		protected function onComplete(event:Event):void{
-			AppData.objects = new XML(event.target.data);
-			var xml:XML = new XML(event.target.data);
-			var objectVO:MapObjectVO;
-			for (var i:int = 0; i < xml.object.length(); i++){
-				objectVO = new MapObjectVO();
-				objectVO.id = xml.object[i].@id;
-				objectVO.name = xml.object[i].@name;
-				objectVO.url = xml.object[i].@url;
-				objectVO.length = xml.object[i].@length;
-				objectVO.width = xml.object[i].@width;
-				objectVO.offsetX = xml.object[i].@offsetX;
-				objectVO.offsetY = xml.object[i].@offsetY;
-				addItem(new PanelItem(objectVO));
-			}
-		}
-		
+
 		protected function onLeftClick(event:MouseEvent):void{
 			scrollLeft();
 		}

@@ -1,25 +1,17 @@
-package game.map
-{
-	import as3isolib.display.IsoSprite;
-	import as3isolib.display.scene.IsoScene;
-	import as3isolib.geom.Pt;
-	
-	import game.collector.AppData;
-	import core.FpsMeter;
-	import core.enum.ScenesENUM;
-	
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.Stage;
-	import flash.events.Event;
-	import flash.geom.Point;
-	
-	import game.GameView;
-	import game.events.GameViewEvent;
-	
-	import org.casalib.util.StageReference;
-	
-	import ru.beenza.framework.utils.EventJoin;
+package game.map {
+import as3isolib.display.IsoSprite;
+
+import core.FpsMeter;
+import core.enum.ScenesENUM;
+
+import flash.display.Bitmap;
+import flash.events.Event;
+
+import game.GameView;
+
+import org.casalib.util.StageReference;
+
+import ru.beenza.framework.utils.EventJoin;
 
 	/**
 	 * GroundMap
@@ -47,8 +39,7 @@ package game.map
 			_stage = StageReference.getStage();
 			_scene = _gameView.getScene(ScenesENUM.GROUND);
 			_eventJ = new EventJoin(2,load);
-			//load();
-			AppData.instance.addEventListener(Event.COMPLETE, onComplete);
+			load();
 		}
 		
 		public static function get instance():GroundMap{
@@ -98,7 +89,7 @@ package game.map
 			var mapLength:int = _map[0].length;
 			for(var x:int = 0; x < mapWidth; x++){
 				for(var y:int = 0; y < mapLength; y++){
-					tempTile = _map[x][y]
+					tempTile = _map[x][y];
 					tempTile.shown = true;
 					_newTilesFowShow.push(tempTile);
 				}

@@ -15,7 +15,6 @@ import core.window.WindowBase;
 import flash.events.Event;
 
 import flash.events.MouseEvent;
-import flash.ui.Mouse;
 
 import game.collector.ObjectsCollector;
 import game.vo.MapObjectVO;

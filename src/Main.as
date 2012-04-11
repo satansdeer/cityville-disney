@@ -4,7 +4,6 @@
  * Time: 1:59 PM
  */
 package {
-import game.collector.AppData;
 import core.enum.ScenesENUM;
 import core.enum.WindowsENUM;
 import core.layer.LayersENUM;
@@ -12,11 +11,8 @@ import core.window.WindowManager;
 
 import flash.display.Sprite;
 import flash.display.StageAlign;
-import flash.display.StageQuality;
 import flash.display.StageScaleMode;
 import flash.events.Event;
-import flash.net.URLLoader;
-import flash.net.URLRequest;
 import flash.system.Security;
 
 import game.GameView;
@@ -69,8 +65,6 @@ public class Main extends Sprite {
 		UserSession.instance.init();
 		ObjectsCollector.instance.init();
 		
-		loadOptions();
-		
 			// stage settings
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.align = StageAlign.TOP_LEFT;
@@ -100,17 +94,6 @@ public class Main extends Sprite {
 		WindowManager.instance.layer = LayerManager.getLayer(LayersENUM.WINDOWS);
 		WindowManager.instance.registerWindow(WindowsENUM.RESIZE_MAP_WINDOW, new ResizeMapWindow());
 		WindowManager.instance.registerWindow(WindowsENUM.STORE_WINDOW, new StoreWindow());
-	}
-	
-	private function loadOptions():void {
-		var req:URLRequest = new URLRequest(Configuration.HOST + "/options.xml");
-		var loader:URLLoader = new URLLoader;
-		loader.addEventListener(Event.COMPLETE, onOptionsComplete);
-		loader.load(req);
-	}
-	
-	protected function onOptionsComplete(event:Event):void{
-		AppData.options = new XML(event.target.data);
 	}
 	
 	private function initPanel():void {

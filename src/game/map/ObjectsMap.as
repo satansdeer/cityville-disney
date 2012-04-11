@@ -1,35 +1,28 @@
-package game.map
-{
-	import as3isolib.display.IsoSprite;
-	import as3isolib.geom.IsoMath;
-	import as3isolib.geom.Pt;
-	
-	import game.collector.AppData;
-	import core.display.InteractivePNG;
-	import core.display.IsoFurnitureGrid;
-	import core.enum.ScenesENUM;
-	import core.layer.LayersENUM;
-	
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
-	
-	import game.GameView;
-	import game.vo.MapObjectVO;
-	
-	import mouse.MouseManager;
-	
-	import org.casalib.util.StageReference;
+package game.map {
+import as3isolib.display.IsoSprite;
+import as3isolib.geom.IsoMath;
+import as3isolib.geom.Pt;
+
+import core.enum.ScenesENUM;
+import core.layer.LayersENUM;
+
+import flash.events.Event;
+import flash.events.MouseEvent;
+import flash.geom.Point;
+import flash.geom.Rectangle;
+import flash.net.URLLoader;
+
+import game.GameView;
+import game.collector.ObjectsCollector;
+import game.vo.MapObjectVO;
+
+import mouse.MouseManager;
+
+import org.casalib.util.StageReference;
 
 import rpc.GameRpc;
 
 import ru.beenza.framework.layers.LayerManager;
-	import ru.beenza.framework.utils.EventJoin;
 
 	/**
 	 * ObjectsMap
@@ -44,7 +37,6 @@ import ru.beenza.framework.layers.LayerManager;
 		
 		private var _objectForBuying:MapObject;
 		
-		private var _loadEventJoin:EventJoin;
 		private var _controller:MapsController;
 		
 		private var _shownObjects:Array = [];
@@ -64,8 +56,11 @@ import ru.beenza.framework.layers.LayerManager;
 			LayerManager.getLayer(LayersENUM.SCENE).addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			StageReference.getStage().addEventListener(Event.ENTER_FRAME, onEnterFrame);
-			AppData.instance.addEventListener(Event.COMPLETE, onDataLoaded);
-			_loadEventJoin = new EventJoin(2, load);
+
+			if (ObjectsCollector.instance.objectVOs) { load();
+			} else {
+				ObjectsCollector.instance.addEventListener(Event.COMPLETE, onObjectsLoaded);
+			}
 		}
 		
 		public function setObjectForBuying(value:MapObjectVO):void{
@@ -108,8 +103,8 @@ import ru.beenza.framework.layers.LayerManager;
 		}
 		
 		
-		protected function onDataLoaded(event:Event):void{
-			_loadEventJoin.join(event);
+		private function onObjectsLoaded(event:Event):void {
+			load();
 		}
 		
 		protected function onEnterFrame(event:Event):void{
@@ -141,10 +136,10 @@ import ru.beenza.framework.layers.LayerManager;
 		}
 		
 		private function load():void{
-			GameRpc.instance.getMapObjects(onObjectsInfoLoaded);
+			GameRpc.instance.getMapObjects(onMapObjectsLoaded);
 		}
 
-		private function onObjectsInfoLoaded(response:Object):void {
+		private function onMapObjectsLoaded(response:Object):void {
 			if (!response["ok"]) { return; }
 			var objectList:Array = response["ok"];
 			var mO:MapObject;
@@ -157,36 +152,14 @@ import ru.beenza.framework.layers.LayerManager;
 			}
 			updateRegion();
 		}
-		
-		protected function onMapLoaded(event:Event):void
-		{
-			AppData.objectsMap= new XML(loader.data);
-			var mapXML:XML = AppData.objectsMap;
-			var mO:MapObject;
-			for(var i:int = 0; i<mapXML.object.length(); i++){
-				mO = new MapObject(getVOById(mapXML.object[i].@id), this);
-				mO.x = int(mapXML.object[i].@x);
-				mO.y = int(mapXML.object[i].@y);
-				mO.shown = false;
-				objects.push(mO);
-			}
-			updateRegion();
-		}
-		
+
 		private function getVOById(id:String):MapObjectVO{
-			var vo:MapObjectVO = new MapObjectVO();
-			for (var i:int = 0; i<AppData.objects.object.length(); i++){
-				if(AppData.objects.object[i].@id == id){
-					vo.id = AppData.objects.object[i].@id;
-					vo.name = AppData.objects.object[i].@name;
-					vo.url = AppData.objects.object[i].@url;
-					vo.length = AppData.objects.object[i].@length;
-					vo.width = AppData.objects.object[i].@width;
-					vo.offsetX = AppData.objects.object[i].@offsetX;
-					vo.offsetY = AppData.objects.object[i].@offsetY;
+			for each (var objectVO:MapObjectVO in ObjectsCollector.instance.objectVOs) {
+				if (objectVO.id.toString() == id) {
+					return objectVO;
 				}
 			}
-			return vo;
+			return null;
 		}
 		
 		protected function onMouseMove(event:MouseEvent):void{
