@@ -74,14 +74,6 @@ import ru.beenza.framework.layers.LayerManager;
 			_objectForBuying.isoSprite.render();
 		}
 		
-		public function addObject(object:MapObject):void{
-			
-		}
-		
-		public function get objectForBuying():MapObject{
-			return _objectForBuying;
-		}
-		
 		public function addObjectAt(x:int, y:int, vo:MapObjectVO):void{
 			objects.push(new MapObject(vo, this));
 			objects[objects.length -1].shown = true;
@@ -166,6 +158,7 @@ import ru.beenza.framework.layers.LayerManager;
 			if(_objectForBuying){
 				var isoMouse:Point = stageToIso(new Point(_scene.container.mouseX,_scene.container.mouseY));
 				if((_objectForBuying.y != isoMouse.y) || (_objectForBuying.x != isoMouse.x)){
+					trace("isoMouse.x : " + isoMouse.x + " [ObjectsMap.onMouseMove]");
 					_objectForBuying.x = isoMouse.x;
 					_objectForBuying.y = isoMouse.y;
 					_objectForBuying.isoSprite.moveTo(isoMouse.x, isoMouse.y, 0);
@@ -210,8 +203,8 @@ import ru.beenza.framework.layers.LayerManager;
 			p = LayerManager.getLayer(LayersENUM.SCENE).globalToLocal(p);
 			const pt:Pt = new Pt(p.x, p.y);
 			IsoMath.screenToIso(pt);
-			p.x = Math.floor(pt.x / Main.UNIT_SIZE) * Main.UNIT_SIZE;
-			p.y = Math.floor(pt.y / Main.UNIT_SIZE) * Main.UNIT_SIZE;
+			p.x = Math.floor(pt.x / (Main.UNIT_SIZE/2)) * (Main.UNIT_SIZE/2);
+			p.y = Math.floor(pt.y / (Main.UNIT_SIZE/2)) * (Main.UNIT_SIZE/2);
 			return p;
 		}
 		

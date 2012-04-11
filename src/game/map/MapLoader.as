@@ -42,9 +42,7 @@ public class MapLoader extends EventDispatcher{
 		/* Internal functionsn */
 
 	private static function onMapFromServerLoaded(response:Object):void {
-		if (response["ok"]) {
-			createMapFromJSON(response["ok"]);
-		}
+		createMapFromJSON(response);
 	}
 
 		private static function onMapFromFileLoaded(event:Event):void {
@@ -59,7 +57,7 @@ public class MapLoader extends EventDispatcher{
 				for (var i:int = 0; i < mapObject["width"]; i++){
 					map[i] = new Vector.<Tile>(mapObject["height"], true);
 					for(var j:int = 0; j < mapObject["height"]; j++){
-						map[i][j] = new Tile(i,j, Tile.TILE1_URL);
+						map[i][j] = new Tile(i,j, Tile.TILE_URLS[int(Math.random() * Tile.TILE_URLS.length)]);
 						k++;
 					}
 				}

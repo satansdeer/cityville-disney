@@ -36,7 +36,7 @@ import ru.beenza.framework.layers.LayerManager;
 public class Main extends Sprite {
 	public static const APP_WIDTH:int = 760;
 	public static const APP_HEIGHT:int = 760;
-	public static const UNIT_SIZE:int = 32;
+	public static const UNIT_SIZE:int = 254;
 	
 	private var sceneController:SceneController;
 
@@ -60,7 +60,7 @@ public class Main extends Sprite {
 	private function addedToStageHandler(event:Event):void {
 		removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 
-		GameRpc.instance.init("localhost", 8080);
+		GameRpc.instance.init(Configuration.HOST_BASE, 8080);
 
 		UserSession.instance.init();
 		ObjectsCollector.instance.init();
@@ -69,7 +69,6 @@ public class Main extends Sprite {
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.align = StageAlign.TOP_LEFT;
 		StageReference.setStage(stage);
-		stage.addEventListener(Event.RESIZE, onStageResize);
 		//stage.quality = StageQuality.LOW;
 			//layers
 		LayerManager.init();
@@ -84,10 +83,6 @@ public class Main extends Sprite {
 		//initPanel();
 		registerWindows();
 		_iface = new GameInterface();
-	}
-	
-	protected function onStageResize(event:Event):void{
-		//_gameView.resize();
 	}
 	
 	private function registerWindows():void {

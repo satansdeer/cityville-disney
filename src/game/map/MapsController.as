@@ -39,7 +39,7 @@ public class MapsController extends EventDispatcher{
 		
 		private var _stage:Stage;
 		private static var _instance:MapsController;
-		private var _fogMap:FogMap;
+		//private var _fogMap:FogMap;
 		
 		public function MapsController(gV:GameView)
 		{
@@ -49,14 +49,13 @@ public class MapsController extends EventDispatcher{
 			_stage = StageReference.getStage();
 			_stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 			_gameView.addEventListener(GameViewEvent.MOVE, onGameViewMove);
-			_gameView.addEventListener(MouseEvent.CLICK, onGameViewClick);
 			initMaps();
 		}
 		
-		public function get fogMap():FogMap{
-			return _fogMap;
-		}
-		
+//		public function get fogMap():FogMap{
+//			return _fogMap;
+//		}
+/*
 		protected function onGameViewClick(event:MouseEvent):void{
 			if(MouseManager.instance.mode == MouseManager.FOG_MODE){
 				var pt:Pt =  getIsoUnitPt(_gameView.mouseX, _gameView.mouseY);
@@ -67,6 +66,7 @@ public class MapsController extends EventDispatcher{
 				}
 			}
 		}
+		*/
 		
 		protected function getIsoUnitPt(mX:int, mY:int):Pt{
 			tempPoint.x = mX;
@@ -85,30 +85,30 @@ public class MapsController extends EventDispatcher{
 			GameRpc.instance.sendMap(_groundMap.mapToJSON());
 		}
 		
-		public function setSize(sW:int, sL:int):void{
-			_groundMap.setSize(sW, sL);
-			_objectsMap.setSize(sW, sL);
-			_fogMap.setSize(sW, sL);
-			saveToServer();
-		}
+//		public function setSize(sW:int, sL:int):void{
+//			_groundMap.setSize(sW, sL);
+//			_objectsMap.setSize(sW, sL);
+//			_fogMap.setSize(sW, sL);
+//			saveToServer();
+//		}
 		
 		protected function onEnterFrame(event:Event):void{
-			_groundMap.showNewTiles();
-			_objectsMap.showNewObjects();
+			//_groundMap.showNewTiles();
+			//_objectsMap.showNewObjects();
 		}
 		
 		protected function onGameViewMove(event:Event):void{
 			recountRegion();
-			_groundMap.updateRegion();
+			//_groundMap.updateRegion();
 			_objectsMap.updateRegion();
-			_fogMap.updateRegion();
+//			_fogMap.updateRegion();
 		}
 		
 		private function initMaps():void {
 			_groundMap = new GroundMap(_gameView, this);
 			//_road1Map = new Road1Map(_gameView);
 			_objectsMap = new ObjectsMap(_gameView, this);
-			_fogMap = new FogMap(_gameView, this);
+//			_fogMap = new FogMap(_gameView, this);
 		}
 		
 		protected function recountRegion():void{

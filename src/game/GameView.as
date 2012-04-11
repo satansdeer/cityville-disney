@@ -58,7 +58,7 @@ package game {
 			//clipContent = true;
 			autoUpdate = true;
 			limitRangeOfMotion = false;
-			setSize(StageReference.getStage().stageWidth, StageReference.getStage().stageHeight);
+			//setSize(StageReference.getStage().stageWidth, StageReference.getStage().stageHeight);
 			addListeners();
 		}
 		
@@ -123,10 +123,6 @@ package game {
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
 		
-		protected function onMouseWheel(event:MouseEvent):void{
-			zoom(currentZoom + 0.1 * event.delta);
-		}
-		
 		private function onFullscreen(event:Event):void{
 			recountBounds();
 		}
@@ -146,7 +142,6 @@ package game {
 			addEventListener(MouseEvent.MOUSE_DOWN, onViewDown);
 			addEventListener(MouseEvent.CLICK, onViewClick, false, 1);
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
-			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 		}
 		
 		private function onRemovedFromStage(event:Event):void {

@@ -30,7 +30,8 @@ public class Tile {
 	
 	public var isoSprite:IsoSprite;
 
-	public static const TILE1_URL:String = "assets/tile.png";
+	public static const TILE_URLS:Array = ["assets/tile/land_01.png", "assets/tile/land_02.png", "assets/tile/land_03.png",
+																					"assets/tile/land_04.png", "assets/tile/land_05.png"];
 	
 	public function Tile(x:Number, y:Number, url:String) {
 		_x = x;

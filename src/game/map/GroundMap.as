@@ -45,7 +45,8 @@ import ru.beenza.framework.utils.EventJoin;
 		public static function get instance():GroundMap{
 			return _instance;
 		}
-		
+
+/*
 		public function setSize(w:int, h:int):void{
 			var tile:IsoSprite;
 			var bmp:Bitmap;
@@ -69,6 +70,7 @@ import ru.beenza.framework.utils.EventJoin;
 			}
 			_map = _tempMap;
 		}
+		*/
 		
 		protected function onComplete(event:Event):void{
 			_eventJ.join(event);
@@ -91,10 +93,18 @@ import ru.beenza.framework.utils.EventJoin;
 				for(var y:int = 0; y < mapLength; y++){
 					tempTile = _map[x][y];
 					tempTile.shown = true;
-					_newTilesFowShow.push(tempTile);
+
+					if(tempTile.isoSprite){
+						trace("WARN! tile already has isoSprite [GroundMap.makeTileMap")
+					}
+					tempTile.draw();
+					tempTile.isoSprite.moveTo(tempTile.x * (Main.UNIT_SIZE-10), tempTile.y * (Main.UNIT_SIZE-10), 0);
+					_scene.addChild(tempTile.isoSprite);
+					tempTile.isoSprite.render();
+					tiles.push(tempTile)
 				}
 			}
-			_controller.fogMap.setSize(mapWidth, mapLength);
+			//_controller.fogMap.setSize(mapWidth, mapLength);
 		}
 		
 		private function getTileByXY(tX:int, tY:int):Tile{
@@ -104,7 +114,7 @@ import ru.beenza.framework.utils.EventJoin;
 			if(tY>=_map[tX].length){return null}
 			return _map[tX][tY];
 		}
-		
+		/*
 		public function updateRegion():void {
 			for (var k:int = _controller.minUnitIsoPoint.x; k < _controller.maxUnitIsoPoint.x; k++){
 				for (var q:int = _controller.minUnitIsoPoint.y; q < _controller.maxUnitIsoPoint.y; q++){
@@ -112,7 +122,7 @@ import ru.beenza.framework.utils.EventJoin;
 					if(tempTile && !tempTile.shown){
 						_newTilesFowShow.push(tempTile);
 						tempTile.shown = true;
-					} 
+
 				}
 			}
 			tempTiles = new Vector.<Tile>;
@@ -128,6 +138,26 @@ import ru.beenza.framework.utils.EventJoin;
 				}
 			}
 			tiles = tempTiles;
+		}
+		*/
+		/*
+		public function showTiles():void {
+			for each(var tile:Tile in _tiles){
+					if(_newTilesFowShow.length > 0){
+						tempTile = _newTilesFowShow[_newTilesFowShow.length -1];
+						if(tempTile && ((tempTile.x>_controller.minUnitIsoPoint.x) || (tempTile.y>_controller.minUnitIsoPoint.y) || (tempTile.x<_controller.maxUnitIsoPoint.x) || (tempTile.y<_controller.maxUnitIsoPoint.y))){
+							var tile:Tile = _newTilesFowShow.shift();
+							if(tile){
+								if(!tile.isoSprite){
+									tile.draw();
+								}
+								tile.isoSprite.moveTo(tile.x * Main.UNIT_SIZE, tile.y * Main.UNIT_SIZE, 0);
+								_scene.addChild(tile.isoSprite);
+								tile.isoSprite.render();
+								tiles.push(tile)
+							}
+						}
+					}
 		}
 		
 		public function showNewTiles():void {
@@ -158,6 +188,7 @@ import ru.beenza.framework.utils.EventJoin;
 				}
 			}
 		}
+		*/
 
 		public function mapToJSON():String {
 			if (_map.length == 0) { return "{\"width\":0, \"height\":0}"; }

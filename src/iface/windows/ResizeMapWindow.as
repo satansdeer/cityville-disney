@@ -59,7 +59,7 @@ package iface.windows
 		}
 		
 		protected function onOkClick(event:MouseEvent):void{
-			MapsController.instance.setSize(_mapWidth, _mapLength);
+//			MapsController.instance.setSize(_mapWidth, _mapLength);
 			WindowManager.instance.hideCurrentWindow();
 		}
 		
