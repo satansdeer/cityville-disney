@@ -48,7 +48,7 @@ package rpc {
 		}
 
 		public function buyTown(id:String, x:int, y:int, callback:Function):void {
-			var objectInfo:String = "\"id\" : " + id + ", \"x\" : " + x + "\"y\" : " + y;
+			var objectInfo:String = "\"id\" : " + id + ", \"x\" : " + x + ", \"y\" : " + y;
 			_rpc.send("{" + getRequestString("buy_town") + ", " + objectInfo + "}", callback);
 		}
 

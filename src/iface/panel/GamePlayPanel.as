@@ -45,7 +45,7 @@ public class GamePlayPanel {
 	}
 
 	private function onResetBtnClick(event:MouseEvent):void{
-		//MapsController.instance.saveToServer()
+		MapsController.instance.saveToServer()
 		trace("reset btn");
 	}
 	private function onDeleteBtnClick(event:MouseEvent):void {

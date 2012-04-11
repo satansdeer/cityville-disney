@@ -110,12 +110,15 @@ import ru.beenza.framework.layers.LayerManager;
 				_scene.removeChild(_objectForBuying.isoSprite);
 				if(placeAvailable(_objectForBuying)){
 					addObjectAt(_objectForBuying.x, _objectForBuying.y, _objectForBuying.vo);
+					GameRpc.instance.buyTown(_objectForBuying.vo.id.toString(), _objectForBuying.x,  _objectForBuying.y, onObjectBought);
 				}
 				_objectForBuying = null;
 				//grid.clear();
 				setObjectsMouseEnabled(true);
-				save()
 			}
+		}
+
+		private function onObjectBought(response:Object):void {
 		}
 		
 		private function save():void{
@@ -132,16 +135,16 @@ import ru.beenza.framework.layers.LayerManager;
 		}
 
 		private function onMapObjectsLoaded(response:Object):void {
-			var objectList:Array = response["ok"];
+			var objectList:Array = response as Array;
 			var mO:MapObject;
 			for(var i:int = 0; i<objectList.length; i++){
 				mO = new MapObject(getVOById(objectList[i]["id"]), this);
 				mO.x = int(objectList[i]["x"]);
 				mO.y = int(objectList[i]["y"]);
-				mO.shown = false;
+				mO.shown = true;
 				objects.push(mO);
+				addObjectAt(mO.x, mO.y, mO.vo);
 			}
-			updateRegion();
 		}
 
 		private function getVOById(id:String):MapObjectVO{
