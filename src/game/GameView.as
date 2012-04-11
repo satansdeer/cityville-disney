@@ -27,7 +27,7 @@ package game {
 		
 		public static var unitSize:uint;
 		
-		public var velosity_force:Number = .8;
+		public var velosity_force:Number = .9;
 		
 		private static var _instance:GameView;
 		
@@ -154,6 +154,7 @@ package game {
 			}
 		}
 		private function moveView():void {
+
 			if (Math.abs(velosity.x) >= currentZoom) {
 				velosity.x *= velosity_force;
 			}else{
@@ -164,14 +165,21 @@ package game {
 			}else{
 				velosity.y = 0;
 			}
+
 			if((velosity.x != 0) || (velosity.y !=0)){
-				panBy(velosity.x, velosity.y);
-				render(true);
+				trace("velosity.x : " + velosity.x + ", velosity.y : " + velosity.y + " [GameView.moveView]");
+			  //hard code, but what can i do this?
+//				if (((currentX + velosity.x) > -485 || velosity.x > 0) && ((currentY + velosity.y) > 256 || velosity.y > 0)
+//								&& (currentX < -36 || velosity.x < 0) && (currentY < 470 || velosity.y < 0)) {
+					panBy(velosity.x, velosity.y);
+//				}
+				trace("game view x : " + currentX + ", game view y : " + currentY + " [GameView.moveView]");
 				validatePosition();
+				render(true);
 				curUnitPoint.x = int(currentX/Main.UNIT_SIZE);
 				curUnitPoint.y = int(currentY/Main.UNIT_SIZE);
 				if((curUnitPoint.x != prevUnitPoint.x) || (curUnitPoint.y != prevUnitPoint.y)){
-					dispatchEvent(new GameViewEvent(GameViewEvent.MOVE));
+					//dispatchEvent(new GameViewEvent(GameViewEvent.MOVE));
 				}
 				prevUnitPoint.x = curUnitPoint.x;
 				prevUnitPoint.y = curUnitPoint.y;
@@ -180,7 +188,7 @@ package game {
 		
 		private function onViewDown(event:MouseEvent):void {
 			drag = true;
-			currentPoint.x = mouseX + currentX;	
+			currentPoint.x = mouseX + currentX;
 			currentPoint.y = mouseY + currentY;
 			prevPt = localToIso(new Point(mouseX, mouseY));
 			prevPoint.x = stage.mouseX;
@@ -212,8 +220,15 @@ package game {
 				curPoint.x = mouseX;
 				curPoint.y = mouseY;
 				curPt = localToIso(curPoint);
+				//hard code, but what can i do this?
 				velosity.x = ((currentPoint.x - curPoint.x) - currentX);
 				velosity.y = ((currentPoint.y - curPoint.y) - currentY);
+				if (((currentPoint.x - curPoint.x) > -485 || velosity.x > 0) && ((currentPoint.y - curPoint.y) > 256 || velosity.y > 0)
+								&& ((currentPoint.x - curPoint.x) < -36 || velosity.x < 0) && ((currentPoint.y - curPoint.y) < 470 || velosity.y < 0)) {
+				} else {
+					velosity.x = 0;
+					velosity.y = 0;
+				}
 			}
 			if(velosity.x != 0 || velosity.y != 0){
 				moveView();
