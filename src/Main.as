@@ -110,5 +110,6 @@ public class Main extends Sprite {
 		LayerManager.getLayer("scene").addChild(_gameView);
 		_mapsController = new MapsController(_gameView);
 	}
+
 }
 }

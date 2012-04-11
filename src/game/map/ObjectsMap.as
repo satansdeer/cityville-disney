@@ -132,7 +132,6 @@ import ru.beenza.framework.layers.LayerManager;
 		}
 
 		private function onMapObjectsLoaded(response:Object):void {
-			if (!response["ok"]) { return; }
 			var objectList:Array = response["ok"];
 			var mO:MapObject;
 			for(var i:int = 0; i<objectList.length; i++){
@@ -158,10 +157,9 @@ import ru.beenza.framework.layers.LayerManager;
 			if(_objectForBuying){
 				var isoMouse:Point = stageToIso(new Point(_scene.container.mouseX,_scene.container.mouseY));
 				if((_objectForBuying.y != isoMouse.y) || (_objectForBuying.x != isoMouse.x)){
-					trace("isoMouse.x : " + isoMouse.x + " [ObjectsMap.onMouseMove]");
-					_objectForBuying.x = isoMouse.x;
-					_objectForBuying.y = isoMouse.y;
-					_objectForBuying.isoSprite.moveTo(isoMouse.x, isoMouse.y, 0);
+					_objectForBuying.x = isoMouse.x + 50;
+					_objectForBuying.y = isoMouse.y + 50;
+					_objectForBuying.isoSprite.moveTo(isoMouse.x+50, isoMouse.y+50, 0);
 				}
 				_scene.render();
 			}
@@ -184,11 +182,11 @@ import ru.beenza.framework.layers.LayerManager;
 		private function placeAvailable(object:MapObject):Boolean{
 			var obj:MapObject;
 			var rect:Rectangle;
-			const objectRect:Rectangle = new Rectangle(int(object.isoSprite.x/Main.UNIT_SIZE), int(object.isoSprite.y/Main.UNIT_SIZE), object.vo.width, object.vo.length);
+			const objectRect:Rectangle = new Rectangle(int(object.isoSprite.x), int(object.isoSprite.y), object.vo.width, object.vo.length);
 			const objRect:Rectangle = new Rectangle();
 			for each (obj in _shownObjects) {
-				objRect.x = int(obj.isoSprite.x/Main.UNIT_SIZE);
-				objRect.y = int(obj.isoSprite.y/Main.UNIT_SIZE);
+				objRect.x = int(obj.isoSprite.x);
+				objRect.y = int(obj.isoSprite.y);
 				objRect.width = obj.vo.width;
 				objRect.height = obj.vo.length;
 				rect = objectRect.intersection(objRect);

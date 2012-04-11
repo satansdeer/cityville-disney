@@ -191,7 +191,7 @@ import ru.beenza.framework.utils.EventJoin;
 		*/
 
 		public function mapToJSON():String {
-			if (_map.length == 0) { return "{\"width\":0, \"height\":0}"; }
+			//if (_map.length == 0) { return "{\"width\":0, \"height\":0}"; }
 			/*
 			var tiles:String = "[";
 			for (var i:int = 0; i < _map.length; ++i) {
@@ -202,7 +202,7 @@ import ru.beenza.framework.utils.EventJoin;
 			}
 			tiles += "]";
 			*/
-			return "{\"width\":" + _map.length + ", \"height\":" + _map[0].length + "}";
+			return "{\"width\":" + 12 + ", \"height\":" + 12 + "}";
 		}
 
 		/* Internal function */

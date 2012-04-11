@@ -11,6 +11,8 @@ import core.window.WindowManager;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
 
+import game.map.MapsController;
+
 public class GamePlayPanel {
 	private var _view:Sprite;
 	private var _storeBtn:Sprite;
@@ -43,6 +45,7 @@ public class GamePlayPanel {
 	}
 
 	private function onResetBtnClick(event:MouseEvent):void{
+		//MapsController.instance.saveToServer()
 		trace("reset btn");
 	}
 	private function onDeleteBtnClick(event:MouseEvent):void {
