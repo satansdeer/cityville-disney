@@ -30,11 +30,10 @@ import ru.beenza.framework.layers.LayerManager;
 	 */
 	public class ObjectsMap extends MapBase{
 		
-		private var _map:Array;
 		private var objects:Array = [];
 		
-		//private var grid:IsoFurnitureGrid;
-		
+		private var _plot:FarmPlot;
+
 		private var _objectForBuying:MapObject;
 		
 		private var _controller:MapsController;
@@ -45,10 +44,8 @@ import ru.beenza.framework.layers.LayerManager;
 		private var _newObjectsForShow:Array = [];
 		private var tempObject:MapObject;
 		private const SHOW_NUM:int = 1;
-		private var loader:URLLoader;
-		
-		public function ObjectsMap(gameView:GameView, controller:MapsController)
-		{
+
+		public function ObjectsMap(gameView:GameView, controller:MapsController) {
 			super(gameView);
 			_controller = controller;
 			_scene = _gameView.getScene(ScenesENUM.OBJECTS);
@@ -91,7 +88,6 @@ import ru.beenza.framework.layers.LayerManager;
 			_scene.removeChild(object.isoSprite);
 			objects.splice(objects.indexOf(object),1);
 			_shownObjects.splice(_shownObjects.indexOf(object),1);
-			save();
 		}
 		
 		
@@ -121,29 +117,22 @@ import ru.beenza.framework.layers.LayerManager;
 		private function onObjectBought(response:Object):void {
 		}
 		
-		private function save():void{
-			var mapString:String = "<objects>";
-			for(var i:int=0; i < objects.length; i++){
-				mapString += "<object id=\""+objects[i].vo.id+"\"" + " x=\""+ objects[i].x + "\"" + "y=\""+ objects[i].y + "\"" + "/>";
-			}
-			mapString += "</objects>";
-			var mapXML:XML = new XML(mapString);
-		}
-		
 		private function load():void{
+			_plot = FarmPlot.create(this);
+			addObjectAt(_plot.x, _plot.y, _plot.vo);
 			GameRpc.instance.getMapObjects(onMapObjectsLoaded);
 		}
 
 		private function onMapObjectsLoaded(response:Object):void {
 			var objectList:Array = response as Array;
-			var mO:MapObject;
+			var mapObjectVO:MapObjectVO;
 			for(var i:int = 0; i<objectList.length; i++){
-				mO = new MapObject(getVOById(objectList[i]["id"]), this);
-				mO.x = int(objectList[i]["x"]);
-				mO.y = int(objectList[i]["y"]);
-				mO.shown = true;
-				objects.push(mO);
-				addObjectAt(mO.x, mO.y, mO.vo);
+
+				mapObjectVO = getVOById(objectList[i]["id"]);
+				//mO.x = int(objectList[i]["x"]);
+				//mO.y = int(objectList[i]["y"]);
+				//mO.shown = true;
+				addObjectAt(int(objectList[i]["x"]), int(objectList[i]["y"]), mapObjectVO);
 			}
 		}
 

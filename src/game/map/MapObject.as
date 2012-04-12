@@ -30,15 +30,14 @@ package game.map
 		public var img:InteractivePNG;
 		
 		private var _controller:ObjectsMap;
-		
+
 		private var _x:int;
 		private var _y:int;
 		private var preloader:MapObjectPreloader;
 		
 		public var shown:Boolean;
 		
-		public function MapObject(objectVO:MapObjectVO, controller:ObjectsMap)
-		{
+		public function MapObject(objectVO:MapObjectVO, controller:ObjectsMap) {
 			super(null);
 			vo = objectVO;
 			_controller = controller;
