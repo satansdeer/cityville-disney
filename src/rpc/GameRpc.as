@@ -57,6 +57,14 @@ package rpc {
 			_rpc.send("{" + getRequestString("remove_town") + ", " + objectInfo + "}", null);
 		}
 
+		public function plantPlot():void {
+			_rpc.send("{" + getRequestString("plant_flower") + "}", null);
+		}
+
+		public function getPlotProfit():void {
+			_rpc.send("{" + getRequestString("get_flower_profit") + "}", null);
+		}
+
 		//not use please
 		public function getObjectsInfo(callback:Function):void {
 			_rpc.send("{" + getRequestString("get_objects_info") + "}", callback);

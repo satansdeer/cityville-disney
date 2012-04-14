@@ -32,11 +32,14 @@ public class UserSession extends EventDispatcher {
 		return _instance;
 	}
 
-	public function UserSession() {}
+	public function UserSession() {
+		_plot = new PlotVO();
+	}
 
 	public function get money():int { return _money; }
 	public function get level():int { return _level; }
 	public function get food():int { return _food; }
+	public function get plot():PlotVO { return _plot; }
 
 	public function init():void {
 		GameRpc.instance.getState(onState);
@@ -57,9 +60,6 @@ public class UserSession extends EventDispatcher {
 		_level = state["level"];
 		_money = state["money"];
 		_food = state["food"];
-		if (!_plot) {
-			_plot = new PlotVO();
-		}
 		_plot._timeLeft = state["plot"]["time"];
 		_plot.completed = state["plot"]["completed"];
 		_canRequest = true;

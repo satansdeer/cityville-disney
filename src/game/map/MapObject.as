@@ -35,7 +35,7 @@ public class MapObject extends EventDispatcher{
 
 		private var _x:int;
 		private var _y:int;
-		private var preloader:MapObjectPreloader;
+		protected var preloader:MapObjectPreloader;
 		
 		public var shown:Boolean;
 		
@@ -102,10 +102,9 @@ public class MapObject extends EventDispatcher{
 			}
 		}
 		
-		private function addListeners():void {
+		protected function addListeners():void {
 			img.addEventListener(MouseEvent.CLICK, onClick);
 			img.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			
 		}
 		
 		protected function onAssetLoaded(event:AssetEvent):void{
@@ -125,7 +124,7 @@ public class MapObject extends EventDispatcher{
 			}
 		}
 		
-		protected function onClick(event:MouseEvent):void{
+		private function onClick(event:MouseEvent):void{
 			if(MouseManager.instance.mode == MouseManager.REMOVE_MODE){
 				(_controller as ObjectsMap).removeObject(this);
 				GameRpc.instance.removeTown(this.vo.id.toString(), isoSprite.x, isoSprite.y);

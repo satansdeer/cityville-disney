@@ -70,6 +70,16 @@ import ru.beenza.framework.layers.LayerManager;
 			GameView.instance.getScene(ScenesENUM.GRID).render();
 			_objectForBuying.isoSprite.render();
 		}
+
+		public function addPlot():void {
+			_plot = FarmPlot.create(this);
+			_scene.addChild(_plot.isoSprite);
+			_plot.x = 2;
+			_plot.y = 1;
+			_plot.isoSprite.moveTo(_plot.x * Main.UNIT_SIZE, _plot.y * Main.UNIT_SIZE, 0);
+			_plot.isoSprite.setSize(_plot.vo.width *Main.UNIT_SIZE,_plot.vo.length *Main.UNIT_SIZE,1);
+			_plot.isoSprite.render();
+		}
 		
 		public function addObjectAt(x:int, y:int, vo:MapObjectVO):void{
 			objects.push(new MapObject(vo, this));
@@ -79,7 +89,7 @@ import ru.beenza.framework.layers.LayerManager;
 			_shownObjects[_shownObjects.length-1].x = x/Main.UNIT_SIZE;
 			_shownObjects[_shownObjects.length-1].y = y/Main.UNIT_SIZE;
 			_shownObjects[_shownObjects.length-1].isoSprite.moveTo(x,y,0);
-			(_shownObjects[_shownObjects.length-1].isoSprite as IsoSprite).setSize(_shownObjects[_shownObjects.length-1].vo.width *Main.UNIT_SIZE,_shownObjects[_shownObjects.length-1].vo.length *Main.UNIT_SIZE,1);
+			_shownObjects[_shownObjects.length-1].isoSprite.setSize(_shownObjects[_shownObjects.length-1].vo.width *Main.UNIT_SIZE,_shownObjects[_shownObjects.length-1].vo.length *Main.UNIT_SIZE,1);
 			_shownObjects[_shownObjects.length-1].isoSprite.render();
 		}
 		
@@ -118,8 +128,7 @@ import ru.beenza.framework.layers.LayerManager;
 		}
 		
 		private function load():void{
-			_plot = FarmPlot.create(this);
-			addObjectAt(_plot.x, _plot.y, _plot.vo);
+			addPlot();
 			GameRpc.instance.getMapObjects(onMapObjectsLoaded);
 		}
 
