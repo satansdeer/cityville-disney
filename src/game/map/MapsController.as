@@ -84,6 +84,10 @@ public class MapsController extends EventDispatcher{
 		public function saveToServer():void {
 			GameRpc.instance.sendMap(_groundMap.mapToJSON());
 		}
+
+		public function plantPlot():void {
+			_objectsMap.plantPlot();
+		}
 		
 //		public function setSize(sW:int, sL:int):void{
 //			_groundMap.setSize(sW, sL);

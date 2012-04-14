@@ -74,7 +74,7 @@ import ru.beenza.framework.layers.LayerManager;
 			_objectForBuying.isoSprite.render();
 		}
 
-		public function addPlot():void {
+		private function addPlot():void {
 			_plot = FarmPlot.create(this);
 			_scene.addChild(_plot.isoSprite);
 			_plot.x = 2;
@@ -82,6 +82,10 @@ import ru.beenza.framework.layers.LayerManager;
 			_plot.isoSprite.moveTo(_plot.x * Main.UNIT_SIZE, _plot.y * Main.UNIT_SIZE, 0);
 			_plot.isoSprite.setSize(_plot.vo.width *Main.UNIT_SIZE,_plot.vo.length *Main.UNIT_SIZE,1);
 			_plot.isoSprite.render();
+		}
+
+		public function plantPlot():void {
+			_plot.plantIfCan();
 		}
 		
 		public function addObjectAt(x:int, y:int, vo:MapObjectVO):void{

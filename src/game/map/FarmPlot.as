@@ -10,7 +10,10 @@ import core.component.MapObjectPreloader;
 
 import core.display.AssetManager;
 import core.display.InteractivePNG;
+import core.enum.WindowsENUM;
 import core.event.AssetEvent;
+import core.event.WindowEvent;
+import core.window.WindowManager;
 
 import flash.events.Event;
 
@@ -21,6 +24,8 @@ import game.model.UserSession;
 
 import game.vo.MapObjectVO;
 
+import iface.windows.StoreWindow;
+
 import rpc.GameRpc;
 
 
@@ -30,7 +35,7 @@ public class FarmPlot extends MapObject {
 	private var _assetsLoadedCount:int = 0;
 
 
-	private static const URLS:Array = ["assets/plot/plot_1.png", "assets/plot/plot_2.png", "assets/plot/plot_3.png", "assets/plot/plot_4.png"];
+	public static const URLS:Array = ["assets/plot/plot_1.png", "assets/plot/plot_2.png", "assets/plot/plot_3.png", "assets/plot/plot_4.png"];
 
 	public static function create(controller:ObjectsMap):FarmPlot {
 		var vo:MapObjectVO = new MapObjectVO();
@@ -64,6 +69,13 @@ public class FarmPlot extends MapObject {
 			//isoSprite.container.addChild(preloader);
 		}
 	}
+
+	public function plantIfCan():void {
+		if (!_plotVo.completed && _plotVo._timeLeft == 0) {
+			GameRpc.instance.plantPlot();
+		}
+	}
+
 	override protected function onAssetLoaded(event:AssetEvent):void {
 		trace("asset loaded : " + event.url + " [FarmPlot.onAssetLoaded]");
 		if(URLS.indexOf(event.url) != -1 ){
@@ -121,7 +133,9 @@ public class FarmPlot extends MapObject {
 
 	private function onClick(event:MouseEvent):void {
 		if (!_plotVo.completed && _plotVo._timeLeft == 0) {
-			GameRpc.instance.plantPlot();
+			var window:StoreWindow = WindowManager.instance.getWindow(WindowsENUM.STORE_WINDOW) as StoreWindow;
+			window.setTab(StoreWindow.FARM_TAB);
+			WindowManager.instance.showWindow(WindowsENUM.STORE_WINDOW);
 		} else if (_plotVo.completed) {
 			GameRpc.instance.getPlotProfit();
 			_plotVo.completed = true;
