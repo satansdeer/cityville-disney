@@ -1,5 +1,6 @@
 package game.map {
 import as3isolib.display.IsoSprite;
+import as3isolib.display.scene.IsoScene;
 import as3isolib.geom.IsoMath;
 import as3isolib.geom.Pt;
 
@@ -59,6 +60,8 @@ import ru.beenza.framework.layers.LayerManager;
 				ObjectsCollector.instance.addEventListener(Event.COMPLETE, onObjectsLoaded);
 			}
 		}
+
+		public function get scene():IsoScene { return _scene; }
 		
 		public function setObjectForBuying(value:MapObjectVO):void{
 			var isoMouse:Point = stageToIso(new Point(_scene.container.mouseX,_scene.container.mouseY));

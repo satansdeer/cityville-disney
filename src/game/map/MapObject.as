@@ -31,7 +31,7 @@ public class MapObject extends EventDispatcher{
 		public var isoSprite:IsoSprite;
 		public var img:InteractivePNG;
 		
-		private var _controller:ObjectsMap;
+		protected var _controller:ObjectsMap;
 
 		private var _x:int;
 		private var _y:int;
