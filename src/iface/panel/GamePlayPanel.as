@@ -13,6 +13,8 @@ import flash.events.MouseEvent;
 
 import game.map.MapsController;
 
+import mouse.MouseManager;
+
 public class GamePlayPanel {
 	private var _view:Sprite;
 	private var _storeBtn:Sprite;
@@ -45,10 +47,12 @@ public class GamePlayPanel {
 	}
 
 	private function onResetBtnClick(event:MouseEvent):void{
-		MapsController.instance.saveToServer()
+		MouseManager.instance.mode = MouseManager.NORMAL_MODE;
+		//MapsController.instance.saveToServer();
 		trace("reset btn");
 	}
 	private function onDeleteBtnClick(event:MouseEvent):void {
+		MouseManager.instance.mode = MouseManager.REMOVE_MODE;
 		trace("delete btn");
 	}
 }

@@ -27,8 +27,13 @@ package mouse
 		public static const NORMAL_MODE:String = "normal_mode";
 		public static const REMOVE_MODE:String = "remove_mode";
 		public static const MOVE_MODE:String = "move_mode";
+		public static const UPGRADE_MODE:String = "upgrade_mode";
+
+		private const REMOVE_ICON:Sprite = new DeleteCursor_view();
+		private const UPGRADE_ICON:Sprite = new UpgradeCursor_view();
 		
 		private static var _instance:MouseManager;
+		private var _cursorContainer:Sprite;
 		
 		private var _img:InteractivePNG;
 		private var stage:Stage;
@@ -40,12 +45,12 @@ package mouse
 		private var _mode:String = NORMAL_MODE;
 		
 		private var _label:Label;
+		private var _icon:Sprite;
 		private var _labelBack:Sprite;
 		
-		public function MouseManager(target:IEventDispatcher=null)
-		{
+		public function MouseManager(target:IEventDispatcher=null) {
 			super(target);
-			_instance = this;
+			_cursorContainer = LayerManager.getLayer(LayersENUM.CURSOR);
 			initLabel();
 			stage = StageReference.getStage();
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
@@ -63,7 +68,7 @@ package mouse
 			_labelBack.graphics.beginFill(0xFFFFFF);
 			_labelBack.graphics.drawRect(0,0, 40, 20);
 			_labelBack.graphics.endFill();
-			LayerManager.getLayer(LayersENUM.CURSOR).addChild(_labelBack);
+			_cursorContainer.addChild(_labelBack);
 			_labelBack.visible = false;
 			_labelBack.mouseEnabled = false;
 			_label = new Label(LayerManager.getLayer(LayersENUM.CURSOR));
@@ -72,17 +77,22 @@ package mouse
 		}
 		
 		public function set mode(value:String):void{
-			if(_mode != value){
-				_mode = value;
-				if(_mode != NORMAL_MODE){
-					_label.visible = true;
-					_label.text = _mode;
-					_labelBack.visible = true;
-				}else{
-					_labelBack.visible = false;
-					_label.visible = false;
-				}
-			}	
+			if(_mode == value){ return; }
+			_mode = value;
+			if (_icon && _cursorContainer.contains(_icon)) {
+				_cursorContainer.removeChild(_icon);
+			}
+			switch (_mode) {
+				case REMOVE_MODE :
+					_icon = REMOVE_ICON;
+					_cursorContainer.addChild(_icon);
+					break;
+				case UPGRADE_MODE :
+					_icon = UPGRADE_ICON;
+					_cursorContainer.addChild(_icon);
+					break;
+			}
+			correctIconPos();
 		}
 		
 		public function get mode():String{
@@ -101,10 +111,14 @@ package mouse
 		
 		protected function onMouseMove(event:MouseEvent):void{
 			moved = true;
-			_label.x = stage.mouseX + 8;
-			_label.y = stage.mouseY + 8;
-			_labelBack.x = stage.mouseX + 8;
-			_labelBack.y = stage.mouseY + 8;
+			if (_mode != NORMAL_MODE) {
+				correctIconPos();
+			}
+		}
+
+		private function correctIconPos():void {
+			_icon.x = stage.mouseX + 20;
+			_icon.y = stage.mouseY + 20;
 		}
 		
 		public static function get instance():MouseManager{

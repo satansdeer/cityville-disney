@@ -22,8 +22,10 @@ package game.map
 	import game.vo.MapObjectVO;
 	
 	import mouse.MouseManager;
-	
-	public class MapObject extends EventDispatcher{
+
+import rpc.GameRpc;
+
+public class MapObject extends EventDispatcher{
 		
 		public var vo:MapObjectVO;
 		public var isoSprite:IsoSprite;
@@ -81,7 +83,7 @@ package game.map
 			if(!isoSprite){
 				isoSprite = new IsoSprite();
 				isoSprite.setSize(vo.width * Main.UNIT_SIZE,vo.length * Main.UNIT_SIZE, 1);
-				isoSprite.moveTo(x * Main.TILE_SIZE, y * Main.TILE_SIZE, 0);
+				isoSprite.moveTo(x * Main.UNIT_SIZE, y * Main.UNIT_SIZE, 0);
 				isoSprite.data = {x:x, y:y}
 				if(AssetManager.getImageByURL(vo.url)){
 					img = new InteractivePNG(AssetManager.getImageByURL(vo.url));
@@ -126,6 +128,7 @@ package game.map
 		protected function onClick(event:MouseEvent):void{
 			if(MouseManager.instance.mode == MouseManager.REMOVE_MODE){
 				(_controller as ObjectsMap).removeObject(this);
+				GameRpc.instance.removeTown(this.vo.id.toString(), isoSprite.x, isoSprite.y);
 			}
 		}
 	}

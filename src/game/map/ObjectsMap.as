@@ -76,10 +76,10 @@ import ru.beenza.framework.layers.LayerManager;
 			objects[objects.length -1].shown = true;
 			_shownObjects.push(objects[objects.length-1]);
 			_scene.addChild(_shownObjects[_shownObjects.length-1].isoSprite);
-			_shownObjects[_shownObjects.length-1].x = x/Main.TILE_SIZE;
-			_shownObjects[_shownObjects.length-1].y = y/Main.TILE_SIZE;
+			_shownObjects[_shownObjects.length-1].x = x/Main.UNIT_SIZE;
+			_shownObjects[_shownObjects.length-1].y = y/Main.UNIT_SIZE;
 			_shownObjects[_shownObjects.length-1].isoSprite.moveTo(x,y,0);
-			(_shownObjects[_shownObjects.length-1].isoSprite as IsoSprite).setSize(_shownObjects[_shownObjects.length-1].vo.width *Main.TILE_SIZE,_shownObjects[_shownObjects.length-1].vo.length *Main.TILE_SIZE,1);
+			(_shownObjects[_shownObjects.length-1].isoSprite as IsoSprite).setSize(_shownObjects[_shownObjects.length-1].vo.width *Main.UNIT_SIZE,_shownObjects[_shownObjects.length-1].vo.length *Main.UNIT_SIZE,1);
 			_shownObjects[_shownObjects.length-1].isoSprite.render();
 		}
 		

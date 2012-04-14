@@ -52,6 +52,10 @@ package rpc {
 			_rpc.send("{" + getRequestString("buy_town") + ", " + objectInfo + "}", callback);
 		}
 
+		public function removeTown(id:String, x:int, y:int):void {
+			var objectInfo:String = "\"id\" : " + id + ", \"x\" : " + x + ", \"y\" : " + y;
+			_rpc.send("{" + getRequestString("remove_town") + ", " + objectInfo + "}", null);
+		}
 
 		//not use please
 		public function getObjectsInfo(callback:Function):void {
