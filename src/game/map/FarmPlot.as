@@ -65,21 +65,27 @@ public class FarmPlot extends MapObject {
 		}
 	}
 	override protected function onAssetLoaded(event:AssetEvent):void {
-		if(URLS.indexOf(event.url) != 0 ){
+		trace("asset loaded : " + event.url + " [FarmPlot.onAssetLoaded]");
+		if(URLS.indexOf(event.url) != -1 ){
 			_assetsLoadedCount++;
 			if (_assetsLoadedCount == URLS.length) {
+				trace("try set asset [FarmPlot.onAssetLoaded]");
 				AssetManager.instance.removeEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);
 				updateAsset();
-				addListeners();
 			}
 		}
 	}
 
 	private function setAsset():void {
+		if (img && isoSprite.container.contains(img)) {
+			removeListeners();
+			isoSprite.container.removeChild(img);
+		}
 		img = new InteractivePNG(AssetManager.getImageByURL(vo.url));
-		if (isoSprite.container.contains(img)) { isoSprite.container.removeChild(img); }
+		addListeners();
+		trace("add child [FarmPlot.setAsset]");
 		isoSprite.container.addChild(img);
-	  _controller.scene.render();
+	  //_controller.scene.render(true);
 	}
 
 	private function updateAsset():void {
@@ -91,6 +97,7 @@ public class FarmPlot extends MapObject {
 			trace("plot url : " + (3 - int(_plotVo._timeLeft/5000 * 2)) + " [FarmPlot.updateAsset]");
 			url = URLS[3 - int(_plotVo._timeLeft/5000 * 2)-1];
 		}
+		trace("vo url : " + vo.url + ", url : " + url + " [FarmPlot.updateAsset]");
 		if (vo.url != url) {
 			vo.url = url;
 			setAsset();
@@ -99,11 +106,17 @@ public class FarmPlot extends MapObject {
 	}
 
 	override protected function addListeners():void {
-		isoSprite.container.addEventListener(MouseEvent.CLICK, onClick);
+		img.addEventListener(MouseEvent.CLICK, onClick);
+	}
+	protected function removeListeners():void {
+		img.removeEventListener(MouseEvent.CLICK, onClick);
 	}
 
+
 	private function onStateChange(event:Event):void {
-		updateAsset();
+		if (_assetsLoadedCount == URLS.length) {
+			updateAsset();
+		}
 	}
 
 	private function onClick(event:MouseEvent):void {
