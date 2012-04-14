@@ -138,7 +138,7 @@ package game {
 		}
 		
 		private function onAddedToStage(event:Event):void {
-			currentX = -1300; currentY = 800;
+			currentX = 40; currentY = 40;
 			validatePosition();
 			render(true);
 			stage.addEventListener(Event.RESIZE, onFullscreen);
@@ -173,8 +173,8 @@ package game {
 				panBy(velosity.x, velosity.y);
 				validatePosition();
 				render(true);
-				curUnitPoint.x = int(currentX/Main.UNIT_SIZE);
-				curUnitPoint.y = int(currentY/Main.UNIT_SIZE);
+				curUnitPoint.x = int(currentX/Main.TILE_SIZE);
+				curUnitPoint.y = int(currentY/Main.TILE_SIZE);
 				if((curUnitPoint.x != prevUnitPoint.x) || (curUnitPoint.y != prevUnitPoint.y)){
 					//dispatchEvent(new GameViewEvent(GameViewEvent.MOVE));
 				}
@@ -218,15 +218,15 @@ package game {
 				curPoint.y = mouseY;
 			}
 			if (curPoint) {
-				if ((currentY + velosity.y < 737) || (currentX + velosity.x < -1440) || (currentX + velosity.x > 949) || (currentY + velosity.y > 1434 )) {
+				if ((currentY + velosity.y < 40) || (currentX + velosity.x < 40) || (currentX + velosity.x > 949) || (currentY + velosity.y > 1434 )) {
 					velosity.x = 0;
 					velosity.y = 0;
 				}
-				if ((currentPoint.x - curPoint.x) < -1440) {
-					curPoint.x = currentPoint.x + 1440;
+				if ((currentPoint.x - curPoint.x) < 40) {
+					curPoint.x = currentPoint.x - 40;
 				}
-				if ((currentPoint.y - curPoint.y) < 737) {
-					curPoint.y = currentPoint.y - 737;
+				if ((currentPoint.y - curPoint.y) < 40) {
+					curPoint.y = currentPoint.y - 40;
 				}
 				if ((currentPoint.x - curPoint.x) > 949) {
 					curPoint.x = currentPoint.x - 949;

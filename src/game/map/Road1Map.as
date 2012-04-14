@@ -38,8 +38,8 @@ package game.map
 			for(var x:int = 0; x < _map.length; x++){
 				for(var y:int = 0; y < _map[x].length; y++){
 					tile = new IsoSprite();
-					tile.setSize(Main.UNIT_SIZE, Main.UNIT_SIZE, 0);
-					tile.moveTo(x * Main.UNIT_SIZE, y * Main.UNIT_SIZE, 0);
+					tile.setSize(Main.TILE_SIZE, Main.TILE_SIZE, 0);
+					tile.moveTo(x * Main.TILE_SIZE, y * Main.TILE_SIZE, 0);
 					tile.data = {x:x, y:y}
 					bmp = new MapObjectPreloader(1,1);
 					bmp.x = 32;

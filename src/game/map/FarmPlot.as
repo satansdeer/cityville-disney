@@ -13,7 +13,7 @@ public class FarmPlot extends MapObject {
 		vo.length = 1;
 		vo.width = 1;
 		vo.name = "farm plot";
-		vo.url = "assets/plot/plot_1";
+		vo.url = "assets/plot/plot_1.png";
 		return new FarmPlot(vo, controller);
 	}
 

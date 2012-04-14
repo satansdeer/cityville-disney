@@ -76,10 +76,10 @@ import ru.beenza.framework.layers.LayerManager;
 			objects[objects.length -1].shown = true;
 			_shownObjects.push(objects[objects.length-1]);
 			_scene.addChild(_shownObjects[_shownObjects.length-1].isoSprite);
-			_shownObjects[_shownObjects.length-1].x = x/Main.UNIT_SIZE;
-			_shownObjects[_shownObjects.length-1].y = y/Main.UNIT_SIZE;
+			_shownObjects[_shownObjects.length-1].x = x/Main.TILE_SIZE;
+			_shownObjects[_shownObjects.length-1].y = y/Main.TILE_SIZE;
 			_shownObjects[_shownObjects.length-1].isoSprite.moveTo(x,y,0);
-			(_shownObjects[_shownObjects.length-1].isoSprite as IsoSprite).setSize(_shownObjects[_shownObjects.length-1].vo.width *Main.UNIT_SIZE,_shownObjects[_shownObjects.length-1].vo.length *Main.UNIT_SIZE,1);
+			(_shownObjects[_shownObjects.length-1].isoSprite as IsoSprite).setSize(_shownObjects[_shownObjects.length-1].vo.width *Main.TILE_SIZE,_shownObjects[_shownObjects.length-1].vo.length *Main.TILE_SIZE,1);
 			_shownObjects[_shownObjects.length-1].isoSprite.render();
 		}
 		
@@ -149,9 +149,9 @@ import ru.beenza.framework.layers.LayerManager;
 			if(_objectForBuying){
 				var isoMouse:Point = stageToIso(new Point(_scene.container.mouseX,_scene.container.mouseY));
 				if((_objectForBuying.y != isoMouse.y) || (_objectForBuying.x != isoMouse.x)){
-					_objectForBuying.x = isoMouse.x + 50;
-					_objectForBuying.y = isoMouse.y + 50;
-					_objectForBuying.isoSprite.moveTo(isoMouse.x+50, isoMouse.y+50, 0);
+					_objectForBuying.x = isoMouse.x;
+					_objectForBuying.y = isoMouse.y;
+					_objectForBuying.isoSprite.moveTo(isoMouse.x, isoMouse.y, 0);
 				}
 				_scene.render();
 			}
@@ -174,11 +174,11 @@ import ru.beenza.framework.layers.LayerManager;
 		private function placeAvailable(object:MapObject):Boolean{
 			var obj:MapObject;
 			var rect:Rectangle;
-			const objectRect:Rectangle = new Rectangle(int(object.isoSprite.x), int(object.isoSprite.y), object.vo.width, object.vo.length);
+			const objectRect:Rectangle = new Rectangle(int(object.isoSprite.x/Main.UNIT_SIZE), int(object.isoSprite.y/Main.UNIT_SIZE), object.vo.width, object.vo.length);
 			const objRect:Rectangle = new Rectangle();
 			for each (obj in _shownObjects) {
-				objRect.x = int(obj.isoSprite.x);
-				objRect.y = int(obj.isoSprite.y);
+				objRect.x = int(obj.isoSprite.x/Main.UNIT_SIZE);
+				objRect.y = int(obj.isoSprite.y/Main.UNIT_SIZE);
 				objRect.width = obj.vo.width;
 				objRect.height = obj.vo.length;
 				rect = objectRect.intersection(objRect);
@@ -193,8 +193,8 @@ import ru.beenza.framework.layers.LayerManager;
 			p = LayerManager.getLayer(LayersENUM.SCENE).globalToLocal(p);
 			const pt:Pt = new Pt(p.x, p.y);
 			IsoMath.screenToIso(pt);
-			p.x = Math.floor(pt.x / (Main.UNIT_SIZE/2)) * (Main.UNIT_SIZE/2);
-			p.y = Math.floor(pt.y / (Main.UNIT_SIZE/2)) * (Main.UNIT_SIZE/2);
+			p.x = Math.floor(pt.x / (Main.UNIT_SIZE)) * (Main.UNIT_SIZE);
+			p.y = Math.floor(pt.y / (Main.UNIT_SIZE)) * (Main.UNIT_SIZE);
 			return p;
 		}
 		
@@ -245,7 +245,7 @@ import ru.beenza.framework.layers.LayerManager;
 						var object:MapObject = _newObjectsForShow.shift();
 						if(object){
 							_shownObjects.push(object);
-							_shownObjects[_shownObjects.length-1].isoSprite.moveTo(object.x * Main.UNIT_SIZE, object.y * Main.UNIT_SIZE, 0);
+							_shownObjects[_shownObjects.length-1].isoSprite.moveTo(object.x * Main.TILE_SIZE, object.y * Main.TILE_SIZE, 0);
 							_scene.addChild(_shownObjects[_shownObjects.length-1].isoSprite);
 							_shownObjects[_shownObjects.length-1].isoSprite.render();
 							//_scene.render();

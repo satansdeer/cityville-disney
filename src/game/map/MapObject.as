@@ -81,7 +81,7 @@ package game.map
 			if(!isoSprite){
 				isoSprite = new IsoSprite();
 				isoSprite.setSize(vo.width * Main.UNIT_SIZE,vo.length * Main.UNIT_SIZE, 1);
-				isoSprite.moveTo(x * Main.UNIT_SIZE, y * Main.UNIT_SIZE, 0);
+				isoSprite.moveTo(x * Main.TILE_SIZE, y * Main.TILE_SIZE, 0);
 				isoSprite.data = {x:x, y:y}
 				if(AssetManager.getImageByURL(vo.url)){
 					img = new InteractivePNG(AssetManager.getImageByURL(vo.url));
@@ -90,7 +90,7 @@ package game.map
 					img.scaleY = 0.25;
 					img.x = vo.offsetX;
 					img.y = vo.offsetY;
-					addListeners()
+					addListeners();
 				}else{
 					AssetManager.load(vo.url);
 					AssetManager.instance.addEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);

@@ -92,8 +92,8 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 		for (var i:int = 1; i <= 8; ++i) {
 			if (event.target.parent == _view["item" + i]) {
 				MouseManager.instance.mode = MouseManager.NORMAL_MODE;
-				MouseManager.instance.img = new InteractivePNG(AssetManager.getImageByURL(_objectVOs[_page*ITEMS_NUM + i].url))
-				MouseManager.instance.data = _objectVOs[_page*ITEMS_NUM + i];
+				MouseManager.instance.img = new InteractivePNG(AssetManager.getImageByURL(_objectVOs[_page*ITEMS_NUM + i-1].url))
+				MouseManager.instance.data = _objectVOs[_page*ITEMS_NUM + i-1];
 				dispatchEvent(new WindowEvent(WindowEvent.JUST_HIDE_REQUEST));
 				break;
 			}

@@ -28,7 +28,7 @@ public class Tile {
 	
 	private var img:InteractivePNG;
 	
-	public var isoSprite:IsoSprite;
+	public var sprite:Sprite;
 
 	public static const TILE_URLS:Array = ["assets/tile/land_01.png", "assets/tile/land_02.png", "assets/tile/land_03.png",
 																					"assets/tile/land_04.png", "assets/tile/land_05.png"];
@@ -54,17 +54,20 @@ public class Tile {
 	}
 	
 	public function draw():void{
-		isoSprite = new IsoSprite();
-		isoSprite.setSize(Main.UNIT_SIZE, Main.UNIT_SIZE, 0);
-		isoSprite.data = {x:_x, y:_y}
+		sprite = new Sprite();
+		//sprite.width = Main.TILE_SIZE;
+		//sprite.height = Main.TILE_SIZE;
+		//sprite.x = _x;
+		//sprite.y = _y;
+		//sprite.data = {x:_x, y:_y}
 		if(AssetManager.getImageByURL(_url)){
 			setImg();
 		}else{
 			AssetManager.load(_url);
 			AssetManager.instance.addEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);
 			_preloader = new MapObjectPreloader(1, 1);
-			_preloader.x = Main.UNIT_SIZE;
-			isoSprite.container.addChild(_preloader);
+			_preloader.x = Main.TILE_SIZE;
+			sprite.addChild(_preloader);
 		}
 	}
 	
@@ -72,8 +75,8 @@ public class Tile {
 		if(_url == event.url){
 			AssetManager.instance.removeEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);
 			setImg();
-			if(_preloader && isoSprite.container.contains(_preloader)){
-				isoSprite.container.removeChild(_preloader);
+			if(_preloader && sprite.contains(_preloader)){
+				sprite.removeChild(_preloader);
 				_preloader = null;
 			}
 		}
@@ -83,7 +86,7 @@ public class Tile {
 		img = new InteractivePNG(AssetManager.getImageByURL(_url));
 		img.cacheAsBitmap = true;
 		img.mouseEnabled = false;
-		isoSprite.container.addChild(img);
+		sprite.addChild(img);
 	}
 
 }

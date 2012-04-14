@@ -25,11 +25,11 @@ package game.map
 		}
 		
 		public function addTile(pt:Pt):void {
-			var tile:Tile = new Tile(pt.x * Main.UNIT_SIZE, pt.y * Main.UNIT_SIZE, Configuration.HOST + "/" + Tile.TILE1_URL);
+			var tile:Tile = new Tile(pt.x * Main.TILE_SIZE, pt.y * Main.TILE_SIZE, Configuration.HOST + "/" + Tile.TILE1_URL);
 			tile.draw();
-			tile.isoSprite.moveTo(pt.x * Main.UNIT_SIZE, pt.y * Main.UNIT_SIZE, 0);
-			_scene.addChild(tile.isoSprite);
-			tile.isoSprite.render();
+			tile.sprite.moveTo(pt.x * Main.TILE_SIZE, pt.y * Main.TILE_SIZE, 0);
+			_scene.addChild(tile.sprite);
+			tile.sprite.render();
 			tile.shown = true;
 			tiles.push(tile);
 			map[pt.x][pt.y] = tile;
@@ -37,7 +37,7 @@ package game.map
 		}
 		
 		public function removeTile(pt:Pt):void{
-			_scene.removeChild(map[pt.x][pt.y].isoSprite);
+			_scene.removeChild(map[pt.x][pt.y].sprite);
 			map[pt.x][pt.y].remove();
 			map[pt.x][pt.y] = null;
 		}
@@ -72,7 +72,7 @@ package game.map
 			for(k = 0; k < tilesLength; k++){
 				tempTile = tiles[k];
 				if((tempTile.x<_controller.minUnitIsoPoint.x) || (tempTile.y<_controller.minUnitIsoPoint.y) || (tempTile.x>_controller.maxUnitIsoPoint.x) || (tempTile.y>_controller.maxUnitIsoPoint.y)){
-					_scene.removeChild(tempTile.isoSprite);
+					_scene.removeChild(tempTile.sprite);
 					tempTile.remove();
 					getTileByXY(tempTile.x,tempTile.y).shown = false;
 				}else{
@@ -97,12 +97,12 @@ package game.map
 						if(tempTile && ((tempTile.x>_controller.minUnitIsoPoint.x) || (tempTile.y>_controller.minUnitIsoPoint.y) || (tempTile.x<_controller.maxUnitIsoPoint.x) || (tempTile.y<_controller.maxUnitIsoPoint.y))){
 							var tile:Tile = _newTilesFowShow.shift();
 							if(tile){
-								if(!tile.isoSprite){
+								if(!tile.sprite){
 									tile.draw();
 								}
-								tile.isoSprite.moveTo(tile.x * Main.UNIT_SIZE, tile.y * Main.UNIT_SIZE, 0);
-								_scene.addChild(tile.isoSprite);
-								tile.isoSprite.render();
+								tile.sprite.moveTo(tile.x * Main.TILE_SIZE, tile.y * Main.TILE_SIZE, 0);
+								_scene.addChild(tile.sprite);
+								tile.sprite.render();
 								tiles.push(tile)
 							}
 						}

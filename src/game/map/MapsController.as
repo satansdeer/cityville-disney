@@ -72,8 +72,8 @@ public class MapsController extends EventDispatcher{
 			tempPoint.x = mX;
 			tempPoint.y = mY;
 			var pt:Pt = _gameView.localToIso(tempPoint);
-			pt.x = int((pt.x - Main.UNIT_SIZE/2) / Main.UNIT_SIZE);
-			pt.y = int((pt.y) / Main.UNIT_SIZE);
+			pt.x = int((pt.x - Main.TILE_SIZE/2) / Main.TILE_SIZE);
+			pt.y = int((pt.y) / Main.TILE_SIZE);
 			return pt;
 		}
 		
@@ -124,10 +124,10 @@ public class MapsController extends EventDispatcher{
 			tempPt.x = maxPoint.x;
 			tempPt.y = maxPoint.y;
 			maxIsoPoint = _gameView.localToIso(tempPt);
-			minUnitIsoPoint.x = int(minIsoPoint.x/Main.UNIT_SIZE);
-			minUnitIsoPoint.y = int(minIsoPoint.y/Main.UNIT_SIZE);
-			maxUnitIsoPoint.x = int(maxIsoPoint.x/Main.UNIT_SIZE);
-			maxUnitIsoPoint.y = int(maxIsoPoint.y/Main.UNIT_SIZE);
+			minUnitIsoPoint.x = int(minIsoPoint.x/Main.TILE_SIZE);
+			minUnitIsoPoint.y = int(minIsoPoint.y/Main.TILE_SIZE);
+			maxUnitIsoPoint.x = int(maxIsoPoint.x/Main.TILE_SIZE);
+			maxUnitIsoPoint.y = int(maxIsoPoint.y/Main.TILE_SIZE);
 		}
 	}
 }

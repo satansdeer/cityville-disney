@@ -36,10 +36,9 @@ import ru.beenza.framework.layers.LayerManager;
 public class Main extends Sprite {
 	public static const APP_WIDTH:int = 760;
 	public static const APP_HEIGHT:int = 760;
-	public static const UNIT_SIZE:int = 254;
+	public static const TILE_SIZE:int = 254;
+	public static const UNIT_SIZE:int = 32;
 	
-	private var sceneController:SceneController;
-
 	private var _gameView:GameView;
 	private var _mapsController:MapsController;
 	
@@ -98,7 +97,7 @@ public class Main extends Sprite {
 	}
 	
 	private function initGameView():void {
-		_gameView = new GameView(UNIT_SIZE);
+		_gameView = new GameView(TILE_SIZE);
 		_gameView.addSceneWithName(ScenesENUM.BACKGROUND);
 		_gameView.addSceneWithName(ScenesENUM.GROUND);
 		_gameView.addSceneWithName(ScenesENUM.ROAD_1);

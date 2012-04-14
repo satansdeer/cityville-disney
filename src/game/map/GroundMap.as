@@ -94,14 +94,14 @@ import ru.beenza.framework.utils.EventJoin;
 					tempTile = _map[x][y];
 					tempTile.shown = true;
 
-					if(tempTile.isoSprite){
+					if(tempTile.sprite){
 						trace("WARN! tile already has isoSprite [GroundMap.makeTileMap")
 					}
 					tempTile.draw();
-					tempTile.isoSprite.moveTo(tempTile.x * (Main.UNIT_SIZE-10), tempTile.y * (Main.UNIT_SIZE-10), 0);
-					_scene.addChild(tempTile.isoSprite);
-					tempTile.isoSprite.render();
-					tiles.push(tempTile)
+					tempTile.sprite.x = tempTile.x * (Main.TILE_SIZE-20);
+					tempTile.sprite.y = tempTile.y * (Main.TILE_SIZE-20);
+					_scene.container.addChild(tempTile.sprite);
+					tiles.push(tempTile);
 				}
 			}
 			//_controller.fogMap.setSize(mapWidth, mapLength);
