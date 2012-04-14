@@ -23,6 +23,7 @@ import game.vo.MapObjectVO;
 
 import rpc.GameRpc;
 
+//по  ходу выращивания грядки должны менятся тайлы 1, 2, 3..
 public class FarmPlot extends MapObject {
 
 	private var _vo:PlotVO;
