@@ -41,10 +41,10 @@ public class FarmPlot extends MapObject {
 
 	public static function create(controller:ObjectsMap):FarmPlot {
 		var vo:MapObjectVO = new MapObjectVO();
-		vo.length = 2;
-		vo.width = 2;
-		vo.offsetY = -40;
-		vo.offsetX = -40;
+		vo.length = 3;
+		vo.width = 3;
+		vo.offsetY = 0;
+		vo.offsetX = 0;
 		vo.name = "farm plot";
 		//vo.url = URLS[0];
 		return new FarmPlot(vo, controller);
@@ -98,6 +98,8 @@ public class FarmPlot extends MapObject {
 		img = new InteractivePNG(AssetManager.getImageByURL(vo.url));
 		addListeners();
 		trace("add child [FarmPlot.setAsset]");
+		img.x = vo.offsetX;
+		img.y = vo.offsetY;
 		isoSprite.container.addChild(img);
 	  //_controller.scene.render(true);
 	}

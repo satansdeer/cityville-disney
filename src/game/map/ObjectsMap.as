@@ -84,7 +84,7 @@ import ru.beenza.framework.layers.LayerManager;
 			_plot = FarmPlot.create(this);
 			_scene.addChild(_plot.isoSprite);
 			_plot.x = 2;
-			_plot.y = 1;
+			_plot.y = 2;
 			_plot.isoSprite.moveTo(_plot.x * Main.UNIT_SIZE, _plot.y * Main.UNIT_SIZE, 0);
 			_plot.isoSprite.setSize(_plot.vo.width *Main.UNIT_SIZE,_plot.vo.length *Main.UNIT_SIZE,1);
 			_plot.isoSprite.render();
@@ -216,9 +216,13 @@ import ru.beenza.framework.layers.LayerManager;
 			var rect:Rectangle;
 			const objectRect:Rectangle = new Rectangle(int(object.isoSprite.x/Main.UNIT_SIZE), int(object.isoSprite.y/Main.UNIT_SIZE), object.vo.width, object.vo.length);
 			const objRect:Rectangle = new Rectangle();
-			for each (obj in _shownObjects.concat(_castle)) {
-				objRect.x = int(obj.isoSprite.x/Main.UNIT_SIZE);
-				objRect.y = int(obj.isoSprite.y/Main.UNIT_SIZE);
+			for each (obj in _shownObjects.concat(_castle, _plot)) {
+				if (obj != _plot) {
+					objRect.x = int(obj.isoSprite.x/Main.UNIT_SIZE);
+					objRect.y = int(obj.isoSprite.y/Main.UNIT_SIZE);
+				} else {
+					objRect.x = 14; objRect.y = 6;
+				}
 				objRect.width = obj.vo.width;
 				objRect.height = obj.vo.length;
 				rect = objectRect.intersection(objRect);
