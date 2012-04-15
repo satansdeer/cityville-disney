@@ -34,6 +34,7 @@ import ru.beenza.framework.layers.LayerManager;
 		private var objects:Array = [];
 		
 		private var _plot:FarmPlot;
+		private var _castle:Castle;
 
 		private var _objectForBuying:MapObject;
 		
@@ -82,6 +83,16 @@ import ru.beenza.framework.layers.LayerManager;
 			_plot.isoSprite.moveTo(_plot.x * Main.UNIT_SIZE, _plot.y * Main.UNIT_SIZE, 0);
 			_plot.isoSprite.setSize(_plot.vo.width *Main.UNIT_SIZE,_plot.vo.length *Main.UNIT_SIZE,1);
 			_plot.isoSprite.render();
+		}
+
+		private function addCastle():void {
+			_castle = Castle.create(this);
+			_scene.addChild(_castle.isoSprite);
+			_castle.x = 10;
+			_castle.y = 6;
+			_castle.isoSprite.moveTo(_castle.x * Main.UNIT_SIZE, _castle.y * Main.UNIT_SIZE, 0);
+			_castle.isoSprite.setSize(_castle.vo.width *Main.UNIT_SIZE, _castle.vo.length *Main.UNIT_SIZE,1);
+			_castle.isoSprite.render();
 		}
 
 		public function plantPlot():void {
@@ -136,6 +147,7 @@ import ru.beenza.framework.layers.LayerManager;
 		
 		private function load():void{
 			addPlot();
+			addCastle();
 			GameRpc.instance.getMapObjects(onMapObjectsLoaded);
 		}
 
@@ -192,7 +204,7 @@ import ru.beenza.framework.layers.LayerManager;
 			var rect:Rectangle;
 			const objectRect:Rectangle = new Rectangle(int(object.isoSprite.x/Main.UNIT_SIZE), int(object.isoSprite.y/Main.UNIT_SIZE), object.vo.width, object.vo.length);
 			const objRect:Rectangle = new Rectangle();
-			for each (obj in _shownObjects) {
+			for each (obj in _shownObjects.concat(_castle)) {
 				objRect.x = int(obj.isoSprite.x/Main.UNIT_SIZE);
 				objRect.y = int(obj.isoSprite.y/Main.UNIT_SIZE);
 				objRect.width = obj.vo.width;

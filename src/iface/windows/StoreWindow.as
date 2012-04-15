@@ -80,6 +80,7 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 				panelItem = new PanelItem(_objectVOs[i]);
 				_view["item" + itemIndex]["photo"].addChild(panelItem);
 				_view["item" + itemIndex].visible = true;
+				_view["item" + itemIndex]["priceTxt"].text = "500";
 			} else {
 				_view["item" + itemIndex].visible = false;
 			}
@@ -104,6 +105,7 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 			_farmItem = new PanelItem(vo);
 		}
 		_view["item1"]["photo"].addChild(_farmItem);
+		_view["item1"]["priceTxt"].text = 0;
 	}
 
 	private function addListeners():void {

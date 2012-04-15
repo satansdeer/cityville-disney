@@ -32,10 +32,10 @@ import core.display.AssetManager;
 		{
 			_vo = vo;
 			//drawBackground();
-			nameLabel = new Label(this, 4 , 60)
-			if(_vo.hasOwnProperty("name")){
-				nameLabel.text = _vo.name;
-			}
+			//nameLabel = new Label(this, 4 , 60)
+			//if(_vo.hasOwnProperty("name")){
+			//	nameLabel.text = _vo.name;
+			//}
 			drawPreloader();
 			if (AssetManager.existInCache(_vo.url)) {
 				addImage();
