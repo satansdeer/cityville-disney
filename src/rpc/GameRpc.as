@@ -65,6 +65,10 @@ package rpc {
 			_rpc.send("{" + getRequestString("get_flower_profit") + "}", null);
 		}
 
+		public function upgradeCastle():void {
+			_rpc.send("{" + getRequestString("upgrade_castle") + "}", null);
+		}
+
 		//not use please
 		public function getObjectsInfo(callback:Function):void {
 			_rpc.send("{" + getRequestString("get_objects_info") + "}", callback);

@@ -104,7 +104,7 @@ import ru.beenza.framework.layers.LayerManager;
 		private function onCastleClick(event:CastleEvent):void {
 			var window:NewLevelWindow = WindowManager.instance.getWindow(WindowsENUM.NEWLEVEL_WINDOW) as NewLevelWindow;
 			window.updateItems(ObjectsCollector.instance.objectVOs);
-			WindowManager.instance.showWindow(WindowsENUM.NEWLEVEL_WINDOW);
+			GameRpc.instance.upgradeCastle();
 		}
 
 		public function plantPlot():void {

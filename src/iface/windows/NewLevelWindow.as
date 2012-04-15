@@ -8,9 +8,11 @@ import core.component.IfaceBtnWrapper;
 import core.component.panel.PanelItem;
 import core.display.AssetManager;
 import core.display.InteractivePNG;
+import core.enum.WindowsENUM;
 import core.event.WindowEvent;
 import core.window.IScreenWindow;
 import core.window.WindowBase;
+import core.window.WindowManager;
 
 import flash.events.Event;
 
@@ -57,6 +59,7 @@ public class NewLevelWindow extends WindowBase implements IScreenWindow{
 			IfaceBtnWrapper.wrap(_view["item" + i].buyBtn);
 			_view["item" + i].buyBtn.mouseChildren = false;
 		}
+		_view.levelTxt.text = "0";
 	}
 
 	private function addListeners():void {
@@ -81,7 +84,12 @@ public class NewLevelWindow extends WindowBase implements IScreenWindow{
 	}
 
 	private function onStateChange(event:Event):void {
+		var newLevel:int = UserSession.instance.level;
+		if (_view.levelTxt.text != "0" && newLevel >  int(_view.levelTxt.text)) {
+			WindowManager.instance.showWindow(WindowsENUM.NEWLEVEL_WINDOW);
+		}
 		_view.levelTxt.text = UserSession.instance.level.toString();
+
 	}
 
 	private function onCloseBtnClick(event:MouseEvent):void {
