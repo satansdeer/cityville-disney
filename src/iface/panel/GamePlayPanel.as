@@ -40,6 +40,24 @@ public class GamePlayPanel {
 		_storeBtn.addEventListener(MouseEvent.CLICK, onStoreBtnClick);
 		_resetBtn.addEventListener(MouseEvent.CLICK, onResetBtnClick);
 		_deleteBtn.addEventListener(MouseEvent.CLICK, onDeleteBtnClick);
+
+		_storeBtn.addEventListener(MouseEvent.MOUSE_OVER, onTxtMouseOver);
+		_resetBtn.addEventListener(MouseEvent.MOUSE_OVER, onTxtMouseOver);
+		_deleteBtn.addEventListener(MouseEvent.MOUSE_OVER, onTxtMouseOver);
+		_storeBtn.addEventListener(MouseEvent.MOUSE_OUT, onTxtMouseOut);
+		_resetBtn.addEventListener(MouseEvent.MOUSE_OUT, onTxtMouseOut);
+		_deleteBtn.addEventListener(MouseEvent.MOUSE_OUT, onTxtMouseOut);
+	}
+
+	private function onTxtMouseOver(event:MouseEvent):void {
+		switch (event.target) {
+			case _storeBtn : MouseManager.showHint("store"); break;
+			case _resetBtn : MouseManager.showHint("reset cursor"); break;
+			case _deleteBtn : MouseManager.showHint("delete mode"); break;
+		}
+	}
+	private function onTxtMouseOut(evnet:MouseEvent):void {
+		MouseManager.hideHint();
 	}
 
 	private function onStoreBtnClick(event:MouseEvent):void {

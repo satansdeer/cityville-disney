@@ -15,7 +15,8 @@ package mouse
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
-	import flash.ui.Mouse;
+import flash.text.TextFieldAutoSize;
+import flash.ui.Mouse;
 	
 	import org.casalib.util.StageReference;
 	
@@ -44,14 +45,17 @@ package mouse
 		
 		private var _mode:String = NORMAL_MODE;
 		
-		private var _label:Label;
+		private var _hint:Hint_view;
 		private var _icon:Sprite;
 		private var _labelBack:Sprite;
 		
 		public function MouseManager(target:IEventDispatcher=null) {
 			super(target);
 			_cursorContainer = LayerManager.getLayer(LayersENUM.CURSOR);
-			initLabel();
+			_hint = new Hint_view();
+			_hint.visible = false;
+			_hint.contentTxt.autoSize = TextFieldAutoSize.LEFT;
+			_cursorContainer.addChild(_hint);
 			stage = StageReference.getStage();
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -60,23 +64,9 @@ package mouse
 		}
 		
 		protected function onEnterFrame(event:Event):void{
-			_labelBack.width = _label.width;
 		}
 		
-		private function initLabel():void {
-			_labelBack = new Sprite();
-			_labelBack.graphics.beginFill(0xFFFFFF);
-			_labelBack.graphics.drawRect(0,0, 40, 20);
-			_labelBack.graphics.endFill();
-			_cursorContainer.addChild(_labelBack);
-			_labelBack.visible = false;
-			_labelBack.mouseEnabled = false;
-			_label = new Label(LayerManager.getLayer(LayersENUM.CURSOR));
-			_label.mouseEnabled = false;
-			_label.mouseChildren = false;
-		}
-		
-		public function set mode(value:String):void{
+	public function set mode(value:String):void{
 			if(_mode == value){ return; }
 			_mode = value;
 			if (_icon && _cursorContainer.contains(_icon)) {
@@ -114,11 +104,24 @@ package mouse
 			if (_mode != NORMAL_MODE) {
 				correctIconPos();
 			}
+			if (_hint.visible) { correctHintPos(); }
 		}
 
 		private function correctIconPos():void {
 			_icon.x = stage.mouseX + 20;
 			_icon.y = stage.mouseY + 20;
+		}
+		private function correctHintPos():void {
+			if (stage.mouseX > Main.APP_WIDTH - _hint.width) {
+				_hint.x = stage.mouseX - 10 - _hint.width;
+			} else {
+				_hint.x = stage.mouseX + 10;
+			}
+			if (stage.mouseY > Main.APP_HEIGHT - _hint.height) {
+				_hint.y = stage.mouseY - 10 - _hint.height;
+			} else {
+				_hint.y = stage.mouseY + 10;
+			}
 		}
 		
 		public static function get instance():MouseManager{
@@ -162,18 +165,19 @@ package mouse
 		}
 		
 		public static function hideHint():void {
-			if(instance.mode == NORMAL_MODE){
-				instance._label.visible = false;
-				instance._labelBack.visible = false;
-			}else{
-				instance._label.text = instance.mode;
-			}
+			//if(instance.mode == NORMAL_MODE){
+				instance._hint.visible = false;
+			//}else{
+			//	instance._label.text = instance.mode;
+			//}
 		}
 		
 		public static function showHint(hint:String):void {
-			instance._label.visible = true;
-			instance._labelBack.visible = true;
-			instance._label.text = hint;
+			instance._hint.visible = true;
+			instance._hint.contentTxt.text = hint;
+			instance._hint.bg.width = instance._hint.contentTxt.width + 10;
+			instance._hint.bg.height = instance._hint.contentTxt.height + 20;
+			instance.correctHintPos();
 		}
 	}
 }
