@@ -23,6 +23,7 @@ import game.model.UserSession;
 
 import iface.GameInterface;
 import iface.panel.ObjectsPanel;
+import iface.windows.NewLevelWindow;
 import iface.windows.ResizeMapWindow;
 import iface.windows.StoreWindow;
 
@@ -88,6 +89,7 @@ public class Main extends Sprite {
 		WindowManager.instance.layer = LayerManager.getLayer(LayersENUM.WINDOWS);
 		WindowManager.instance.registerWindow(WindowsENUM.RESIZE_MAP_WINDOW, new ResizeMapWindow());
 		WindowManager.instance.registerWindow(WindowsENUM.STORE_WINDOW, new StoreWindow());
+		WindowManager.instance.registerWindow(WindowsENUM.NEWLEVEL_WINDOW, new NewLevelWindow());
 	}
 	
 	private function initPanel():void {

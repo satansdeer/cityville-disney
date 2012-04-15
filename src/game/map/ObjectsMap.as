@@ -5,7 +5,9 @@ import as3isolib.geom.IsoMath;
 import as3isolib.geom.Pt;
 
 import core.enum.ScenesENUM;
+import core.enum.WindowsENUM;
 import core.layer.LayersENUM;
+import core.window.WindowManager;
 
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -15,7 +17,10 @@ import flash.net.URLLoader;
 
 import game.GameView;
 import game.collector.ObjectsCollector;
+import game.events.CastleEvent;
 import game.vo.MapObjectVO;
+
+import iface.windows.NewLevelWindow;
 
 import mouse.MouseManager;
 
@@ -93,6 +98,13 @@ import ru.beenza.framework.layers.LayerManager;
 			_castle.isoSprite.moveTo(_castle.x * Main.UNIT_SIZE, _castle.y * Main.UNIT_SIZE, 0);
 			_castle.isoSprite.setSize(_castle.vo.width *Main.UNIT_SIZE, _castle.vo.length *Main.UNIT_SIZE,1);
 			_castle.isoSprite.render();
+			_castle.addEventListener(CastleEvent.CLICK, onCastleClick);
+		}
+
+		private function onCastleClick(event:CastleEvent):void {
+			var window:NewLevelWindow = WindowManager.instance.getWindow(WindowsENUM.NEWLEVEL_WINDOW) as NewLevelWindow;
+			window.updateItems(ObjectsCollector.instance.objectVOs);
+			WindowManager.instance.showWindow(WindowsENUM.NEWLEVEL_WINDOW);
 		}
 
 		public function plantPlot():void {

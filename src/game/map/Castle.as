@@ -4,7 +4,12 @@
  * Time: 11:17 AM
  */
 package game.map {
+import core.enum.WindowsENUM;
+import core.window.WindowManager;
+
 import flash.events.MouseEvent;
+
+import game.events.CastleEvent;
 
 import game.vo.MapObjectVO;
 
@@ -31,6 +36,7 @@ public class Castle extends MapObject {
 	override protected function addListeners():void {
 		img.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 		img.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+		img.addEventListener(MouseEvent.CLICK, onClick);
 	}
 
 	private function onMouseOver(event:MouseEvent):void {
@@ -38,6 +44,10 @@ public class Castle extends MapObject {
 	}
 	private function onMouseOut(evnent:MouseEvent):void {
 		MouseManager.instance.mode = MouseManager.NORMAL_MODE;
+	}
+
+	private function onClick(event:MouseEvent):void {
+		dispatchEvent(new CastleEvent());
 	}
 }
 }

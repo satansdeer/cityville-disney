@@ -56,7 +56,7 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 	private function init():void {
 		_view.buildTab.bg.gotoAndStop(1);
 		_view.farmTab.bg.gotoAndStop(2);
-		for (var i:int = 1; i <= 8; ++i) {
+		for (var i:int = 1; i <= ITEMS_NUM; ++i) {
 			IfaceBtnWrapper.wrap(_view["item" + i].buyBtn);
 			_view["item" + i].buyBtn.mouseChildren = false;
 		}
@@ -118,7 +118,7 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 		_view.farmTab.addEventListener(MouseEvent.CLICK, onFarmTabClick);
 
 		_view.closeBtn.addEventListener(MouseEvent.CLICK, onCloseBtnClick);
-		for (var i:int = 1; i <= 8; ++i) {
+		for (var i:int = 1; i <= ITEMS_NUM; ++i) {
 			_view["item" + i].buyBtn.addEventListener(MouseEvent.CLICK, onItemClick);
 		}
 	}
