@@ -66,7 +66,7 @@ public class Main extends Sprite {
 		ObjectsCollector.instance.init();
 		
 			// stage settings
-		stage.scaleMode = StageScaleMode.NO_SCALE;
+//		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.align = StageAlign.TOP_LEFT;
 		StageReference.setStage(stage);
 		//stage.quality = StageQuality.LOW;

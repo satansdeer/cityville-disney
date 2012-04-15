@@ -19,6 +19,7 @@ import flash.events.MouseEvent;
 import game.collector.ObjectsCollector;
 import game.map.FarmPlot;
 import game.map.MapsController;
+import game.model.UserSession;
 import game.vo.MapObjectVO;
 
 import mouse.MouseManager;
@@ -133,6 +134,7 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 
 	private function onItemClick(event:MouseEvent):void {
 		if (_tab == BUILD_TAB) {
+			if (UserSession.instance.money < 500) { return; }
 			for (var i:int = 1; i <= 8; ++i) {
 				if (event.target.parent == _view["item" + i]) {
 					MouseManager.instance.mode = MouseManager.NORMAL_MODE;

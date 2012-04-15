@@ -16,6 +16,7 @@ package mouse
 	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
 import flash.text.TextFieldAutoSize;
+import flash.text.TextFieldType;
 import flash.ui.Mouse;
 	
 	import org.casalib.util.StageReference;
@@ -175,7 +176,7 @@ import flash.ui.Mouse;
 		public static function showHint(hint:String):void {
 			instance._hint.visible = true;
 			instance._hint.contentTxt.text = hint;
-			instance._hint.bg.width = instance._hint.contentTxt.width + 10;
+			instance._hint.bg.width = instance._hint.contentTxt.textWidth + 23;
 			instance._hint.bg.height = instance._hint.contentTxt.height + 20;
 			instance.correctHintPos();
 		}
