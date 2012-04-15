@@ -18,6 +18,7 @@ import core.window.WindowManager;
 import flash.events.Event;
 
 import flash.events.MouseEvent;
+import flash.filters.GlowFilter;
 
 import game.crafting.PlotVO;
 import game.model.UserSession;
@@ -34,6 +35,7 @@ public class FarmPlot extends MapObject {
 	private var _plotVo:PlotVO;
 	private var _assetsLoadedCount:int = 0;
 
+	private const GLOW_FILTER:GlowFilter = new GlowFilter(0xffffff);
 
 	public static const URLS:Array = ["assets/plot/plot_1.png", "assets/plot/plot_2.png", "assets/plot/plot_3.png", "assets/plot/plot_4.png"];
 
@@ -119,9 +121,13 @@ public class FarmPlot extends MapObject {
 
 	override protected function addListeners():void {
 		img.addEventListener(MouseEvent.CLICK, onClick);
+		img.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+		img.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 	}
 	protected function removeListeners():void {
 		img.removeEventListener(MouseEvent.CLICK, onClick);
+		img.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+		img.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 	}
 
 
@@ -141,6 +147,15 @@ public class FarmPlot extends MapObject {
 			_plotVo.completed = true;
 			updateAsset();
 		}
+	}
+
+	private function onMouseOver(event:MouseEvent):void {
+		if (_plotVo._timeLeft == 0) {
+			img.filters = [GLOW_FILTER];
+		}
+	}
+	private function onMouseOut(event:MouseEvent):void {
+		img.filters = [];
 	}
 
 }

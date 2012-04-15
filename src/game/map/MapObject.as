@@ -17,16 +17,23 @@ package game.map
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
-	
-	import game.GameView;
+import flash.filters.GlowFilter;
+
+import game.GameView;
 	import game.vo.MapObjectVO;
-	
-	import mouse.MouseManager;
+
+import mouse.MouseManager;
+
+import mouse.MouseManager;
+
+import mouse.MouseManager;
 
 import rpc.GameRpc;
 
 public class MapObject extends EventDispatcher{
 		
+		private const GLOW_FILTER:GlowFilter = new GlowFilter(0xffffff);
+
 		public var vo:MapObjectVO;
 		public var isoSprite:IsoSprite;
 		public var img:InteractivePNG;
@@ -66,11 +73,29 @@ public class MapObject extends EventDispatcher{
 			removeListeners();
 		}
 		
+	protected function addListeners():void {
+		img.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+		img.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+		img.addEventListener(MouseEvent.CLICK, onClick);
+		img.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+	}
+
 		private function removeListeners():void {
+			img.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+			img.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			img.removeEventListener(MouseEvent.CLICK, onClick);
 			img.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		}
 		
+	private function onMouseOver(event:MouseEvent):void {
+		if (MouseManager.instance.mode == MouseManager.REMOVE_MODE) {
+			img.filters = [GLOW_FILTER];
+		}
+	}
+	private function onMouseOut(evnent:MouseEvent):void {
+		img.filters = [];
+	}
+
 		private function onMouseDown(event:MouseEvent):void {
 			if(MouseManager.instance.mode == MouseManager.MOVE_MODE){
 				event.stopPropagation();
@@ -100,11 +125,6 @@ public class MapObject extends EventDispatcher{
 					isoSprite.container.addChild(preloader);
 				}
 			}
-		}
-		
-		protected function addListeners():void {
-			img.addEventListener(MouseEvent.CLICK, onClick);
-			img.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		}
 		
 		protected function onAssetLoaded(event:AssetEvent):void{

@@ -8,6 +8,7 @@ import core.enum.WindowsENUM;
 import core.window.WindowManager;
 
 import flash.events.MouseEvent;
+import flash.filters.GlowFilter;
 
 import game.events.CastleEvent;
 
@@ -17,6 +18,7 @@ import mouse.MouseManager;
 
 public class Castle extends MapObject {
 
+	private const GLOW_FILTER:GlowFilter = new GlowFilter(0xffffff);
 
 	public static function create(controller:ObjectsMap):Castle {
 		var vo:MapObjectVO = new MapObjectVO();
@@ -41,9 +43,11 @@ public class Castle extends MapObject {
 
 	private function onMouseOver(event:MouseEvent):void {
 		MouseManager.instance.mode = MouseManager.UPGRADE_MODE;
+		img.filters = [GLOW_FILTER];
 	}
 	private function onMouseOut(evnent:MouseEvent):void {
 		MouseManager.instance.mode = MouseManager.NORMAL_MODE;
+		img.filters = [];
 	}
 
 	private function onClick(event:MouseEvent):void {
