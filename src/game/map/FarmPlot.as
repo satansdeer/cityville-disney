@@ -80,7 +80,6 @@ public class FarmPlot extends MapObject {
 	}
 
 	override protected function onAssetLoaded(event:AssetEvent):void {
-		trace("asset loaded : " + event.url + " [FarmPlot.onAssetLoaded]");
 		if(URLS.indexOf(event.url) != -1 ){
 			_assetsLoadedCount++;
 			if (_assetsLoadedCount == URLS.length) {
