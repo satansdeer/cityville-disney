@@ -110,10 +110,8 @@ public class FarmPlot extends MapObject {
 		} else if (_plotVo._timeLeft == 0) {
 			url = URLS[0];
 		} else {
-			trace("plot url : " + (3 - int(_plotVo._timeLeft/5000 * 2)) + " [FarmPlot.updateAsset]");
 			url = URLS[3 - int(_plotVo._timeLeft/5000 * 2)-1];
 		}
-		trace("vo url : " + vo.url + ", url : " + url + " [FarmPlot.updateAsset]");
 		if (vo.url != url) {
 			vo.url = url;
 			setAsset();

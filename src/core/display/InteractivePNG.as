@@ -2,7 +2,8 @@ package core.display {
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.Sprite;
+import flash.display.PixelSnapping;
+import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -19,8 +20,11 @@ package core.display {
 		private var _offsetX:int;
 		private var _offsetY:int;
 		
-		public function InteractivePNG(bmd:BitmapData) {
+		private var _needTrace:Boolean;
+
+		public function InteractivePNG(bmd:BitmapData, needTrace:Boolean = true) {
 			src = bmd;
+			_needTrace = needTrace;
 			init();
 		}
 		
@@ -46,6 +50,9 @@ package core.display {
 		}
 		
 		private function captureMouseEvent(event:Event):void {
+			if (_needTrace) {
+				trace("mouse interact : " + event.type + "url : " + " [InteractivePNG.captureMouseEvent]");
+			}
 			if (event.type == MouseEvent.MOUSE_OVER || event.type == MouseEvent.ROLL_OVER) {
 				mouseEnabled = false;
 				addEventListener(Event.ENTER_FRAME, trackMouseWhileInBounds, false, 10000, true);
@@ -112,7 +119,7 @@ package core.display {
 				bmp.y = -offsetY;
 				addChild(bmp);
 			}
-			
+
 			bmp.bitmapData = value;
 		}
 		

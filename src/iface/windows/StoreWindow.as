@@ -55,8 +55,8 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 	}
 
 	private function init():void {
-		_view.buildTab.bg.gotoAndStop(1);
-		_view.farmTab.bg.gotoAndStop(2);
+		_view.buildTab.bg.gotoAndStop(2);
+		_view.farmTab.bg.gotoAndStop(1);
 		for (var i:int = 1; i <= ITEMS_NUM; ++i) {
 			IfaceBtnWrapper.wrap(_view["item" + i].buyBtn);
 			_view["item" + i].buyBtn.mouseChildren = false;
@@ -86,6 +86,10 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 				_view["item" + itemIndex].visible = false;
 			}
 		}
+		updateNextPrevBtns();
+	}
+
+	private function updateNextPrevBtns():void {
 		if (_page == 0) {
 			_view.prevBtn.visible = false;
 		} else { _view.prevBtn.visible = true; }
@@ -107,6 +111,8 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 		}
 		_view["item1"]["photo"].addChild(_farmItem);
 		_view["item1"]["priceTxt"].text = 0;
+		_view.prevBtn.visible = false;
+		_view.nextBtn.visible = false;
 	}
 
 	private function addListeners():void {
@@ -154,16 +160,16 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 		if (_tab != BUILD_TAB) {
 			_tab = BUILD_TAB;
 			updateItems();
-			_view.buildTab.bg.gotoAndStop(1);
-			_view.farmTab.bg.gotoAndStop(2);
+			_view.buildTab.bg.gotoAndStop(2);
+			_view.farmTab.bg.gotoAndStop(1);
 		}
 	}
 	private function onFarmTabClick(event:MouseEvent):void {
 		if (_tab != FARM_TAB) {
 			_tab = FARM_TAB;
 			updateItems();
-			_view.buildTab.bg.gotoAndStop(2);
-			_view.farmTab.bg.gotoAndStop(1);
+			_view.buildTab.bg.gotoAndStop(1);
+			_view.farmTab.bg.gotoAndStop(2);
 		}
 	}
 

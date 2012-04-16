@@ -65,6 +65,7 @@ import ru.beenza.framework.layers.LayerManager;
 			} else {
 				ObjectsCollector.instance.addEventListener(Event.COMPLETE, onObjectsLoaded);
 			}
+			MouseManager.instance.addEventListener(Event.CHANGE, onMouseModeChange);
 		}
 
 		public function get scene():IsoScene { return _scene; }
@@ -83,7 +84,7 @@ import ru.beenza.framework.layers.LayerManager;
 		private function addPlot():void {
 			_plot = FarmPlot.create(this);
 			_scene.addChild(_plot.isoSprite);
-			_plot.x = 2;
+			_plot.x = 10;
 			_plot.y = 2;
 			_plot.isoSprite.moveTo(_plot.x * Main.UNIT_SIZE, _plot.y * Main.UNIT_SIZE, 0);
 			_plot.isoSprite.setSize(_plot.vo.width *Main.UNIT_SIZE,_plot.vo.length *Main.UNIT_SIZE,1);
@@ -129,7 +130,18 @@ import ru.beenza.framework.layers.LayerManager;
 			objects.splice(objects.indexOf(object),1);
 			_shownObjects.splice(_shownObjects.indexOf(object),1);
 		}
-		
+
+		private function onMouseModeChange(event:Event):void {
+			/*if (MouseManager.instance.mode == MouseManager.REMOVE_MODE) {
+				_castle.img.mouseEnabled = false;
+				_castle.img.alpha = .5;
+				_plot.img.alpha = .5;
+			} else {
+				_castle.img.mouseEnabled = true;
+				_castle.img.alpha = 1;
+				_plot.img.alpha = 1;
+			}*/
+		}
 		
 		private function onObjectsLoaded(event:Event):void {
 			load();
@@ -216,7 +228,7 @@ import ru.beenza.framework.layers.LayerManager;
 			var rect:Rectangle;
 			const objectRect:Rectangle = new Rectangle(int(object.isoSprite.x/Main.UNIT_SIZE), int(object.isoSprite.y/Main.UNIT_SIZE), object.vo.width, object.vo.length);
 			const objRect:Rectangle = new Rectangle();
-			for each (obj in _shownObjects.concat(_castle, _plot)) {
+			for each (obj in _shownObjects){//.concat(_castle, _plot)) {
 				if (obj != _plot) {
 					objRect.x = int(obj.isoSprite.x/Main.UNIT_SIZE);
 					objRect.y = int(obj.isoSprite.y/Main.UNIT_SIZE);

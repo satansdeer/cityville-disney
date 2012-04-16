@@ -84,6 +84,7 @@ import flash.ui.Mouse;
 					break;
 			}
 			correctIconPos();
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		public function get mode():String{

@@ -88,6 +88,7 @@ public class MapObject extends EventDispatcher{
 		}
 		
 	private function onMouseOver(event:MouseEvent):void {
+		trace("mouse over [MapObject.mouseOver]");
 		if (MouseManager.instance.mode == MouseManager.REMOVE_MODE) {
 			img.filters = [GLOW_FILTER];
 		}

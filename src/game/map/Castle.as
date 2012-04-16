@@ -4,7 +4,10 @@
  * Time: 11:17 AM
  */
 package game.map {
+import core.display.AssetManager;
+import core.display.InteractivePNG;
 import core.enum.WindowsENUM;
+import core.event.AssetEvent;
 import core.window.WindowManager;
 
 import flash.events.MouseEvent;
@@ -18,14 +21,15 @@ import mouse.MouseManager;
 
 public class Castle extends MapObject {
 
+
 	private const GLOW_FILTER:GlowFilter = new GlowFilter(0xffffff);
 
 	public static function create(controller:ObjectsMap):Castle {
 		var vo:MapObjectVO = new MapObjectVO();
-		vo.length = 4;
-		vo.width = 4;
-		vo.offsetY = -60;
-		vo.offsetX = -80;
+		vo.length = 8;
+		vo.width = 9;
+		vo.offsetY = -80;
+		vo.offsetX = -160;
 		vo.name = "castle";
 		vo.url = "assets/Buildings/castle.png";
 		return new Castle(vo, controller);
@@ -39,6 +43,23 @@ public class Castle extends MapObject {
 		img.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 		img.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 		img.addEventListener(MouseEvent.CLICK, onClick);
+	}
+
+	override protected function onAssetLoaded(event:AssetEvent):void{
+		if(vo.url == event.url){
+			AssetManager.instance.removeEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);
+			img = new InteractivePNG(AssetManager.getImageByURL(vo.url), false);
+			isoSprite.container.addChild(img);
+			img.scaleX = 0.5;
+			img.scaleY = 0.5;
+			img.x = vo.offsetX;
+			img.y = vo.offsetY;
+			addListeners();
+			if(preloader && isoSprite.container.contains(preloader)){
+				isoSprite.container.removeChild(preloader);
+				preloader = null;
+			}
+		}
 	}
 
 	private function onMouseOver(event:MouseEvent):void {
