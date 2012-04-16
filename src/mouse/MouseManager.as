@@ -36,7 +36,8 @@ import flash.ui.Mouse;
 		
 		private static var _instance:MouseManager;
 		private var _cursorContainer:Sprite;
-		
+
+		private var _overrideIcon:Boolean;
 		private var _img:InteractivePNG;
 		private var stage:Stage;
 		
@@ -52,6 +53,7 @@ import flash.ui.Mouse;
 		
 		public function MouseManager(target:IEventDispatcher=null) {
 			super(target);
+			_overrideIcon = false;
 			_cursorContainer = LayerManager.getLayer(LayersENUM.CURSOR);
 			_hint = new Hint_view();
 			_hint.visible = false;
@@ -110,8 +112,8 @@ import flash.ui.Mouse;
 		}
 
 		private function correctIconPos():void {
-			_icon.x = stage.mouseX + 20;
-			_icon.y = stage.mouseY + 20;
+			_icon.x = stage.mouseX + 15;
+			_icon.y = stage.mouseY + 5;
 		}
 		private function correctHintPos():void {
 			if (stage.mouseX > Main.APP_WIDTH - _hint.width) {
@@ -119,8 +121,12 @@ import flash.ui.Mouse;
 			} else {
 				_hint.x = stage.mouseX + 10;
 			}
-			if (stage.mouseY > Main.APP_HEIGHT - _hint.height) {
-				_hint.y = stage.mouseY - 10 - _hint.height;
+			if (stage.mouseY > Main.APP_HEIGHT - _hint.height || (mode != NORMAL_MODE && !_overrideIcon)) {
+				if (mode != NORMAL_MODE && !_overrideIcon && stage.mouseY < _hint.height + 10) {
+					_hint.y = stage.mouseY + _icon.width + 20;
+				} else {
+					_hint.y = stage.mouseY - 10 - _hint.height;
+				}
 			} else {
 				_hint.y = stage.mouseY + 10;
 			}
@@ -174,7 +180,8 @@ import flash.ui.Mouse;
 			//}
 		}
 		
-		public static function showHint(hint:String):void {
+		public static function showHint(hint:String, overrideIcon:Boolean = false):void {
+			instance._overrideIcon = overrideIcon;
 			instance._hint.visible = true;
 			instance._hint.contentTxt.text = hint;
 			instance._hint.bg.width = instance._hint.contentTxt.textWidth + 23;

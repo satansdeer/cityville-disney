@@ -65,10 +65,12 @@ public class Castle extends MapObject {
 	private function onMouseOver(event:MouseEvent):void {
 		MouseManager.instance.mode = MouseManager.UPGRADE_MODE;
 		img.filters = [GLOW_FILTER];
+		MouseManager.showHint("          Upgrade castle", true);
 	}
 	private function onMouseOut(evnent:MouseEvent):void {
 		MouseManager.instance.mode = MouseManager.NORMAL_MODE;
 		img.filters = [];
+		MouseManager.hideHint();
 	}
 
 	private function onClick(event:MouseEvent):void {
