@@ -107,9 +107,13 @@ public class StoreWindow  extends WindowBase implements IScreenWindow{
 			vo.url = FarmPlot.URLS[FarmPlot.URLS.length-1];
 			vo.length = 2;
 			vo.width = 2;
-			_farmItem = new PanelItem(vo);
+			_farmItem = new PanelItem(vo, true);
+			_farmItem.mouseChildren = false;
+			_farmItem.mouseEnabled = false;
 		}
-		_view["item1"]["photo"].addChild(_farmItem);
+		_view["item1"]["photo"].addChildAt(_farmItem, 0);
+		_view["item1"]["photo"].mouseEnabled = false;
+		_view["item1"].mouseEnabled = false;
 		_view["item1"]["priceTxt"].text = 0;
 		_view.prevBtn.visible = false;
 		_view.nextBtn.visible = false;

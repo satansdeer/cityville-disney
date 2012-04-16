@@ -22,15 +22,17 @@ import core.display.AssetManager;
 	 * @author satansdeer
 	 */
 	public class PanelItem extends Sprite{
-		
+
+		private var _farm:Boolean;
 		private var nameLabel:Label;
 		private var _vo:Object;
 		
 		private var _preloader:PreloaderItem;
 		
-		public function PanelItem(vo:Object)
+		public function PanelItem(vo:Object, farm:Boolean = false)
 		{
 			_vo = vo;
+			_farm = farm;
 			//drawBackground();
 			//nameLabel = new Label(this, 4 , 60)
 			//if(_vo.hasOwnProperty("name")){
@@ -104,10 +106,14 @@ import core.display.AssetManager;
 		private function addImage() {
 			AssetManager.instance.removeEventListener(AssetEvent.ASSET_LOADED, onAssetLoaded);
 			var img:InteractivePNG = new InteractivePNG(AssetManager.getImageByURL(_vo.url));
-			img.width = 100;
-			img.height = 100;
-			img.x = -50;
-			img.y = -50;
+			if (!_farm) {
+				img.width = 100;
+				img.height = 100;
+			} else {
+
+			}
+			img.x = _farm ? -300 : -50;
+			img.y = _farm ? -280 : -50;
 			img.mouseEnabled = false;
 			addChild(img);
 			removeChild(_preloader);
