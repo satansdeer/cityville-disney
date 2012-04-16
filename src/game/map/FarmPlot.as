@@ -43,8 +43,8 @@ public class FarmPlot extends MapObject {
 		var vo:MapObjectVO = new MapObjectVO();
 		vo.length = 3;
 		vo.width = 3;
-		vo.offsetY = 0;
-		vo.offsetX = 0;
+		vo.offsetY = -270;
+		vo.offsetX = -270;
 		vo.name = "farm plot";
 		//vo.url = URLS[0];
 		return new FarmPlot(vo, controller);
@@ -59,6 +59,7 @@ public class FarmPlot extends MapObject {
 	override public function init():void{
 		if(!isoSprite){
 			isoSprite = new IsoSprite();
+			isoSprite.container.mouseEnabled = false;
 			isoSprite.setSize(vo.width * Main.UNIT_SIZE,vo.length * Main.UNIT_SIZE, 1);
 			isoSprite.moveTo(x * Main.UNIT_SIZE, y * Main.UNIT_SIZE, 0);
 			isoSprite.data = {x:x, y:y}

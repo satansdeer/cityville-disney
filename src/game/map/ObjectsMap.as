@@ -84,8 +84,8 @@ import ru.beenza.framework.layers.LayerManager;
 		private function addPlot():void {
 			_plot = FarmPlot.create(this);
 			_scene.addChild(_plot.isoSprite);
-			_plot.x = 10;
-			_plot.y = 2;
+			_plot.x = 19;//10;
+			_plot.y = 3;//2;
 			_plot.isoSprite.moveTo(_plot.x * Main.UNIT_SIZE, _plot.y * Main.UNIT_SIZE, 0);
 			_plot.isoSprite.setSize(_plot.vo.width *Main.UNIT_SIZE,_plot.vo.length *Main.UNIT_SIZE,1);
 			_plot.isoSprite.render();
@@ -95,7 +95,7 @@ import ru.beenza.framework.layers.LayerManager;
 			_castle = Castle.create(this);
 			_scene.addChild(_castle.isoSprite);
 			_castle.x = 10;
-			_castle.y = 6;
+			_castle.y = 2;
 			_castle.isoSprite.moveTo(_castle.x * Main.UNIT_SIZE, _castle.y * Main.UNIT_SIZE, 0);
 			_castle.isoSprite.setSize(_castle.vo.width *Main.UNIT_SIZE, _castle.vo.length *Main.UNIT_SIZE,1);
 			_castle.isoSprite.render();
@@ -228,13 +228,13 @@ import ru.beenza.framework.layers.LayerManager;
 			var rect:Rectangle;
 			const objectRect:Rectangle = new Rectangle(int(object.isoSprite.x/Main.UNIT_SIZE), int(object.isoSprite.y/Main.UNIT_SIZE), object.vo.width, object.vo.length);
 			const objRect:Rectangle = new Rectangle();
-			for each (obj in _shownObjects){//.concat(_castle, _plot)) {
-				if (obj != _plot) {
+			for each (obj in _shownObjects.concat(_castle, _plot)) {
+//				if (obj != _plot) {
 					objRect.x = int(obj.isoSprite.x/Main.UNIT_SIZE);
 					objRect.y = int(obj.isoSprite.y/Main.UNIT_SIZE);
-				} else {
-					objRect.x = 14; objRect.y = 6;
-				}
+//				} else {
+//					objRect.x = 14; objRect.y = 6;
+//				}
 				objRect.width = obj.vo.width;
 				objRect.height = obj.vo.length;
 				rect = objectRect.intersection(objRect);
